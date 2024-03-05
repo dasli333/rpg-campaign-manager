@@ -1,0 +1,9 @@
+mat-toolbar {
+  display: flex;
+  justify-content: space-between;
+
+  .header-right-side {
+    display: flex;
+    align-items: center;
+  }
+}

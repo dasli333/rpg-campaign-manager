@@ -1,4 +1,19 @@
 <mat-toolbar>
-  <span>My Application</span>
-  <i class="material-icons">home</i>
+  <div class="header-left-side">
+    <span>My Application</span>
+  </div>
+  <div class="header-right-side">
+    <mat-tab-group>
+      <mat-tab label="Campaigns"></mat-tab>
+    </mat-tab-group>
+    <button mat-icon-button color="accent" aria-label="Create an account">
+      <mat-icon>person_add</mat-icon>
+    </button>
+    <button mat-icon-button color="accent" aria-label="Login">
+      <mat-icon>login</mat-icon>
+    </button>
+    <button mat-icon-button color="accent" aria-label="Example icon button with a menu icon">
+      <mat-icon>menu</mat-icon>
+    </button>
+  </div>
 </mat-toolbar>
