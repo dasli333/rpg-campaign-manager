@@ -6,4 +6,26 @@ mat-toolbar {
     display: flex;
     align-items: center;
   }
+
+  .header-tab {
+    height: 48px;
+    display: flex;
+    align-items: center;
+    min-width: 90px;
+    padding-right: 24px;
+    padding-left: 24px;
+    cursor: pointer;
+    font-size: 14px;
+    letter-spacing: 0.0892857143em;
+    transition: color 0.3s, background-color 0.3s;
+
+    &:hover {
+      background-color: #242026;
+    }
+
+    &.active-link {
+      color: #7b1fa2;
+      border-bottom: #7b1fa2 2px solid;
+    }
+  }
 }
