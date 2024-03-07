@@ -8,9 +8,16 @@
     <button mat-icon-button color="accent" aria-label="Create an account">
       <mat-icon>person_add</mat-icon>
     </button>
-    <button mat-icon-button color="accent" aria-label="Login">
-      <mat-icon>login</mat-icon>
-    </button>
+    @if (isLoggedIn()) {
+      <button (click)="logout()" mat-icon-button color="accent" aria-label="Logout">
+        <mat-icon>logout</mat-icon>
+      </button>
+    } @else {
+      <button (click)="login()" mat-icon-button color="accent" aria-label="Login">
+        <mat-icon>login</mat-icon>
+      </button>
+    }
+
     <button mat-icon-button color="accent" aria-label="Example icon button with a menu icon">
       <mat-icon>menu</mat-icon>
     </button>
