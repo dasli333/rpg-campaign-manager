@@ -1,5 +1,4 @@
-import {ChangeDetectionStrategy, Component, inject, Signal} from '@angular/core';
-import {LoginService} from "../login/services/login.service";
+import {ChangeDetectionStrategy, Component} from '@angular/core';
 
 @Component({
   selector: 'app-campaigns',
@@ -11,10 +10,5 @@ import {LoginService} from "../login/services/login.service";
 })
 export class CampaignsComponent {
 
-  isLoggedIn: Signal<boolean>
-  #loginService = inject(LoginService);
-
-  constructor() {
-    this.isLoggedIn = this.#loginService.isLoggedIn()
-  }
+  constructor() {}
 }

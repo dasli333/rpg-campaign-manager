@@ -20,7 +20,7 @@ export class HeaderComponent {
   #loginService = inject(LoginService);
 
   constructor() {
-    this.isLoggedIn = this.#loginService.isLoggedIn()
+    this.isLoggedIn = this.#loginService.isUserLoggedIn
   }
 
   login() {
