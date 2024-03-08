@@ -4,7 +4,7 @@ import {MatIcon} from "@angular/material/icon";
 import {MatIconButton} from "@angular/material/button";
 import {MatTabsModule} from '@angular/material/tabs'
 import {RouterLink, RouterLinkActive} from "@angular/router";
-import {LoginService} from "../../modules/login/services/login.service";
+import {AuthService} from "../../modules/login/services/auth.service";
 
 @Component({
   selector: 'app-header',
@@ -17,17 +17,17 @@ import {LoginService} from "../../modules/login/services/login.service";
 export class HeaderComponent {
 
   isLoggedIn: Signal<boolean>
-  #loginService = inject(LoginService);
+  #authService = inject(AuthService);
 
   constructor() {
-    this.isLoggedIn = this.#loginService.isUserLoggedIn
+    this.isLoggedIn = this.#authService.isUserLoggedIn
   }
 
   login() {
-    this.#loginService.login()
+    this.#authService.login()
   }
 
   logout() {
-    this.#loginService.logout()
+    this.#authService.logout()
   }
 }

@@ -1,6 +1,6 @@
 import {ChangeDetectionStrategy, Component, inject} from '@angular/core';
-import {FormBuilder, FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {LoginService} from "./services/login.service";
+import {FormBuilder, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
+import {AuthService} from "./services/auth.service";
 
 @Component({
   selector: 'app-login',
@@ -16,15 +16,15 @@ import {LoginService} from "./services/login.service";
 export class LoginComponent {
 
   #formBuilder = inject(FormBuilder);
-  #loginService = inject(LoginService);
+  #authService = inject(AuthService);
 
   loginForm = this.#formBuilder.group({
-    username: '',
-    password: ''
+    username: ['', Validators.required],
+    password: ['', Validators.required]
   })
 
   onSubmit() {
     console.log(this.loginForm.value);
-    this.#loginService.login();
+    this.#authService.login();
   }
 }

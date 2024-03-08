@@ -3,8 +3,10 @@
     <span>My Application</span>
   </div>
   <div class="header-right-side">
-    <div class="header-tab" routerLinkActive="active-link"
-         routerLink="/campaigns">Campaigns</div>
+    @if (isLoggedIn()) {
+      <div class="header-tab" routerLinkActive="active-link"
+           routerLink="/campaigns">Campaigns</div>
+    }
     <button mat-icon-button color="accent" aria-label="Create an account">
       <mat-icon>person_add</mat-icon>
     </button>

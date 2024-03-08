@@ -4,7 +4,7 @@ import {Router} from "@angular/router";
 @Injectable({
   providedIn: 'root'
 })
-export class LoginService {
+export class AuthService {
 
   #router = inject(Router);
   #isUserLoggedIn = signal(false);

@@ -1,3 +1,4 @@
+<h2>Log in</h2>
 <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
   <label for="username">Username</label>
   <input id="username" type="text" formControlName="username">
@@ -8,3 +9,5 @@
   <button type="submit" [disabled]="loginForm.invalid">Log in</button>
 </form>
 
+<!-- TODO: Add a sign up form dialog-->
+<h2>Sign up</h2>
