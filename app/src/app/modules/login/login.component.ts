@@ -4,6 +4,8 @@ import {AuthService} from "./services/auth.service";
 import {MatButton} from "@angular/material/button";
 import {MatDialog} from "@angular/material/dialog";
 import {SignUpDialogComponent} from "./sign-up-dialog/sign-up-dialog.component";
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {MatInput} from "@angular/material/input";
 
 @Component({
   selector: 'app-login',
@@ -11,7 +13,9 @@ import {SignUpDialogComponent} from "./sign-up-dialog/sign-up-dialog.component";
   imports: [
     ReactiveFormsModule,
     FormsModule,
-    MatButton
+    MatButton,
+    MatFormFieldModule,
+    MatInput
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
@@ -34,6 +38,6 @@ export class LoginComponent {
   }
 
   openRegister() {
-    this.#dialog.open(SignUpDialogComponent)
+    this.#dialog.open(SignUpDialogComponent, {width: '300px'})
   }
 }

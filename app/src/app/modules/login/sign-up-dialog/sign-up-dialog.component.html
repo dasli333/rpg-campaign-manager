@@ -1,28 +1,28 @@
-<div mat-dialog-title class="dialog-title">
-  <span>Sign up</span>
-  <button mat-icon-button aria-label="Close dialog" mat-dialog-close>
-    <mat-icon>close</mat-icon>
-  </button>
-</div>
+<h2 mat-dialog-title>Create an account</h2>
 
-<form mat-dialog-content [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
-  <p>
-    <mat-form-field>
-      <mat-label>Username</mat-label>
-      <input matInput formControlName="username" required>
-    </mat-form-field>
-  </p>
-  <p>
-    <mat-form-field>
-      <mat-label>Email</mat-label>
-      <input matInput formControlName="email" required>
-    </mat-form-field>
-  </p>
-  <p>
-    <mat-form-field>
-      <mat-label>Password</mat-label>
-      <input matInput type="password" formControlName="password" required>
-    </mat-form-field>
-  </p>
-  <button [disabled]="signUpForm.invalid" mat-raised-button color="primary" type="submit">Sign up</button>
+<form [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
+  <mat-dialog-content>
+    <p>
+      <mat-form-field>
+        <mat-label>Username</mat-label>
+        <input matInput formControlName="username">
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field>
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="email">
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field>
+        <mat-label>Password</mat-label>
+        <input matInput type="password" formControlName="password">
+      </mat-form-field>
+    </p>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Cancel</button>
+    <button [disabled]="signUpForm.invalid" mat-raised-button color="primary" type="submit">Sign up</button>
+  </mat-dialog-actions>
 </form>

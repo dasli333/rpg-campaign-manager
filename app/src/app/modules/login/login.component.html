@@ -1,14 +1,28 @@
-<h2>Log in</h2>
-<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-  <label for="username">Username</label>
-  <input id="username" type="text" formControlName="username">
+<div class="login-card">
+  <div class="login-section">
+    <h2>Log in</h2>
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <p>
+        <mat-form-field>
+          <mat-label>Username</mat-label>
+          <input matInput type="text" formControlName="username">
+        </mat-form-field>
+      </p>
 
-  <label for="password">Password</label>
-  <input id="password" type="password" formControlName="password">
+      <p>
+        <mat-form-field>
+          <mat-label>Password</mat-label>
+          <input matInput type="password" formControlName="password">
+        </mat-form-field>
+      </p>
 
-  <button type="submit" [disabled]="loginForm.invalid">Log in</button>
-</form>
+      <div class="submit-button">
+        <button mat-raised-button type="submit" [disabled]="loginForm.invalid" color="primary">Log in</button>
+      </div>
+    </form>
+  </div>
 
-<!-- TODO: Add a sign up form dialog-->
-<button mat-raised-button (click)="openRegister()">Sign up</button>
-<h2>Sign up</h2>
+  <div class="signup-section">
+    <button mat-raised-button (click)="openRegister()" color="accent">Sign up</button>
+  </div>
+</div>

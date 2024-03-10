@@ -1,6 +1,6 @@
 import {ChangeDetectionStrategy, Component, Inject} from '@angular/core';
 import {
-  MAT_DIALOG_DATA,
+  MAT_DIALOG_DATA, MatDialogActions,
   MatDialogClose,
   MatDialogContent,
   MatDialogTitle
@@ -23,7 +23,8 @@ import {MatIcon} from "@angular/material/icon";
     MatDialogContent,
     MatIconButton,
     MatIcon,
-    MatDialogClose
+    MatDialogClose,
+    MatDialogActions
   ],
   templateUrl: './sign-up-dialog.component.html',
   styleUrl: './sign-up-dialog.component.scss',
