@@ -1,13 +1,17 @@
 import {ChangeDetectionStrategy, Component, inject} from '@angular/core';
 import {FormBuilder, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import {AuthService} from "./services/auth.service";
+import {MatButton} from "@angular/material/button";
+import {MatDialog} from "@angular/material/dialog";
+import {SignUpDialogComponent} from "./sign-up-dialog/sign-up-dialog.component";
 
 @Component({
   selector: 'app-login',
   standalone: true,
   imports: [
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    MatButton
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
@@ -17,6 +21,7 @@ export class LoginComponent {
 
   #formBuilder = inject(FormBuilder);
   #authService = inject(AuthService);
+  #dialog = inject(MatDialog);
 
   loginForm = this.#formBuilder.group({
     username: ['', Validators.required],
@@ -26,5 +31,9 @@ export class LoginComponent {
   onSubmit() {
     console.log(this.loginForm.value);
     this.#authService.login();
+  }
+
+  openRegister() {
+    this.#dialog.open(SignUpDialogComponent)
   }
 }
