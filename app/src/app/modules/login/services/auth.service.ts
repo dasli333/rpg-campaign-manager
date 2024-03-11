@@ -7,7 +7,7 @@ import {Router} from "@angular/router";
 export class AuthService {
 
   #router = inject(Router);
-  #isUserLoggedIn = signal(false);
+  #isUserLoggedIn = signal(true);
   isUserLoggedIn = this.#isUserLoggedIn.asReadonly();
 
   constructor() { }
