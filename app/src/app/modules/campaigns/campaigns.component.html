@@ -1,2 +1,14 @@
-<p>Welcome</p>
+<button mat-raised-button routerLink="/create-campaign" color="primary">Create New Campaign</button>
 
+<div class="campaigns">
+  @for (campaign of campaigns; track campaign.id) {
+    <mat-card class="campaign-card">
+      <mat-card-header>
+        <mat-card-title>{{ campaign.title }}</mat-card-title>
+        <mat-card-subtitle>{{ campaign.gameSystem }}</mat-card-subtitle>
+      </mat-card-header>
+      <img mat-card-image [ngSrc]="campaign.image || defaultCampaignImage" alt="Photo of a Shiba Inu" width="400" height="320">
+      <mat-card-content>{{ campaign.description }}</mat-card-content>
+    </mat-card>
+  }
+</div>

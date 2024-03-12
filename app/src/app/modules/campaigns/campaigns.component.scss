@@ -1,0 +1,14 @@
+.campaigns {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: start;
+
+  .campaign-card {
+    width: 400px;
+    height: 500px;
+    margin-right: 20px;
+    margin-top: 20px;
+  }
+}
+
+
