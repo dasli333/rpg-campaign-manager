@@ -1,0 +1,29 @@
+<button mat-raised-button routerLink="/campaigns">Back</button>
+
+<h1>Create a New Campaign</h1>
+<div class="create-campaign-form">
+  <form [formGroup]="createCampaignForm" (ngSubmit)="onCreateCampaignSubmit()">
+    <mat-form-field appearance="outline">
+      <mat-label>Title</mat-label>
+      <input matInput placeholder="Campaign Title" formControlName="title">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Description</mat-label>
+      <textarea matInput placeholder="Campaign Description" formControlName="description"></textarea>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Game System</mat-label>
+      <mat-select formControlName="gameSystem">
+        @for (gameSystem of gameSystems; track gameSystem) {
+          <mat-option [value]="gameSystem">{{gameSystem}}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <button [disabled]="createCampaignForm.invalid" mat-raised-button color="primary" type="submit">Create Campaign</button>
+
+  </form>
+</div>
+

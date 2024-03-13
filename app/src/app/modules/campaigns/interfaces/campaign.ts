@@ -1,9 +1,9 @@
 import {GameSystem} from "../enums/game-system";
 
 export interface Campaign {
-  id: number;
+  id: string;
   title: string;
-  description: string;
+  description?: string;
   startDate: Date;
   gameSystem: GameSystem;
   image?: string;
