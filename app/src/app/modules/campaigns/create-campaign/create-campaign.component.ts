@@ -1,6 +1,6 @@
-import {ChangeDetectionStrategy, Component, inject} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, inject} from '@angular/core';
 import {MatButton} from "@angular/material/button";
-import {RouterLink} from "@angular/router";
+import {Router, RouterLink} from "@angular/router";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInput} from "@angular/material/input";
 import {MatSelectModule} from '@angular/material/select';
@@ -8,6 +8,8 @@ import {GameSystem} from "../enums/game-system";
 import {FormBuilder, ReactiveFormsModule, Validators} from "@angular/forms";
 import {CampaignsService} from "../campaigns.service";
 import {Campaign} from "../interfaces/campaign";
+import {NgClass, NgOptimizedImage, NgStyle} from "@angular/common";
+import {MatIcon} from "@angular/material/icon";
 
 
 @Component({
@@ -19,7 +21,11 @@ import {Campaign} from "../interfaces/campaign";
     RouterLink,
     MatInput,
     MatSelectModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgOptimizedImage,
+    MatIcon,
+    NgStyle,
+    NgClass
   ],
   templateUrl: './create-campaign.component.html',
   styleUrl: './create-campaign.component.scss',
@@ -27,7 +33,11 @@ import {Campaign} from "../interfaces/campaign";
 })
 export class CreateCampaignComponent {
 
+  imagePreview: string | ArrayBuffer | null = null;
+
   #campaignsService = inject(CampaignsService);
+  #changeDetectorRef = inject(ChangeDetectorRef);
+  #router = inject(Router);
 
   formBuilder = new FormBuilder();
   gameSystems = Object.values(GameSystem);
@@ -48,7 +58,25 @@ export class CreateCampaignComponent {
       image: formValue.image || undefined,
       startDate: new Date(),
     };
-    console.log(campaign.id);
     this.#campaignsService.createCampaign(campaign);
+    this.#router.navigate(['/campaigns']);
+  }
+
+  onFileSelected(event: Event) {
+    const files = (event.target as HTMLInputElement).files;
+    if (files && files.length > 0) {
+      const file = files[0];
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.imagePreview = reader.result;
+        this.#changeDetectorRef.markForCheck();
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
+  onRemoveImage() {
+    this.createCampaignForm.patchValue({image: ''});
+    this.imagePreview = null;
   }
 }

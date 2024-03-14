@@ -8,6 +8,40 @@ h1 {
     display: flex;
     flex-direction: column;
   }
+
+  .file-input {
+    display: none;
+  }
+
+  .file-upload {
+    margin-bottom: 22px;
+
+    .file-upload-actions {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+
+      button {
+        margin-right: 10px;
+      }
+    }
+
+    .file-preview {
+      width: 400px;
+      height: 300px;
+      cursor: pointer;
+      margin-top: 5px;
+    }
+
+    .dashed-border {
+      border: 2px dashed #7e7e7e;
+      width: 396px;
+      height: 296px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
 }
 
 
