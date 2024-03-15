@@ -2,7 +2,7 @@
 
 <div class="campaigns">
   @for (campaign of campaigns; track campaign.id) {
-    <mat-card class="campaign-card">
+    <mat-card class="campaign-card" (click)="selectCampaign(campaign.id)">
       <mat-card-header>
         <mat-card-title>{{ campaign.title }}</mat-card-title>
         <mat-card-subtitle>{{ campaign.gameSystem }}</mat-card-subtitle>

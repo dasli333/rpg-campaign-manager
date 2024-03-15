@@ -1,6 +1,6 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, inject} from '@angular/core';
 import {MatButton} from "@angular/material/button";
-import {Router, RouterLink} from "@angular/router";
+import {RouterLink} from "@angular/router";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInput} from "@angular/material/input";
 import {MatSelectModule} from '@angular/material/select';
@@ -37,7 +37,6 @@ export class CreateCampaignComponent {
 
   #campaignsService = inject(CampaignsService);
   #changeDetectorRef = inject(ChangeDetectorRef);
-  #router = inject(Router);
 
   formBuilder = new FormBuilder();
   gameSystems = Object.values(GameSystem);
@@ -59,7 +58,6 @@ export class CreateCampaignComponent {
       startDate: new Date(),
     };
     this.#campaignsService.createCampaign(campaign);
-    this.#router.navigate(['/campaigns']);
   }
 
   onFileSelected(event: Event) {
