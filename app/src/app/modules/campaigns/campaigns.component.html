@@ -7,12 +7,22 @@
         <mat-card-title>{{ campaign.title }}</mat-card-title>
         <mat-card-subtitle>{{ campaign.gameSystem }}</mat-card-subtitle>
       </mat-card-header>
-      <img mat-card-image [ngSrc]="campaign.image || defaultCampaignImage" alt="campaign picture" width="400" height="320">
-      <mat-card-content>{{ campaign.description }}</mat-card-content>
-      <mat-card-actions>
-        <button mat-button (click)="selectCampaign(campaign.id)">View</button>
-        <button mat-button (click)="deleteCampaign(campaign.id)">Delete</button>
-      </mat-card-actions>
+      <img mat-card-image [ngSrc]="campaign.image || defaultCampaignImage" alt="campaign picture" width="400" height="300">
+      <div class="content-section">
+        <mat-card-content appEllipsis>
+          <p>
+            {{ campaign.description }}
+          </p>
+        </mat-card-content>
+
+        <mat-divider></mat-divider>
+
+        <mat-card-actions>
+          <button mat-button (click)="selectCampaign(campaign.id)">Select</button>
+          <button mat-button (click)="editCampaign(campaign.id)">Edit</button>
+          <button mat-button (click)="deleteCampaign(campaign.id)">Delete</button>
+        </mat-card-actions>
+      </div>
     </mat-card>
   }
 </div>

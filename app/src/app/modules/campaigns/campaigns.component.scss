@@ -8,6 +8,21 @@
     height: 500px;
     margin-right: 20px;
     margin-top: 20px;
+
+    .content-section {
+      display: flex;
+      flex-direction: column;
+      height: 130px;
+
+      mat-card-content {
+        flex-grow: 1;
+        overflow: auto;
+      }
+
+      mat-card-actions {
+        margin-top: auto;
+      }
+    }
   }
 }
 

@@ -15,7 +15,10 @@ export class CampaignsService {
   #campaigns: WritableSignal<Campaign[]> = signal([
     {id: '1', title: 'Campaign 1', description: 'This is campaign 1', startDate: new Date(), gameSystem: GameSystem.DungeonsDragons, image: '/assets/images/baldurs_gate.webp'},
     {id: '2', title: 'Campaign 2', description: 'This is campaign 2', startDate: new Date(), gameSystem: GameSystem.WarhammerFantasy, image: '/assets/images/warhammer_fantasy.webp'},
-    {id: '3', title: 'Campaign 3', description: 'This is campaign 3', startDate: new Date(), gameSystem: GameSystem.DungeonsDragons},
+    {id: '3', title: 'Campaign 3', description: 'The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan. A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was originally bred for hunting.\n' +
+        '\nThe Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan. A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was originally bred for hunting.\n' +
+        '\nThe Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan. A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was originally bred for hunting.\n' +
+        '\n', startDate: new Date(), gameSystem: GameSystem.DungeonsDragons},
   ]) ;
 
   campaigns = this.#campaigns.asReadonly();
@@ -29,6 +32,8 @@ export class CampaignsService {
     this.#activeCampaignId.set(campaign.id);
     this.#router.navigate(['/dashboard']);
   }
+
+  editCampaign(campaign: Campaign): void {}
 
   deleteCampaign(id: string): void {
     this.#campaigns.update(campaigns => campaigns.filter(c => c.id !== id));

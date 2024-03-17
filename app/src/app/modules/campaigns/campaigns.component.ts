@@ -7,11 +7,13 @@ import {NgOptimizedImage} from "@angular/common";
 import {CampaignsService} from "./campaigns.service";
 import {DeleteCampaignDialogComponent} from "./delete-campaign-dialog/delete-campaign-dialog.component";
 import {MatDialog} from "@angular/material/dialog";
+import {MatDivider} from "@angular/material/divider";
+import {EllipsisDirective} from "../helpers/ellipsis.directive";
 
 @Component({
   selector: 'app-campaigns',
   standalone: true,
-  imports: [MatCardModule, MatButton, RouterLink, NgOptimizedImage],
+  imports: [MatCardModule, MatButton, RouterLink, NgOptimizedImage, MatDivider, EllipsisDirective],
   templateUrl: './campaigns.component.html',
   styleUrl: './campaigns.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -33,6 +35,11 @@ export class CampaignsComponent {
   selectCampaign(id: string) {
     this.#campaignsService.setActiveCampaignId(id);
     this.#router.navigate(['dashboard']);
+  }
+
+  editCampaign(id: string) {
+    // TODO: implement edit campaign
+    this.#router.navigate(['campaigns', id, 'edit']);
   }
 
   deleteCampaign(id: string) {
