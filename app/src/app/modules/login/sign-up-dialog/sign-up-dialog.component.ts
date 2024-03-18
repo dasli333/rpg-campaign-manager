@@ -38,7 +38,7 @@ export class SignUpDialogComponent {
     email: ['', [Validators.required, Validators.email]],
     password: ['', Validators.required]
   });
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any) {}
+  constructor() {}
 
   onSubmit() {
     console.log(this.signUpForm.value);

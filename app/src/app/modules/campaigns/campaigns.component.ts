@@ -39,7 +39,7 @@ export class CampaignsComponent {
 
   editCampaign(id: string) {
     // TODO: implement edit campaign
-    this.#router.navigate(['campaigns', id, 'edit']);
+    this.#router.navigate(['edit-campaign', id]);
   }
 
   deleteCampaign(id: string) {

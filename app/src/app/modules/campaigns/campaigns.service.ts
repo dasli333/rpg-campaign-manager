@@ -33,7 +33,14 @@ export class CampaignsService {
     this.#router.navigate(['/dashboard']);
   }
 
-  editCampaign(campaign: Campaign): void {}
+  getCampaignById(id: string | null): Campaign | undefined {
+    return this.#campaigns().find(c => c.id === id);
+  }
+
+  editCampaign(campaign: Campaign): void {
+    this.#campaigns.update(campaigns => campaigns.map(c => c.id === campaign.id ? campaign : c));
+    this.#router.navigate(['/campaigns']);
+  }
 
   deleteCampaign(id: string): void {
     this.#campaigns.update(campaigns => campaigns.filter(c => c.id !== id));

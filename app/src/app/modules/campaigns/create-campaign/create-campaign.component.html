@@ -10,7 +10,7 @@
 
     <mat-form-field appearance="outline">
       <mat-label>Description</mat-label>
-      <textarea matInput placeholder="Campaign Description" formControlName="description"></textarea>
+      <textarea matInput rows="5" placeholder="Campaign Description" formControlName="description"></textarea>
     </mat-form-field>
 
     <mat-form-field appearance="outline">
@@ -42,7 +42,7 @@
       </div>
     </div>
 
-    <button [disabled]="createCampaignForm.invalid" mat-raised-button color="primary" type="submit">Create Campaign</button>
+    <button [disabled]="createCampaignForm.invalid" mat-raised-button color="primary" type="submit">{{ campaignId ? 'Update Campaign' : 'Create Campaign' }}</button>
 
   </form>
 </div>

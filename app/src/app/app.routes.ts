@@ -11,8 +11,8 @@ export const routes: Routes = [
   {path: '', canActivateChild: [authGuard], children: [
       {path: 'campaigns', component: CampaignsComponent},
       {path: 'dashboard', component: DashboardComponent},
-      {path: 'create-campaign', component: CreateCampaignComponent},
       {path: 'edit-campaign/:id', component: CreateCampaignComponent},
+      {path: 'create-campaign', component: CreateCampaignComponent},
     ]
   },
   {path: 'login', component: LoginComponent, canActivate: [loginGuard]},
