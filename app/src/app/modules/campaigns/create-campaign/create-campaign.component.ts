@@ -102,7 +102,7 @@ export class CreateCampaignComponent implements OnInit {
     campaign.title = formValue.title as string;
     campaign.description = formValue.description || undefined;
     campaign.gameSystem = formValue.gameSystem as GameSystem;
-    campaign.image = formValue.image || undefined;
+    campaign.image = formValue.image || campaign.image || undefined;
 
     this.#campaignsService.editCampaign(campaign);
   }

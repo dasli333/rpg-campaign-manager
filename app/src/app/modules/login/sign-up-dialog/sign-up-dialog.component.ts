@@ -1,8 +1,8 @@
-import {ChangeDetectionStrategy, Component, Inject} from '@angular/core';
+import {ChangeDetectionStrategy, Component, inject} from '@angular/core';
 import {
-  MAT_DIALOG_DATA, MatDialogActions,
+  MatDialogActions,
   MatDialogClose,
-  MatDialogContent,
+  MatDialogContent, MatDialogRef,
   MatDialogTitle
 } from "@angular/material/dialog";
 import {FormBuilder, ReactiveFormsModule, Validators} from "@angular/forms";
@@ -10,6 +10,8 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInput} from "@angular/material/input";
 import {MatButton, MatIconButton} from "@angular/material/button";
 import {MatIcon} from "@angular/material/icon";
+import {AuthService} from "../services/auth.service";
+import {User} from "../models/user";
 
 @Component({
   selector: 'app-sign-up-dialog',
@@ -31,7 +33,11 @@ import {MatIcon} from "@angular/material/icon";
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SignUpDialogComponent {
+
+  #authService = inject(AuthService);
+  #dialogRef = inject(MatDialogRef<SignUpDialogComponent>);
   formBuilder = new FormBuilder();
+
 
   signUpForm = this.formBuilder.group({
     username: ['', Validators.required],
@@ -41,6 +47,14 @@ export class SignUpDialogComponent {
   constructor() {}
 
   onSubmit() {
-    console.log(this.signUpForm.value);
+    if (this.signUpForm.valid) {
+      const user= new User(
+        this.signUpForm.value.username ?? '',
+        this.signUpForm.value.email ?? '',
+        this.signUpForm.value.password ?? ''
+      );
+      this.#authService.createUser(user);
+      this.#dialogRef.close();
+    }
   }
 }
