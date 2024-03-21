@@ -9,8 +9,9 @@ import {Router} from "@angular/router";
 export class CampaignsService {
 
   #router = inject(Router);
-  #activeCampaignId: WritableSignal<string> = signal('')
-  activeCampaignId = this.#activeCampaignId.asReadonly();
+
+  #activeCampaign: WritableSignal<Campaign | undefined> = signal(undefined);
+  activeCampaign = this.#activeCampaign.asReadonly();
 
   #campaigns: WritableSignal<Campaign[]> = signal([
     {id: '1', title: 'Campaign 1', description: 'This is campaign 1', startDate: new Date(), gameSystem: GameSystem.DungeonsDragons, image: '/assets/images/baldurs_gate.webp'},
@@ -23,13 +24,13 @@ export class CampaignsService {
 
   campaigns = this.#campaigns.asReadonly();
 
-  setActiveCampaignId(id: string): void {
-    this.#activeCampaignId.set(id);
+  setActiveCampaign(id: string): void {
+    this.#activeCampaign.set(this.getCampaignById(id));
   }
 
   createCampaign(campaign: Campaign): void {
     this.#campaigns.update(campaigns => [...campaigns, campaign]);
-    this.#activeCampaignId.set(campaign.id);
+    this.setActiveCampaign(campaign.id);
     this.#router.navigate(['/dashboard']);
   }
 

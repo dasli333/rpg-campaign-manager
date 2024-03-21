@@ -10,6 +10,8 @@ import {MatDialog} from "@angular/material/dialog";
 import {MatDivider} from "@angular/material/divider";
 import {EllipsisDirective} from "../helpers/ellipsis.directive";
 
+export const DEFAULT_CAMPAIGN_IMAGE: string = '/assets/images/default_campaign.webp';
+
 @Component({
   selector: 'app-campaigns',
   standalone: true,
@@ -24,7 +26,6 @@ export class CampaignsComponent {
   #campaignsService = inject(CampaignsService);
   #dialog = inject(MatDialog);
 
-  defaultCampaignImage: string = '/assets/images/default_campaign.webp';
 
   // TODO: it should be observable when we have a backend
   campaigns: Signal<Campaign[]> = this.#campaignsService.campaigns
@@ -33,12 +34,11 @@ export class CampaignsComponent {
   }
 
   selectCampaign(id: string) {
-    this.#campaignsService.setActiveCampaignId(id);
+    this.#campaignsService.setActiveCampaign(id);
     this.#router.navigate(['dashboard']);
   }
 
   editCampaign(id: string) {
-    // TODO: implement edit campaign
     this.#router.navigate(['edit-campaign', id]);
   }
 
@@ -53,4 +53,6 @@ export class CampaignsComponent {
       }
     });
   }
+
+  protected readonly DEFAULT_CAMPAIGN_IMAGE = DEFAULT_CAMPAIGN_IMAGE;
 }
