@@ -1,19 +1,23 @@
-@if (activeCampaign()) {
-  <mat-card>
-    <mat-card-header>
-      <mat-card-title>{{activeCampaign()?.title}}</mat-card-title>
-      <mat-card-subtitle>{{activeCampaign()?.gameSystem}}</mat-card-subtitle>
-    </mat-card-header>
-    <div class="image-container">
-      <img mat-card-image [ngSrc]="activeCampaign()?.image || DEFAULT_CAMPAIGN_IMAGE" alt="campaign picture" width="249" height="249">
-    </div>
-    <mat-card-content>
-      <p>Page not found</p>
-    </mat-card-content>
-    <mat-card-actions>
-<!--      <button mat-button routerLink="/">Go to home</button>-->
-    </mat-card-actions>
-  </mat-card>
-}
+<mat-card>
+  <mat-card-header>
+    <mat-card-subtitle>{{activeCampaign()?.gameSystem || 'No campaign selected'}}</mat-card-subtitle>
+  </mat-card-header>
 
+  @if (activeCampaign()) {
+    <img mat-card-image [ngSrc]="activeCampaign()?.image || DEFAULT_CAMPAIGN_IMAGE" alt="campaign picture" width="249" height="249">
+  } @else {
+    <div class="empty-image-box"></div>
+  }
 
+  <mat-card-actions>
+    <mat-form-field subscriptSizing="dynamic" appearance="outline" color="accent">
+      <mat-select placeholder="Select Campaign" [value]="activeCampaign()?.id" (selectionChange)="onSelectCampaign($event.value)">
+        @for (campaign of campaigns(); track campaign.id) {
+          <mat-option [value]="campaign.id">
+            {{campaign.title}}
+          </mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+  </mat-card-actions>
+</mat-card>

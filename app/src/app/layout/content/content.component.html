@@ -1,6 +1,8 @@
 <mat-sidenav-container class="content-container">
   <mat-sidenav mode="side" opened>
-    <app-sidenav-content></app-sidenav-content>
+    @if (isUserLoggedIn()) {
+      <app-sidenav-content></app-sidenav-content>
+    }
   </mat-sidenav>
   <mat-sidenav-content>
     <div class="sidenav-content">

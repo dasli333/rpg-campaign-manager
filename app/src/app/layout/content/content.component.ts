@@ -1,7 +1,8 @@
-import {ChangeDetectionStrategy, Component} from '@angular/core';
+import {ChangeDetectionStrategy, Component, inject} from '@angular/core';
 import {MatSidenavModule} from "@angular/material/sidenav";
 import {RouterOutlet} from "@angular/router";
 import {SidenavContentComponent} from "../../modules/sidenav-content/sidenav-content.component";
+import {AuthService} from "../../modules/login/services/auth.service";
 
 @Component({
   selector: 'app-content',
@@ -17,4 +18,6 @@ import {SidenavContentComponent} from "../../modules/sidenav-content/sidenav-con
 })
 export class ContentComponent {
 
+  #authService = inject(AuthService);
+  isUserLoggedIn = this.#authService.isUserLoggedIn;
 }
