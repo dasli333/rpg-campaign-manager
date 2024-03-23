@@ -26,6 +26,7 @@ export class CampaignsService {
 
   setActiveCampaign(id: string): void {
     this.#activeCampaign.set(this.getCampaignById(id));
+    this.#router.navigate(['/dashboard']);
   }
 
   createCampaign(campaign: Campaign): void {
