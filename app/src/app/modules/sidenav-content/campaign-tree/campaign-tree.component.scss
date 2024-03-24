@@ -1,12 +1,9 @@
-@import "../../../styles/variables.scss";
+@import "../../../styles/variables";
 
 mat-tree-node {
   cursor: pointer;
 
-  // TODO: style the tree node
-  color: $secondary-color;
-
   &:hover {
-    background-color: #f5f5f5;
+    background-color: $node-hover-color;
   }
 }

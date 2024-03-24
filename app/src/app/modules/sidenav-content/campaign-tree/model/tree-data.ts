@@ -1,17 +1,17 @@
 import {TreeNode} from "./tree-node";
-import {TreeNodeId} from "./tree-node-id";
+import {TreeNodeRoutes} from "./tree-node-routes";
 
 export const TREE_DATA: TreeNode[] = [
   {
     name: 'Dashboard',
-    id: TreeNodeId.dashboard,
+    route: TreeNodeRoutes.dashboard,
   },
   {
     name: 'Story Log',
-    id: TreeNodeId.storyLog,
+    route: TreeNodeRoutes.storyLog,
   },
   {
-    name: 'Players',
-    id: TreeNodeId.players,
+    name: 'Players Characters',
+    route: TreeNodeRoutes.players,
   }
 ];

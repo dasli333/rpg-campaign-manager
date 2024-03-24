@@ -1,6 +1,7 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import {ChangeDetectionStrategy, Component, inject} from '@angular/core';
 import {CampaignSelectorComponent} from "./campaign-selector/campaign-selector.component";
 import {CampaignTreeComponent} from "./campaign-tree/campaign-tree.component";
+import {CampaignsService} from "../campaigns/campaigns.service";
 
 @Component({
   selector: 'app-sidenav-content',
@@ -15,4 +16,6 @@ import {CampaignTreeComponent} from "./campaign-tree/campaign-tree.component";
 })
 export class SidenavContentComponent {
 
+  #campaignsService = inject(CampaignsService);
+  activeCampaign = this.#campaignsService.activeCampaign;
 }

@@ -1,2 +1,4 @@
 <app-campaign-selector></app-campaign-selector>
-<app-campaign-tree></app-campaign-tree>
+@if (activeCampaign()) {
+  <app-campaign-tree></app-campaign-tree>
+}

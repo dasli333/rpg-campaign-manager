@@ -1,7 +1,7 @@
-import {TreeNodeId} from "./tree-node-id";
+import {TreeNodeRoutes} from "./tree-node-routes";
 
 export interface TreeNode {
   name: string;
-  id: TreeNodeId;
+  route: TreeNodeRoutes;
   children?: TreeNode[];
 }
