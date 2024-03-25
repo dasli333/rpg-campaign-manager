@@ -3,6 +3,10 @@
 mat-tree-node {
   cursor: pointer;
 
+  &.active-node {
+    background-color: $primary-color;
+  }
+
   &:hover {
     background-color: $node-hover-color;
   }

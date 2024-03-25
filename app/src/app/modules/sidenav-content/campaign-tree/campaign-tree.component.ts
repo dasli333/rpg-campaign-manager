@@ -6,7 +6,7 @@ import {MatIcon} from "@angular/material/icon";
 import {TreeNode} from "./model/tree-node";
 import {TREE_DATA} from "./model/tree-data";
 import {TreeNodeRoutes} from "./model/tree-node-routes";
-import {Router, RouterLink} from "@angular/router";
+import {Router, RouterLink, RouterLinkActive} from "@angular/router";
 
 interface ExampleFlatNode {
   expandable: boolean;
@@ -18,7 +18,7 @@ interface ExampleFlatNode {
 @Component({
   selector: 'app-campaign-tree',
   standalone: true,
-  imports: [MatTreeModule, MatIconButton, MatIcon, RouterLink],
+  imports: [MatTreeModule, MatIconButton, MatIcon, RouterLink, RouterLinkActive],
   templateUrl: './campaign-tree.component.html',
   styleUrl: './campaign-tree.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
