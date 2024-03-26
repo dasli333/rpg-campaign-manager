@@ -2,7 +2,8 @@ import {Campaign} from "./entities/campaign.entity";
 import {UpdateCampaignDto} from "./dto/update-campaign.dto";
 import {CreateCampaignDto} from "./dto/create-campaign.dto";
 import {InjectModel} from "@nestjs/mongoose";
-import {Model} from "mongoose";
+import {Model, Types} from "mongoose";
+import {NotFoundException} from "@nestjs/common";
 
 export class CampaignsRepository {
 
@@ -20,8 +21,16 @@ export class CampaignsRepository {
     return this.campaignModel.find().exec();
   }
 
-  async findOne(id: number): Promise<Campaign> {
-    return this.campaignModel.findById(id).exec();
+  async findOne(id: string): Promise<Campaign> {
+    if (!Types.ObjectId.isValid(id)) {
+      throw new NotFoundException('Campaign not found');
+    }
+
+    const campaign = await this.campaignModel.findById(id).exec();
+    if (!campaign) {
+      throw new NotFoundException('Campaign not found');
+    }
+    return campaign;
   }
 
   async remove(id: number): Promise<void> {

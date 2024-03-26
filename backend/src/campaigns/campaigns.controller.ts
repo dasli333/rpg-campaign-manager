@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {Controller, Get, Post, Body, Patch, Param, Delete, NotFoundException} from '@nestjs/common';
 import { CampaignsService } from './campaigns.service';
 import { CreateCampaignDto } from './dto/create-campaign.dto';
 import { UpdateCampaignDto } from './dto/update-campaign.dto';
@@ -18,17 +18,17 @@ export class CampaignsController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: number) {
-    return this.campaignsService.findOne(+id);
+  findOne(@Param('id') id: string) {
+    return this.campaignsService.findOne(id);
   }
 
   @Patch(':id')
   update(@Param('id') id: number, @Body() updateCampaignDto: UpdateCampaignDto) {
-    return this.campaignsService.update(+id, updateCampaignDto);
+    return this.campaignsService.update(id, updateCampaignDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: number) {
-    return this.campaignsService.remove(+id);
+    return this.campaignsService.remove(id);
   }
 }
