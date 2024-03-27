@@ -7,9 +7,9 @@ import {MatSelectModule} from '@angular/material/select';
 import {GameSystem} from "../enums/game-system";
 import {FormBuilder, ReactiveFormsModule, Validators} from "@angular/forms";
 import {CampaignsService} from "../campaigns.service";
-import {Campaign} from "../interfaces/campaign";
 import {NgClass, NgOptimizedImage, NgStyle} from "@angular/common";
 import {MatIcon} from "@angular/material/icon";
+import {ICampaign} from "../interfaces/campaign";
 
 
 @Component({
@@ -110,7 +110,7 @@ export class CreateCampaignComponent implements OnInit {
   private createCampaign() {
     const formValue = this.createCampaignForm.value;
 
-    const campaign: Campaign = {
+    const campaign: ICampaign = {
       id: Math.random().toString(36).slice(2, 9),
       title: formValue.title as string,
       description: formValue.description || undefined,

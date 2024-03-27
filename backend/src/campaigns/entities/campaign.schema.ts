@@ -8,3 +8,11 @@ export const CampaignSchema = new Schema({
   image: String,
   endDate: Date,
 });
+
+CampaignSchema.set('toJSON', {
+    virtuals: true,
+    versionKey: false,
+    transform: function (doc, ret) {
+        delete ret._id;
+    }
+})

@@ -1,5 +1,5 @@
 import {ChangeDetectionStrategy, Component, inject, Signal} from '@angular/core';
-import {Campaign} from "./interfaces/campaign";
+import {ICampaign} from "./interfaces/campaign";
 import {MatCardModule} from '@angular/material/card';
 import {MatButton} from "@angular/material/button";
 import {Router, RouterLink} from "@angular/router";
@@ -9,6 +9,8 @@ import {DeleteCampaignDialogComponent} from "./delete-campaign-dialog/delete-cam
 import {MatDialog} from "@angular/material/dialog";
 import {MatDivider} from "@angular/material/divider";
 import {EllipsisDirective} from "../helpers/ellipsis.directive";
+import {takeUntilDestroyed} from "@angular/core/rxjs-interop";
+import {map} from "rxjs";
 
 export const DEFAULT_CAMPAIGN_IMAGE: string = '/assets/images/default_campaign.webp';
 
@@ -28,9 +30,20 @@ export class CampaignsComponent {
 
 
   // TODO: it should be observable when we have a backend
-  campaigns: Signal<Campaign[]> = this.#campaignsService.campaigns
+  campaigns: Signal<ICampaign[]> = this.#campaignsService.campaigns
 
   constructor() {
+    this.#campaignsService.getCampaigns().pipe(
+      takeUntilDestroyed(),
+      map(campaigns => campaigns.map(campaign => {
+        return {
+          ...campaign,
+          image: campaign.image || this.DEFAULT_CAMPAIGN_IMAGE
+        }
+      }))
+    ).subscribe(campaigns => {
+      this.#campaignsService.setCampaigns(campaigns);
+    });
   }
 
   selectCampaign(id: string) {

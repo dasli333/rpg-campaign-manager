@@ -2,7 +2,7 @@
 
 <h1>Create a New Campaign</h1>
 <div class="create-campaign-form">
-  <form [formGroup]="createCampaignForm" (ngSubmit)="onCreateCampaignSubmit()">
+  <form [formGroup]="createCampaignForm" (ngSubmit)="onCreateCampaignSubmit()" enctype="multipart/form-data">
     <mat-form-field appearance="outline">
       <mat-label>Title</mat-label>
       <input matInput placeholder="Campaign Title" formControlName="title">

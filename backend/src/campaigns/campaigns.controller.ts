@@ -2,6 +2,18 @@ import {Controller, Get, Post, Body, Patch, Param, Delete, NotFoundException} fr
 import { CampaignsService } from './campaigns.service';
 import { CreateCampaignDto } from './dto/create-campaign.dto';
 import { UpdateCampaignDto } from './dto/update-campaign.dto';
+import * as multer from 'multer';
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, './uploads/')
+  },
+  filename: function (req, file, cb) {
+    cb(null, new Date().toISOString() + file.originalname)
+  }
+});
+
+const upload = multer({ storage: storage });
 
 @Controller('campaigns')
 export class CampaignsController {

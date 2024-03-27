@@ -1,6 +1,6 @@
 import {ChangeDetectionStrategy, Component, inject, Signal} from '@angular/core';
 import {CampaignsService} from "../campaigns/campaigns.service";
-import {Campaign} from "../campaigns/interfaces/campaign";
+import {ICampaign} from "../campaigns/interfaces/campaign";
 
 @Component({
   selector: 'app-dashboard',
@@ -13,5 +13,5 @@ import {Campaign} from "../campaigns/interfaces/campaign";
 export class DashboardComponent {
 
   #campaignsService = inject(CampaignsService);
-  campaign: Signal<Campaign | undefined> = this.#campaignsService.activeCampaign;
+  campaign: Signal<ICampaign | undefined> = this.#campaignsService.activeCampaign;
 }

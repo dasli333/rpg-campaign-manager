@@ -1,6 +1,6 @@
 import {GameSystem} from "../enums/game-system";
 
-export interface Campaign {
+export interface ICampaign {
   id: string;
   title: string;
   description?: string;

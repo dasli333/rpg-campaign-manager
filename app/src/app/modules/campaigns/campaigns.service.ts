@@ -1,26 +1,22 @@
-import {inject, Injectable, Signal, signal, WritableSignal} from '@angular/core';
-import {Campaign} from "./interfaces/campaign";
-import {GameSystem} from "./enums/game-system";
+import {inject, Injectable, signal, WritableSignal} from '@angular/core';
 import {Router} from "@angular/router";
+import {HttpService} from "../../http/http.service";
+import {Observable} from "rxjs";
+import {ICampaign} from "./interfaces/campaign";
 
 @Injectable({
   providedIn: 'root'
 })
 export class CampaignsService {
 
+  #apiUrl = 'http://localhost:3000/campaigns';
+  #http = inject(HttpService);
   #router = inject(Router);
 
-  #activeCampaign: WritableSignal<Campaign | undefined> = signal(undefined);
+  #activeCampaign: WritableSignal<ICampaign | undefined> = signal(undefined);
   activeCampaign = this.#activeCampaign.asReadonly();
 
-  #campaigns: WritableSignal<Campaign[]> = signal([
-    {id: '1', title: 'Campaign 1', description: 'This is campaign 1', startDate: new Date(), gameSystem: GameSystem.DungeonsDragons, image: '/assets/images/baldurs_gate.webp'},
-    {id: '2', title: 'Campaign 2', description: 'This is campaign 2', startDate: new Date(), gameSystem: GameSystem.WarhammerFantasy, image: '/assets/images/warhammer_fantasy.webp'},
-    {id: '3', title: 'Campaign 3', description: 'The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan. A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was originally bred for hunting.\n' +
-        '\nThe Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan. A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was originally bred for hunting.\n' +
-        '\nThe Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan. A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was originally bred for hunting.\n' +
-        '\n', startDate: new Date(), gameSystem: GameSystem.DungeonsDragons},
-  ]) ;
+  #campaigns: WritableSignal<ICampaign[]> = signal([]) ;
 
   campaigns = this.#campaigns.asReadonly();
 
@@ -29,17 +25,29 @@ export class CampaignsService {
     this.#router.navigate(['/dashboard']);
   }
 
-  createCampaign(campaign: Campaign): void {
-    this.#campaigns.update(campaigns => [...campaigns, campaign]);
-    this.setActiveCampaign(campaign.id);
-    this.#router.navigate(['/dashboard']);
+  // createCampaign(campaign: Campaign): void {
+  //   this.#campaigns.update(campaigns => [...campaigns, campaign]);
+  //   this.setActiveCampaign(campaign.id);
+  //   this.#router.navigate(['/dashboard']);
+  // }
+
+  setCampaigns(campaigns: ICampaign[]): void {
+    this.#campaigns.set(campaigns);
   }
 
-  getCampaignById(id: string | null): Campaign | undefined {
+  createCampaign(campaign: ICampaign): Observable<any> {
+    return this.#http.post(this.#apiUrl, campaign);
+  }
+
+  getCampaigns(): Observable<ICampaign[]> {
+    return this.#http.get<ICampaign[]>(this.#apiUrl);
+  }
+
+  getCampaignById(id: string | null): ICampaign | undefined {
     return this.#campaigns().find(c => c.id === id);
   }
 
-  editCampaign(campaign: Campaign): void {
+  editCampaign(campaign: ICampaign): void {
     this.#campaigns.update(campaigns => campaigns.map(c => c.id === campaign.id ? campaign : c));
     this.#router.navigate(['/campaigns']);
   }
