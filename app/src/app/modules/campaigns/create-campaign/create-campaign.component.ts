@@ -1,6 +1,6 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, OnInit} from '@angular/core';
 import {MatButton} from "@angular/material/button";
-import {ActivatedRoute, RouterLink} from "@angular/router";
+import {ActivatedRoute, Router, RouterLink} from "@angular/router";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInput} from "@angular/material/input";
 import {MatSelectModule} from '@angular/material/select';
@@ -10,6 +10,7 @@ import {CampaignsService} from "../campaigns.service";
 import {NgClass, NgOptimizedImage, NgStyle} from "@angular/common";
 import {MatIcon} from "@angular/material/icon";
 import {ICampaign} from "../interfaces/campaign";
+import {switchMap, tap} from "rxjs";
 
 
 @Component({
@@ -37,10 +38,12 @@ export class CreateCampaignComponent implements OnInit {
   imagePreview: string | ArrayBuffer | null | undefined = null;
 
   #route = inject(ActivatedRoute);
+  #router = inject(Router);
   #campaignsService = inject(CampaignsService);
   #changeDetectorRef = inject(ChangeDetectorRef);
 
   formBuilder = new FormBuilder();
+  selectedFile: File | null = null;
   gameSystems = Object.values(GameSystem);
   createCampaignForm = this.formBuilder.group({
     title: ['', Validators.required],
@@ -53,15 +56,16 @@ export class CreateCampaignComponent implements OnInit {
     this.campaignId = this.#route.snapshot.paramMap.get('id');
 
     if (this.campaignId) {
-      const campaign = this.#campaignsService.getCampaignById(this.campaignId);
-      if (campaign) {
-        this.createCampaignForm.patchValue({
-          title: campaign.title,
-          description: campaign.description,
-          gameSystem: campaign.gameSystem,
-        });
-        this.imagePreview = campaign.image;
-      }
+      this.#campaignsService.getCampaignById(this.campaignId).subscribe(campaign => {
+        if (campaign) {
+          this.createCampaignForm.patchValue({
+            title: campaign.title,
+            description: campaign.description,
+            gameSystem: campaign.gameSystem,
+          });
+          this.imagePreview = campaign.image;
+        }
+      });
     }
   }
 
@@ -76,13 +80,13 @@ export class CreateCampaignComponent implements OnInit {
   onFileSelected(event: Event) {
     const files = (event.target as HTMLInputElement).files;
     if (files && files.length > 0) {
-      const file = files[0];
+      this.selectedFile = files[0];
       const reader = new FileReader();
       reader.onload = () => {
         this.imagePreview = reader.result;
         this.#changeDetectorRef.markForCheck();
       };
-      reader.readAsDataURL(file);
+      reader.readAsDataURL(this.selectedFile);
     }
   }
 
@@ -93,31 +97,41 @@ export class CreateCampaignComponent implements OnInit {
 
   private updateCampaign() {
     const formValue = this.createCampaignForm.value;
-    const campaign = this.#campaignsService.getCampaignById(this.campaignId);
 
-    if (!campaign) {
-      return;
-    }
+    const campaign: ICampaign = {
+      id: this.campaignId as string,
+      title: formValue.title as string,
+      description: formValue.description || undefined,
+      gameSystem: formValue.gameSystem as GameSystem,
+      image: formValue.image || undefined,
+    };
 
-    campaign.title = formValue.title as string;
-    campaign.description = formValue.description || undefined;
-    campaign.gameSystem = formValue.gameSystem as GameSystem;
-    campaign.image = formValue.image || campaign.image || undefined;
-
-    this.#campaignsService.editCampaign(campaign);
+    this.#campaignsService.editCampaign(campaign).subscribe(() => {
+      this.#router.navigate(['/campaigns']);
+    });
   }
 
   private createCampaign() {
     const formValue = this.createCampaignForm.value;
 
-    const campaign: ICampaign = {
-      id: Math.random().toString(36).slice(2, 9),
-      title: formValue.title as string,
-      description: formValue.description || undefined,
-      gameSystem: formValue.gameSystem as GameSystem,
-      image: formValue.image || undefined,
-      startDate: new Date(),
-    };
-    this.#campaignsService.createCampaign(campaign);
+    const formData = new FormData();
+    formData.append('title', formValue.title || '');
+    formData.append('description', formValue.description || '');
+    formData.append('gameSystem', formValue.gameSystem || '');
+    if (this.selectedFile) {
+      formData.append('image', this.selectedFile);
+    }
+
+
+    this.#campaignsService.createCampaign(formData).pipe(
+      tap(campaign => {
+        this.#campaignsService.addCampaign(campaign);
+      }),
+      switchMap(campaign => {
+        return this.#campaignsService.setActiveCampaign(campaign.id);
+      })
+    ).subscribe(() => {
+      this.#router.navigate(['/dashboard']);
+    });
   }
 }

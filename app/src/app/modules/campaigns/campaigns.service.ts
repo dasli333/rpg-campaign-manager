@@ -1,7 +1,7 @@
 import {inject, Injectable, signal, WritableSignal} from '@angular/core';
 import {Router} from "@angular/router";
 import {HttpService} from "../../http/http.service";
-import {Observable} from "rxjs";
+import {catchError, map, Observable, of, tap} from "rxjs";
 import {ICampaign} from "./interfaces/campaign";
 
 @Injectable({
@@ -10,7 +10,7 @@ import {ICampaign} from "./interfaces/campaign";
 export class CampaignsService {
 
   #apiUrl = 'http://localhost:3000/campaigns';
-  #http = inject(HttpService);
+  #httpService = inject(HttpService);
   #router = inject(Router);
 
   #activeCampaign: WritableSignal<ICampaign | undefined> = signal(undefined);
@@ -20,9 +20,18 @@ export class CampaignsService {
 
   campaigns = this.#campaigns.asReadonly();
 
-  setActiveCampaign(id: string): void {
-    this.#activeCampaign.set(this.getCampaignById(id));
-    this.#router.navigate(['/dashboard']);
+  setActiveCampaign(id: string): Observable<ICampaign | undefined> {
+    return this.getCampaignById(id).pipe(
+      catchError(() => {
+        // TODO: navigate to 404 page
+        this.#router.navigate(['/campaigns']);
+        return of(undefined);
+      }),
+      tap(campaign => {
+        if (!campaign) return;
+        this.#activeCampaign.set(campaign);
+      })
+    )
   }
 
   // createCampaign(campaign: Campaign): void {
@@ -35,24 +44,34 @@ export class CampaignsService {
     this.#campaigns.set(campaigns);
   }
 
-  createCampaign(campaign: ICampaign): Observable<any> {
-    return this.#http.post(this.#apiUrl, campaign);
+  addCampaign(campaign: ICampaign): void {
+    this.#campaigns.update(campaigns => [...campaigns, campaign]);
+  }
+
+
+  createCampaign(campaign: FormData): Observable<ICampaign> {
+    return this.#httpService.post<ICampaign>(this.#apiUrl, campaign);
   }
 
   getCampaigns(): Observable<ICampaign[]> {
-    return this.#http.get<ICampaign[]>(this.#apiUrl);
+    return this.#httpService.get<ICampaign[]>(this.#apiUrl);
   }
 
-  getCampaignById(id: string | null): ICampaign | undefined {
-    return this.#campaigns().find(c => c.id === id);
+  getCampaignById(id: string | null): Observable<ICampaign | undefined> {
+    return this.#httpService.get<ICampaign>(`${this.#apiUrl}/${id}`);
   }
 
-  editCampaign(campaign: ICampaign): void {
-    this.#campaigns.update(campaigns => campaigns.map(c => c.id === campaign.id ? campaign : c));
-    this.#router.navigate(['/campaigns']);
+  editCampaign(campaign: ICampaign): Observable<ICampaign> {
+    return this.#httpService.patch<ICampaign>(`${this.#apiUrl}/${campaign.id}`, campaign);
   }
 
-  deleteCampaign(id: string): void {
-    this.#campaigns.update(campaigns => campaigns.filter(c => c.id !== id));
+  deleteCampaign(id: string): Observable<ICampaign> {
+    return this.#httpService.delete<ICampaign>(`${this.#apiUrl}/${id}`);
+  }
+
+  checkIfCampaignExists(id: string): void {
+    if (this.#activeCampaign()?.id === id) {
+      this.#activeCampaign.set(undefined);
+    }
   }
 }

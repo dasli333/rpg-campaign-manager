@@ -4,8 +4,9 @@ export interface ICampaign {
   id: string;
   title: string;
   description?: string;
-  startDate: Date;
+  startDate?: Date;
   gameSystem: GameSystem;
   image?: string;
+  imageFile?: File;
   endDate?: string;
 }

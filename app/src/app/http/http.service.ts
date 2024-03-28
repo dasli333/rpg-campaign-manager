@@ -14,19 +14,19 @@ export class HttpService {
     return this.#http.get<T>(url);
   }
 
-  post(url: string, data: any) {
-    return this.#http.post(url, data);
+  post<T>(url: string, data: any) {
+    return this.#http.post<T>(url, data);
   }
 
   put(url: string, data: any) {
     return this.#http.put(url, data);
   }
 
-  delete(url: string) {
-    return this.#http.delete(url);
+  delete<T>(url: string) {
+    return this.#http.delete<T>(url);
   }
 
-  patch(url: string, data: any) {
-    return this.#http.patch(url, data);
+  patch<T>(url: string, data: any) {
+    return this.#http.patch<T>(url, data);
   }
 }

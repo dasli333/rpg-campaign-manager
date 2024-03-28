@@ -23,7 +23,7 @@ export class CampaignSelectorComponent {
   campaigns: Signal<ICampaign[]> = this.#campaignService.campaigns;
 
   onSelectCampaign(id: string) {
-    this.#campaignService.setActiveCampaign(id);
+    this.#campaignService.setActiveCampaign(id).subscribe();
   }
 
 

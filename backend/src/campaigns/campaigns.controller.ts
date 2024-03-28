@@ -1,27 +1,19 @@
-import {Controller, Get, Post, Body, Patch, Param, Delete, NotFoundException} from '@nestjs/common';
+import {Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, UploadedFile} from '@nestjs/common';
 import { CampaignsService } from './campaigns.service';
 import { CreateCampaignDto } from './dto/create-campaign.dto';
 import { UpdateCampaignDto } from './dto/update-campaign.dto';
-import * as multer from 'multer';
+import {FileInterceptor} from "@nestjs/platform-express";
 
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, './uploads/')
-  },
-  filename: function (req, file, cb) {
-    cb(null, new Date().toISOString() + file.originalname)
-  }
-});
 
-const upload = multer({ storage: storage });
 
 @Controller('campaigns')
 export class CampaignsController {
   constructor(private readonly campaignsService: CampaignsService) {}
 
   @Post()
-  create(@Body() createCampaignDto: CreateCampaignDto) {
-    return this.campaignsService.create(createCampaignDto);
+  @UseInterceptors(FileInterceptor('image'))
+  create(@UploadedFile() file: Express.Multer.File, @Body() createCampaignDto: CreateCampaignDto) {
+    return this.campaignsService.create(createCampaignDto, file);
   }
 
   @Get()

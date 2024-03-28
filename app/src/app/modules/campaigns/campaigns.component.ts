@@ -47,8 +47,9 @@ export class CampaignsComponent {
   }
 
   selectCampaign(id: string) {
-    this.#campaignsService.setActiveCampaign(id);
-    this.#router.navigate(['dashboard']);
+    this.#campaignsService.setActiveCampaign(id).subscribe(() => {
+      this.#router.navigate(['dashboard']);
+    });
   }
 
   editCampaign(id: string) {
@@ -62,7 +63,10 @@ export class CampaignsComponent {
 
     dialogRef.afterClosed().subscribe((result: boolean) => {
       if (result) {
-        this.#campaignsService.deleteCampaign(id);
+        this.#campaignsService.deleteCampaign(id).subscribe(() => {
+          this.#campaignsService.checkIfCampaignExists(id);
+          this.#campaignsService.setCampaigns(this.#campaignsService.campaigns().filter(campaign => campaign.id !== id));
+        });
       }
     });
   }
