@@ -1,9 +1,10 @@
-import {Campaign} from "./entities/campaign.entity";
+import {Campaign} from "./entities/campaign.interface";
 import {UpdateCampaignDto} from "./dto/update-campaign.dto";
 import {CreateCampaignDto} from "./dto/create-campaign.dto";
 import {InjectModel} from "@nestjs/mongoose";
 import {Model, Types} from "mongoose";
 import {NotFoundException} from "@nestjs/common";
+import * as fs from 'fs';
 
 export class CampaignsRepository {
 
@@ -34,6 +35,15 @@ export class CampaignsRepository {
   }
 
   async remove(id: number): Promise<void> {
+    const campaign = await this.campaignModel.findById(id).exec();
+    if (campaign.image) {
+      try {
+        fs.unlinkSync(`public/images/${campaign.image}`);
+      } catch (e) {
+        console.log(e);
+      }
+    }
+
     await this.campaignModel.findByIdAndDelete(id).exec();
   }
 }

@@ -29,7 +29,6 @@ export class CampaignsComponent {
   #dialog = inject(MatDialog);
 
 
-  // TODO: it should be observable when we have a backend
   campaigns: Signal<ICampaign[]> = this.#campaignsService.campaigns
 
   constructor() {
@@ -37,8 +36,7 @@ export class CampaignsComponent {
       takeUntilDestroyed(),
       map(campaigns => campaigns.map(campaign => {
         return {
-          ...campaign,
-          image: campaign.image || this.DEFAULT_CAMPAIGN_IMAGE
+          ...campaign
         }
       }))
     ).subscribe(campaigns => {

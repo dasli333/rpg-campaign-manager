@@ -4,6 +4,7 @@ import { UpdateCampaignDto } from './dto/update-campaign.dto';
 import {CampaignsRepository} from "./campaigns.repository";
 import * as fs from "fs";
 import * as path from "path";
+import { v4 as uuidv4 } from 'uuid';
 
 @Injectable()
 export class CampaignsService {
@@ -11,16 +12,18 @@ export class CampaignsService {
   constructor(private readonly campaignsRepository: CampaignsRepository) {}
   create(createCampaignDto: CreateCampaignDto, file: Express.Multer.File) {
     if (file) {
-      const uploadPath = 'uploads';
-      const filePath = path.join(uploadPath, file.originalname);
+      const uploadPath = 'public/images';
+      const fileExtension = path.extname(file.originalname);
+      const uniqueFilename = uuidv4() + fileExtension;
+      const filePath = path.join(uploadPath, uniqueFilename);
 
       fs.mkdirSync(uploadPath, { recursive: true });
       fs.writeFileSync(filePath, file.buffer);
 
-      createCampaignDto.image = filePath;
+      createCampaignDto.image = uniqueFilename;
     }
 
-    createCampaignDto.startDate = new Date();
+    // createCampaignDto.startDate = new Date();
     return this.campaignsRepository.create(createCampaignDto);
   }
 
