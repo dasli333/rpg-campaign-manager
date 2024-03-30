@@ -15,6 +15,4 @@ export class CreateCampaignDto {
     gameSystem: string;
 
     image: string;
-
-    startDate: Date;
 }

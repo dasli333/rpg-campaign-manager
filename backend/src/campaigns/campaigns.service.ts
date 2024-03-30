@@ -5,6 +5,7 @@ import {CampaignsRepository} from "./campaigns.repository";
 import * as fs from "fs";
 import * as path from "path";
 import { v4 as uuidv4 } from 'uuid';
+import {CreateStoryLogDto} from "./dto/create-story-log.dto";
 
 @Injectable()
 export class CampaignsService {
@@ -23,7 +24,6 @@ export class CampaignsService {
       createCampaignDto.image = uniqueFilename;
     }
 
-    // createCampaignDto.startDate = new Date();
     return this.campaignsRepository.create(createCampaignDto);
   }
 
@@ -41,5 +41,10 @@ export class CampaignsService {
 
   remove(id: number) {
     return this.campaignsRepository.remove(id);
+  }
+
+  // STORY LOGS
+  addStoryLog(id: string, storyLog: CreateStoryLogDto) {
+    return this.campaignsRepository.addStoryLog(id, storyLog);
   }
 }

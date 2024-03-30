@@ -1,15 +1,16 @@
-import {inject, Injectable, signal, WritableSignal} from '@angular/core';
+import {computed, inject, Injectable, signal, WritableSignal} from '@angular/core';
 import {Router} from "@angular/router";
 import {HttpService} from "../../http/http.service";
 import {catchError, map, Observable, of, tap} from "rxjs";
 import {ICampaign} from "./interfaces/campaign";
+import {StoryLog} from "../story-log/interface/story-log";
 
 @Injectable({
   providedIn: 'root'
 })
 export class CampaignsService {
 
-  #apiUrl = 'http://localhost:3000/campaigns';
+  #apiUrl = 'campaigns';
   #httpService = inject(HttpService);
   #router = inject(Router);
 
@@ -19,6 +20,7 @@ export class CampaignsService {
   #campaigns: WritableSignal<ICampaign[]> = signal([]) ;
 
   campaigns = this.#campaigns.asReadonly();
+  storyLogs = computed(() => this.activeCampaign()?.storyLogs || []);
 
   setActiveCampaign(id: string): Observable<ICampaign | undefined> {
     return this.getCampaignById(id).pipe(
@@ -73,5 +75,9 @@ export class CampaignsService {
     if (this.#activeCampaign()?.id === id) {
       this.#activeCampaign.set(undefined);
     }
+  }
+
+  addStoryLog(storyLog: StoryLog): Observable<ICampaign> {
+    return this.#httpService.post<ICampaign>(`${this.#apiUrl}/${this.activeCampaign()?.id}/story-log`, storyLog);
   }
 }

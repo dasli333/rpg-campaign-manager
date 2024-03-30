@@ -6,6 +6,7 @@ import {DEFAULT_CAMPAIGN_IMAGE} from "../../campaigns/campaigns.component";
 import {MatSelectModule} from "@angular/material/select";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {ICampaign} from "../../campaigns/interfaces/campaign";
+import {IMAGE_URL} from "../../../../config";
 
 @Component({
   selector: 'app-campaign-selector',
@@ -28,4 +29,5 @@ export class CampaignSelectorComponent {
 
 
   protected readonly DEFAULT_CAMPAIGN_IMAGE = DEFAULT_CAMPAIGN_IMAGE;
+  protected readonly IMAGE_URL = IMAGE_URL;
 }

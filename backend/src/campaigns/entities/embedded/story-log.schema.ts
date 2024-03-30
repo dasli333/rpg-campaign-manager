@@ -1,6 +1,6 @@
 import {Schema} from "mongoose";
 
 export const StoryLogSchema = new Schema({
-    date: {type: Date, default: Date.now},
+    date: Date,
     entry: String,
 });

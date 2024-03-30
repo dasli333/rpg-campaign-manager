@@ -3,6 +3,7 @@ import { CampaignsService } from './campaigns.service';
 import { CreateCampaignDto } from './dto/create-campaign.dto';
 import { UpdateCampaignDto } from './dto/update-campaign.dto';
 import {FileInterceptor} from "@nestjs/platform-express";
+import {CreateStoryLogDto} from "./dto/create-story-log.dto";
 
 
 
@@ -34,5 +35,11 @@ export class CampaignsController {
   @Delete(':id')
   remove(@Param('id') id: number) {
     return this.campaignsService.remove(id);
+  }
+
+  // STORY LOGS
+  @Post(':id/story-log')
+  addStoryLog(@Param('id') id: string, @Body() storyLog: CreateStoryLogDto) {
+    return this.campaignsService.addStoryLog(id, storyLog);
   }
 }

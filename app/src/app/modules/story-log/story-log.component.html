@@ -1,1 +1,15 @@
-<p>story-log works!</p>
+<mat-list>
+  @for (storyLog of storyLogs(); track storyLog._id) {
+    <mat-list-item>
+      <span matListItemTitle>{{ storyLog.date }}</span>
+      <span matListItemLine>{{ storyLog.entry }}</span>
+    </mat-list-item>
+  }
+</mat-list>
+
+<form [formGroup]="addStoryLogForm" (ngSubmit)="addStoryLog()">
+  <mat-form-field>
+    <textarea matInput rows="10" formControlName="entry" placeholder="Entry"></textarea>
+  </mat-form-field>
+  <button mat-raised-button color="primary" type="submit">Add</button>
+</form>

@@ -5,6 +5,7 @@ import {InjectModel} from "@nestjs/mongoose";
 import {Model, Types} from "mongoose";
 import {NotFoundException} from "@nestjs/common";
 import * as fs from 'fs';
+import {CreateStoryLogDto} from "./dto/create-story-log.dto";
 
 export class CampaignsRepository {
 
@@ -45,5 +46,13 @@ export class CampaignsRepository {
     }
 
     await this.campaignModel.findByIdAndDelete(id).exec();
+  }
+
+  // STORY LOGS
+  async addStoryLog(id: string, storyLog: CreateStoryLogDto) {
+    const campaign = await this.campaignModel.findById(id).exec();
+    const newStoryLog = { ...storyLog, date: new Date()};
+    campaign.storyLogs.push(newStoryLog);
+    return campaign.save();
   }
 }

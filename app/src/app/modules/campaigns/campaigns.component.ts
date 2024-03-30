@@ -11,6 +11,7 @@ import {MatDivider} from "@angular/material/divider";
 import {EllipsisDirective} from "../helpers/ellipsis.directive";
 import {takeUntilDestroyed} from "@angular/core/rxjs-interop";
 import {map} from "rxjs";
+import {IMAGE_URL} from "../../../config";
 
 export const DEFAULT_CAMPAIGN_IMAGE: string = '/assets/images/default_campaign.webp';
 
@@ -70,4 +71,5 @@ export class CampaignsComponent {
   }
 
   protected readonly DEFAULT_CAMPAIGN_IMAGE = DEFAULT_CAMPAIGN_IMAGE;
+  protected readonly IMAGE_URL = IMAGE_URL;
 }

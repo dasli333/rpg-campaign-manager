@@ -104,6 +104,7 @@ export class CreateCampaignComponent implements OnInit {
       description: formValue.description || undefined,
       gameSystem: formValue.gameSystem as GameSystem,
       image: formValue.image || undefined,
+      storyLogs: [],
     };
 
     this.#campaignsService.editCampaign(campaign).subscribe(() => {

@@ -4,11 +4,10 @@
   </mat-card-header>
 
   @if (activeCampaign()) {
-    <img mat-card-image [ngSrc]="activeCampaign()?.image || DEFAULT_CAMPAIGN_IMAGE" alt="campaign picture" width="249" height="249">
+    <img mat-card-image [ngSrc]="activeCampaign()?.image ? IMAGE_URL + activeCampaign()?.image : DEFAULT_CAMPAIGN_IMAGE" alt="campaign picture" width="249" height="249">
   } @else {
     <div class="empty-image-box"></div>
   }
-
   <mat-card-actions>
     <mat-form-field subscriptSizing="dynamic" appearance="outline" color="accent">
       <mat-select placeholder="Select Campaign" [value]="activeCampaign()?.id" (selectionChange)="onSelectCampaign($event.value)">
