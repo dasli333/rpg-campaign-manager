@@ -1,7 +1,7 @@
 import {computed, inject, Injectable, signal, WritableSignal} from '@angular/core';
 import {Router} from "@angular/router";
 import {HttpService} from "../../http/http.service";
-import {catchError, map, Observable, of, tap} from "rxjs";
+import {catchError, map, Observable, of, switchMap, tap} from "rxjs";
 import {ICampaign} from "./interfaces/campaign";
 import {StoryLog} from "../story-log/interface/story-log";
 
@@ -77,7 +77,11 @@ export class CampaignsService {
     }
   }
 
-  addStoryLog(storyLog: StoryLog): Observable<ICampaign> {
-    return this.#httpService.post<ICampaign>(`${this.#apiUrl}/${this.activeCampaign()?.id}/story-log`, storyLog);
+  addStoryLog(storyLog: StoryLog): Observable<ICampaign | undefined> {
+    return this.#httpService.post<ICampaign>(`${this.#apiUrl}/${this.activeCampaign()?.id}/story-log`, storyLog).pipe(
+      switchMap(campaign => {
+        return this.setActiveCampaign(campaign.id);
+      })
+    );
   }
 }

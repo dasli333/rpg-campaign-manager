@@ -1,11 +1,8 @@
-<mat-list>
+<div class="story-logs-container">
   @for (storyLog of storyLogs(); track storyLog._id) {
-    <mat-list-item>
-      <span matListItemTitle>{{ storyLog.date }}</span>
-      <span matListItemLine>{{ storyLog.entry }}</span>
-    </mat-list-item>
+    <app-story-log-item [storyLog]="storyLog"></app-story-log-item>
   }
-</mat-list>
+</div>
 
 <form [formGroup]="addStoryLogForm" (ngSubmit)="addStoryLog()">
   <mat-form-field>
