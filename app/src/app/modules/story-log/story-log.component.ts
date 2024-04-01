@@ -1,16 +1,16 @@
 import {ChangeDetectionStrategy, Component, inject} from '@angular/core';
-import {FormBuilder, ReactiveFormsModule} from "@angular/forms";
-import {MatFormFieldModule} from "@angular/material/form-field";
+import {ReactiveFormsModule} from "@angular/forms";
 import {MatInput} from "@angular/material/input";
 import {MatButton} from "@angular/material/button";
 import {CampaignsService} from "../campaigns/campaigns.service";
-import {StoryLog} from "./interface/story-log";
 import {StoryLogItemComponent} from "./story-log-item/story-log-item.component";
+import {MatDialog} from "@angular/material/dialog";
+import {StoryLogDialogComponent} from "./story-log-dialog/story-log-dialog.component";
 
 @Component({
   selector: 'app-story-log',
   standalone: true,
-  imports: [ReactiveFormsModule, MatFormFieldModule, MatInput, MatButton, StoryLogItemComponent],
+  imports: [ReactiveFormsModule, MatInput, MatButton, StoryLogItemComponent],
   templateUrl: './story-log.component.html',
   styleUrl: './story-log.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -18,20 +18,11 @@ import {StoryLogItemComponent} from "./story-log-item/story-log-item.component";
 export class StoryLogComponent {
 
   #campaignService = inject(CampaignsService);
-
-  #formBuilder = inject(FormBuilder);
-
-  addStoryLogForm = this.#formBuilder.group({
-    entry: ''
-  });
+  #dialog = inject(MatDialog);
 
   storyLogs = this.#campaignService.storyLogs;
 
-  addStoryLog() {
-    if (!this.addStoryLogForm.value.entry) return;
-    const storyLog: StoryLog = {entry: this.addStoryLogForm.value.entry}
-    this.#campaignService.addStoryLog(storyLog).subscribe();
-    this.addStoryLogForm.reset();
+  openStoryLogDialog() {
+    this.#dialog.open(StoryLogDialogComponent, {width: '600px'})
   }
-
 }

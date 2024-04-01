@@ -1,0 +1,11 @@
+<form [formGroup]="addStoryLogForm" (ngSubmit)="addStoryLog()">
+  <mat-dialog-content>
+    <mat-form-field>
+      <textarea matInput rows="10" formControlName="entry" placeholder="Entry"></textarea>
+    </mat-form-field>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Cancel</button>
+    <button mat-raised-button color="primary" type="submit">Add</button>
+  </mat-dialog-actions>
+</form>

@@ -1,4 +1,9 @@
 <div class="story-log-item">
-  <h2>{{storyLog?.date | date}}</h2>
+  <div class="header">
+    <h2>{{storyLog?.date | date}}</h2>
+    <div class="header-buttons"></div>
+    <button mat-icon-button><mat-icon>edit</mat-icon></button>
+    <button mat-icon-button><mat-icon>delete</mat-icon></button>
+  </div>
   <p>{{storyLog?.entry}}</p>
 </div>

@@ -1,12 +1,9 @@
+<button mat-raised-button color="primary" (click)="openStoryLogDialog()">Add Log</button>
+
 <div class="story-logs-container">
   @for (storyLog of storyLogs(); track storyLog._id) {
     <app-story-log-item [storyLog]="storyLog"></app-story-log-item>
   }
 </div>
 
-<form [formGroup]="addStoryLogForm" (ngSubmit)="addStoryLog()">
-  <mat-form-field>
-    <textarea matInput rows="10" formControlName="entry" placeholder="Entry"></textarea>
-  </mat-form-field>
-  <button mat-raised-button color="primary" type="submit">Add</button>
-</form>
+
