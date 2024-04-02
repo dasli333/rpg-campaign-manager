@@ -5,7 +5,7 @@ import {CampaignsService} from "../../campaigns/campaigns.service";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInput} from "@angular/material/input";
 import {MatButton} from "@angular/material/button";
-import {MatDialogActions, MatDialogClose, MatDialogContent} from "@angular/material/dialog";
+import {MatDialogActions, MatDialogClose, MatDialogContent, MatDialogRef} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-story-log-dialog',
@@ -27,6 +27,7 @@ export class StoryLogDialogComponent {
 
   #formBuilder = inject(FormBuilder);
   #campaignService = inject(CampaignsService);
+  #dialogRef = inject(MatDialogRef<StoryLogDialogComponent>);
 
 
   addStoryLogForm = this.#formBuilder.group({
@@ -35,11 +36,13 @@ export class StoryLogDialogComponent {
 
   // TODO: Close dialog only on cancel or submit
 
+  // TODO: Implement edit functionality
+
   addStoryLog() {
     if (!this.addStoryLogForm.value.entry) return;
     const storyLog: StoryLog = {entry: this.addStoryLogForm.value.entry}
     this.#campaignService.addStoryLog(storyLog).subscribe();
     this.addStoryLogForm.reset();
-    // TODO: Close dialog
+    this.#dialogRef.close();
   }
 }
