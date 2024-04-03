@@ -42,4 +42,9 @@ export class CampaignsController {
   addStoryLog(@Param('id') id: string, @Body() storyLog: CreateStoryLogDto) {
     return this.campaignsService.addStoryLog(id, storyLog);
   }
+
+  @Patch(':id/story-log/:storyLogId')
+  updateStoryLog(@Param('id') id: string, @Param('storyLogId') storyLogId: string, @Body() storyLog: CreateStoryLogDto) {
+    return this.campaignsService.updateStoryLog(id, storyLogId, storyLog);
+  }
 }

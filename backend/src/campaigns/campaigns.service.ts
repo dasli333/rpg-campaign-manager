@@ -47,4 +47,8 @@ export class CampaignsService {
   addStoryLog(id: string, storyLog: CreateStoryLogDto) {
     return this.campaignsRepository.addStoryLog(id, storyLog);
   }
+
+    updateStoryLog(id: string, storyLogId: string, storyLog: CreateStoryLogDto) {
+        return this.campaignsRepository.updateStoryLog(id, storyLogId, storyLog);
+    }
 }

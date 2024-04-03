@@ -55,4 +55,11 @@ export class CampaignsRepository {
     campaign.storyLogs.push(newStoryLog);
     return campaign.save();
   }
+
+    async updateStoryLog(id: string, storyLogId: string, storyLog: CreateStoryLogDto) {
+      const campaign = await this.campaignModel.findById(id).exec();
+      const storyLogIndex = campaign.storyLogs.findIndex(log => log._id.toString() === storyLogId);
+      campaign.storyLogs[storyLogIndex] = {...storyLog};
+      return campaign.save();
+    }
 }

@@ -84,4 +84,12 @@ export class CampaignsService {
       })
     );
   }
+
+  updateStoryLog(storyLog: StoryLog): Observable<ICampaign | undefined> {
+    return this.#httpService.patch<ICampaign>(`${this.#apiUrl}/${this.activeCampaign()?.id}/story-log/${storyLog._id}`, storyLog).pipe(
+      switchMap(campaign => {
+        return this.setActiveCampaign(campaign.id);
+      })
+    );
+  }
 }

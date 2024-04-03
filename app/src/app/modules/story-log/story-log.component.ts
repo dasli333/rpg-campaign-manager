@@ -23,6 +23,9 @@ export class StoryLogComponent {
   storyLogs = this.#campaignService.storyLogs;
 
   openStoryLogDialog() {
-    this.#dialog.open(StoryLogDialogComponent, {width: '600px'})
+    this.#dialog.open(StoryLogDialogComponent, {
+      width: '600px',
+      disableClose: true
+    })
   }
 }

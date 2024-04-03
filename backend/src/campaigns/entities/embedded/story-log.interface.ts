@@ -1,4 +1,5 @@
 export interface StoryLog {
-    date: Date;
     entry: string;
+    date?: Date;
+    _id?: string;
 }
