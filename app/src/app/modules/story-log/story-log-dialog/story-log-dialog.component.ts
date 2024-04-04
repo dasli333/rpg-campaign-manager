@@ -13,8 +13,8 @@ import {
   MatDialogContent,
   MatDialogRef
 } from "@angular/material/dialog";
-import {MatSnackBar} from "@angular/material/snack-bar";
 import {ConfirmCancelDialogComponent} from "../../helpers/confirm-cancel-dialog.component";
+import {SnackbarService} from "../../helpers/snackbar.service";
 
 @Component({
   selector: 'app-story-log-dialog',
@@ -38,8 +38,7 @@ export class StoryLogDialogComponent {
   #campaignService = inject(CampaignsService);
   #dialog = inject(MatDialog);
   #dialogRef = inject(MatDialogRef<StoryLogDialogComponent>);
-  #snackBar = inject(MatSnackBar);
-
+  #snackbarService = inject(SnackbarService);
 
   addStoryLogForm = this.#formBuilder.group({
     entry: ''
@@ -55,9 +54,9 @@ export class StoryLogDialogComponent {
     if (!this.addStoryLogForm.value.entry) return;
     const storyLog: StoryLog = {entry: this.addStoryLogForm.value.entry}
     if (this.data) {
-      this.#campaignService.updateStoryLog({...this.data, ...storyLog}).subscribe(() => this.openSnackBar('Story log updated'));
+      this.#campaignService.updateStoryLog({...this.data, ...storyLog}).subscribe(() => this.#snackbarService.openSnackBar('Story log updated'));
     } else {
-      this.#campaignService.addStoryLog(storyLog).subscribe(() => this.openSnackBar('Story log added'));
+      this.#campaignService.addStoryLog(storyLog).subscribe(() => this.#snackbarService.openSnackBar('Story log added'));
     }
     this.addStoryLogForm.reset();
     this.#dialogRef.close();
@@ -69,14 +68,6 @@ export class StoryLogDialogComponent {
       if (result) {
         this.#dialogRef.close();
       }
-    });
-  }
-
-  private openSnackBar(message: string) {
-    this.#snackBar.open(message, 'Close', {
-      duration: 3000,
-      verticalPosition: 'top',
-      panelClass: 'custom-snackbar'
     });
   }
 }

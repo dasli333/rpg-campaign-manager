@@ -1,16 +1,18 @@
 import {Injectable} from '@nestjs/common';
-import { CreateCampaignDto } from './dto/create-campaign.dto';
-import { UpdateCampaignDto } from './dto/update-campaign.dto';
+import {CreateCampaignDto} from './dto/create-campaign.dto';
+import {UpdateCampaignDto} from './dto/update-campaign.dto';
 import {CampaignsRepository} from "./campaigns.repository";
 import * as fs from "fs";
 import * as path from "path";
-import { v4 as uuidv4 } from 'uuid';
+import {v4 as uuidv4} from 'uuid';
 import {CreateStoryLogDto} from "./dto/create-story-log.dto";
 
 @Injectable()
 export class CampaignsService {
 
-  constructor(private readonly campaignsRepository: CampaignsRepository) {}
+  constructor(private readonly campaignsRepository: CampaignsRepository) {
+  }
+
   create(createCampaignDto: CreateCampaignDto, file: Express.Multer.File) {
     if (file) {
       const uploadPath = 'public/images';
@@ -18,7 +20,7 @@ export class CampaignsService {
       const uniqueFilename = uuidv4() + fileExtension;
       const filePath = path.join(uploadPath, uniqueFilename);
 
-      fs.mkdirSync(uploadPath, { recursive: true });
+      fs.mkdirSync(uploadPath, {recursive: true});
       fs.writeFileSync(filePath, file.buffer);
 
       createCampaignDto.image = uniqueFilename;
@@ -48,7 +50,11 @@ export class CampaignsService {
     return this.campaignsRepository.addStoryLog(id, storyLog);
   }
 
-    updateStoryLog(id: string, storyLogId: string, storyLog: CreateStoryLogDto) {
-        return this.campaignsRepository.updateStoryLog(id, storyLogId, storyLog);
-    }
+  updateStoryLog(id: string, storyLogId: string, storyLog: CreateStoryLogDto) {
+    return this.campaignsRepository.updateStoryLog(id, storyLogId, storyLog);
+  }
+
+  deleteStoryLog(id: string, storyLogId: string) {
+    return this.campaignsRepository.deleteStoryLog(id, storyLogId);
+  }
 }

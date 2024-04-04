@@ -9,7 +9,9 @@ import {CreateStoryLogDto} from "./dto/create-story-log.dto";
 
 export class CampaignsRepository {
 
-  constructor(@InjectModel('Campaign') private campaignModel: Model<Campaign>){}
+  constructor(@InjectModel('Campaign') private campaignModel: Model<Campaign>) {
+  }
+
   async create(createCampaignDto: CreateCampaignDto) {
     const createdCampaign = new this.campaignModel(createCampaignDto);
     return createdCampaign.save();
@@ -51,15 +53,22 @@ export class CampaignsRepository {
   // STORY LOGS
   async addStoryLog(id: string, storyLog: CreateStoryLogDto) {
     const campaign = await this.campaignModel.findById(id).exec();
-    const newStoryLog = { ...storyLog, date: new Date()};
+    const newStoryLog = {...storyLog, date: new Date()};
     campaign.storyLogs.push(newStoryLog);
     return campaign.save();
   }
 
-    async updateStoryLog(id: string, storyLogId: string, storyLog: CreateStoryLogDto) {
-      const campaign = await this.campaignModel.findById(id).exec();
-      const storyLogIndex = campaign.storyLogs.findIndex(log => log._id.toString() === storyLogId);
-      campaign.storyLogs[storyLogIndex] = {...storyLog};
-      return campaign.save();
-    }
+  async updateStoryLog(id: string, storyLogId: string, storyLog: CreateStoryLogDto) {
+    const campaign = await this.campaignModel.findById(id).exec();
+    const storyLogIndex = campaign.storyLogs.findIndex(log => log._id.toString() === storyLogId);
+    campaign.storyLogs[storyLogIndex] = {...storyLog};
+    return campaign.save();
+  }
+
+  async deleteStoryLog(id: string, storyLogId: string) {
+    const campaign = await this.campaignModel.findById(id).exec()
+    const storyLogIndex = campaign.storyLogs.findIndex(log => log._id.toString() === storyLogId);
+    campaign.storyLogs.splice(storyLogIndex, 1);
+    return campaign.save();
+  }
 }

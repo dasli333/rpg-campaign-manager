@@ -47,4 +47,9 @@ export class CampaignsController {
   updateStoryLog(@Param('id') id: string, @Param('storyLogId') storyLogId: string, @Body() storyLog: CreateStoryLogDto) {
     return this.campaignsService.updateStoryLog(id, storyLogId, storyLog);
   }
+
+  @Delete(':id/story-log/:storyLogId')
+  deleteStoryLog(@Param('id') id: string, @Param('storyLogId') storyLogId: string) {
+    return this.campaignsService.deleteStoryLog(id, storyLogId);
+  }
 }

@@ -92,4 +92,12 @@ export class CampaignsService {
       })
     );
   }
+
+  deleteStoryLog(storyLogId: string): Observable<ICampaign | undefined> {
+    return this.#httpService.delete<ICampaign>(`${this.#apiUrl}/${this.activeCampaign()?.id}/story-log/${storyLogId}`).pipe(
+      switchMap(campaign => {
+        return this.setActiveCampaign(campaign.id);
+      })
+    );
+  }
 }

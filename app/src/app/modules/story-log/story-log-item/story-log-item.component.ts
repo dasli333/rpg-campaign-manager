@@ -6,6 +6,8 @@ import {MatIcon} from "@angular/material/icon";
 import {MatDialog} from "@angular/material/dialog";
 import {StoryLogDialogComponent} from "../story-log-dialog/story-log-dialog.component";
 import {ConfirmCancelDialogComponent} from "../../helpers/confirm-cancel-dialog.component";
+import {CampaignsService} from "../../campaigns/campaigns.service";
+import {SnackbarService} from "../../helpers/snackbar.service";
 
 @Component({
   selector: 'app-story-log-item',
@@ -22,6 +24,8 @@ import {ConfirmCancelDialogComponent} from "../../helpers/confirm-cancel-dialog.
 export class StoryLogItemComponent {
 
   #dialog = inject(MatDialog);
+  #campaignService = inject(CampaignsService);
+  #snackbarService = inject(SnackbarService);
 
   @Input({required: true}) storyLog: StoryLog | undefined;
 
@@ -40,11 +44,8 @@ export class StoryLogItemComponent {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        console.log('Delete story log')
-        console.log(this.storyLog)
+        this.#campaignService.deleteStoryLog(this.storyLog?._id as string).subscribe(() => {this.#snackbarService.openSnackBar('Story log deleted')})
       }
     });
-
-    // TODO: Implement delete functionality
   }
 }
