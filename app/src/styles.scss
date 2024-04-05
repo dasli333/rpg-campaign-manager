@@ -6,3 +6,28 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .custom-snackbar {
   padding-top: 74px;
 }
+
+/* For Webkit (Chrome, Safari, etc.) */
+.custom-scroll::-webkit-scrollbar {
+  width: 10px;
+}
+
+.custom-scroll::-webkit-scrollbar-track {
+  background: #2E2E2E;
+}
+
+.custom-scroll::-webkit-scrollbar-thumb {
+  background: #555;
+  border-radius: 6px;
+}
+
+.custom-scroll::-webkit-scrollbar-thumb:hover {
+  background: #777;
+}
+
+///* For Firefox */
+//* {
+//  scrollbar-width: thin; /* Can be 'auto' or 'thin' */
+//  scrollbar-color: #555 #2E2E2E; /* thumb and track color */
+//}
+

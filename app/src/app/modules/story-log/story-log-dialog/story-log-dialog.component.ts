@@ -1,5 +1,5 @@
 import {ChangeDetectionStrategy, Component, Inject, inject} from '@angular/core';
-import {FormBuilder, ReactiveFormsModule} from "@angular/forms";
+import {FormBuilder, ReactiveFormsModule, Validators} from "@angular/forms";
 import {StoryLog} from "../interface/story-log";
 import {CampaignsService} from "../../campaigns/campaigns.service";
 import {MatFormFieldModule} from "@angular/material/form-field";
@@ -41,7 +41,7 @@ export class StoryLogDialogComponent {
   #snackbarService = inject(SnackbarService);
 
   addStoryLogForm = this.#formBuilder.group({
-    entry: ''
+    entry: ['', Validators.required]
   });
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: StoryLog | undefined) {
@@ -63,6 +63,10 @@ export class StoryLogDialogComponent {
   }
 
   onCancel() {
+    if (!this.addStoryLogForm.value.entry) {
+      this.#dialogRef.close();
+      return;
+    }
     const dialogRef = this.#dialog.open(ConfirmCancelDialogComponent);
     dialogRef.afterClosed().subscribe(result => {
       if (result) {

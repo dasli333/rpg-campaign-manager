@@ -1,5 +1,6 @@
 import {GameSystem} from "../enums/game-system";
 import {StoryLog} from "../../story-log/interface/story-log";
+import {PlayerCharacter} from "../../players-characters/interfaces/player-character";
 
 export interface ICampaign {
   id: string;
@@ -11,4 +12,5 @@ export interface ICampaign {
   imageFile?: File;
   endDate?: string;
   storyLogs: StoryLog[];
+  playersCharacters: PlayerCharacter[];
 }

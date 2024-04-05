@@ -21,6 +21,7 @@ export class CampaignsService {
 
   campaigns = this.#campaigns.asReadonly();
   storyLogs = computed(() => this.activeCampaign()?.storyLogs || []);
+  playersCharacters = computed(() => this.activeCampaign()?.playersCharacters || []);
 
   setActiveCampaign(id: string): Observable<ICampaign | undefined> {
     return this.getCampaignById(id).pipe(
@@ -99,5 +100,13 @@ export class CampaignsService {
         return this.setActiveCampaign(campaign.id);
       })
     );
+  }
+
+  deletePlayerCharacter(id: string): void {
+    this.#activeCampaign.update(campaign => {
+      if (!campaign) return;
+      campaign.playersCharacters = campaign.playersCharacters.filter(playerCharacter => playerCharacter._id !== id);
+      return campaign;
+    });
   }
 }

@@ -1,1 +1,20 @@
-<p>players-characters works!</p>
+<button mat-raised-button routerLink="/create-character" color="primary">Create New Character</button>
+
+<div class="players-characters-container">
+  @for (playerCharacter of playersCharacters(); track playerCharacter._id) {
+    <mat-card class="player-character-card">
+      <mat-card-header>
+        <mat-card-title>{{ playerCharacter.name }}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p>{{ playerCharacter.race }} {{ playerCharacter.class }}</p>
+        <p>{{ playerCharacter.level }}</p>
+      </mat-card-content>
+
+      <mat-card-actions>
+        <button mat-raised-button routerLink="/edit-character/{{ playerCharacter._id }}" color="primary">Edit</button>
+        <button mat-raised-button (click)="deletePlayerCharacter(playerCharacter._id)" color="warn">Delete</button>
+      </mat-card-actions>
+    </mat-card>
+  }
+</div>
