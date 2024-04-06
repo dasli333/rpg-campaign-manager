@@ -1,1 +1,22 @@
-<p>create-character works!</p>
+<mat-stepper [linear]="true" #stepper>
+  <mat-step [stepControl]="nameCharacterForm" label="Name and gender" errorMessage="Name is required.">
+    <form [formGroup]="nameCharacterForm">
+      <mat-form-field>
+        <input matInput placeholder="Name" formControlName="name">
+      </mat-form-field>
+      <mat-radio-group aria-label="Select an option" formControlName="gender">
+        <mat-radio-button value="male">Male</mat-radio-button>
+        <mat-radio-button value="female">Female</mat-radio-button>
+      </mat-radio-group>
+      <button mat-button matStepperNext [disabled]="nameCharacterForm.invalid">Next</button>
+    </form>
+  </mat-step>
+  <mat-step label="Step 2">
+    <button mat-button matStepperPrevious>Back</button>
+    <button mat-button matStepperNext>Next</button>
+  </mat-step>
+  <mat-step label="Step 3">
+    <button mat-button matStepperPrevious>Back</button>
+    <button mat-button (click)="stepper.reset()">Reset</button>
+  </mat-step>
+</mat-stepper>
