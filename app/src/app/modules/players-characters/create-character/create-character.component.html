@@ -1,5 +1,44 @@
 <mat-stepper [linear]="true" #stepper>
-  <mat-step [stepControl]="nameCharacterForm" label="Name and gender" errorMessage="Name is required.">
+  <mat-step [stepControl]="raceCharacterForm" label="Rasa">
+    <form [formGroup]="raceCharacterForm">
+      <mat-form-field color="accent">
+        <mat-select placeholder="Wybierz rasę" formControlName="race">
+          @for (race of races; track race.id) {
+            <mat-option [value]="race.id">{{ race.name }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+
+      @if (mainRace?.subrace) {
+        <mat-form-field color="accent">
+          <mat-select placeholder="Wybierz podrasę" formControlName="subrace">
+            @for (subrace of mainRace?.subrace; track subrace.id) {
+              <mat-option [value]="subrace.id">{{ subrace.name }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+      }
+
+    </form>
+
+    @if (selectedRace) {
+      <div class="race-description">
+        <p>{{selectedRace.description}}</p>
+        @for (scoreIncrease of selectedRace.abilityScoreIncrease; track scoreIncrease.id) {
+          @if (scoreIncrease.value > 0) {
+            <p>{{scoreIncrease.description}} +{{scoreIncrease.value}}</p>
+          }
+        }
+        <h3>Umiejętności</h3>
+        @for (skill of selectedRace.skills; track skill.id) {
+          <p>{{skill.name}}</p>
+        }
+      </div>
+    }
+
+    <button mat-button matStepperNext [disabled]="raceCharacterForm.invalid">Next</button>
+  </mat-step>
+  <mat-step [stepControl]="nameCharacterForm" label="Name and gender">
     <form [formGroup]="nameCharacterForm">
       <mat-form-field>
         <input matInput placeholder="Name" formControlName="name">
@@ -8,10 +47,8 @@
         <mat-radio-button value="male">Male</mat-radio-button>
         <mat-radio-button value="female">Female</mat-radio-button>
       </mat-radio-group>
-      <button mat-button matStepperNext [disabled]="nameCharacterForm.invalid">Next</button>
     </form>
-  </mat-step>
-  <mat-step label="Step 2">
+    <button mat-button matStepperNext [disabled]="nameCharacterForm.invalid">Next</button>
     <button mat-button matStepperPrevious>Back</button>
     <button mat-button matStepperNext>Next</button>
   </mat-step>
