@@ -1,13 +1,13 @@
-import {ChangeDetectionStrategy, Component, inject} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, inject} from '@angular/core';
 import {MatStepperModule} from "@angular/material/stepper";
 import {MatButton} from "@angular/material/button";
 import {FormBuilder, ReactiveFormsModule, Validators} from "@angular/forms";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInput} from "@angular/material/input";
 import {MatRadioModule} from "@angular/material/radio";
-import {MatSelectModule} from "@angular/material/select";
-import {RACES_PL} from "../../../../dnd-data/race/race_pl";
-import {Race} from "../../../../dnd-data/race/race";
+import {MatSelectChange, MatSelectModule} from "@angular/material/select";
+import {Dnd5eApiService} from "../../../data-services/dnd5e-api.service";
+import {Race, RaceReference, Subrace} from "../../../data-services/models/race";
 
 @Component({
   selector: 'app-create-character',
@@ -20,11 +20,13 @@ import {Race} from "../../../../dnd-data/race/race";
 export class CreateCharacterComponent {
 
   #formBuilder = inject(FormBuilder);
+  #dnd5eApiService = inject(Dnd5eApiService);
+  #detectChanges = inject(ChangeDetectorRef);
 
-  races = RACES_PL;
-
-  selectedRace: Race | undefined;
-  mainRace: Race | undefined;
+  races: RaceReference[] = [];
+  selectedSubrace: Subrace | null = null;
+  selectedRaceDetail: Race | undefined;
+  // mainRace: Race | undefined;
 
 
   raceCharacterForm = this.#formBuilder.group({
@@ -39,15 +41,32 @@ export class CreateCharacterComponent {
   });
 
   constructor() {
-    this.raceCharacterForm.get('race')?.valueChanges.subscribe(raceId => {
-      this.selectedRace = this.races.find(race => race.id === raceId);
-      this.mainRace = this.selectedRace;
-    })
+    this.#dnd5eApiService.getRaces().subscribe(races => {
+      this.races = races.results;
+    });
+  }
 
-    this.raceCharacterForm.get('subrace')?.valueChanges.subscribe(subraceId => {
-      this.selectedRace = this.mainRace?.subrace?.find(race => race.id === subraceId);
+  onRaceChange(event: MatSelectChange) {
+    const raceUrl = event.value
+    if (!raceUrl) return;
+    this.#dnd5eApiService.getRaceDetails<Race>(raceUrl).subscribe(raceDetail => {
+      this.selectedRaceDetail = raceDetail;
+      this.selectedSubrace = null;
+      this.raceCharacterForm.get('subrace')?.reset();
+      this.#detectChanges.markForCheck();
     })
   }
 
+  onSubraceChange(event: MatSelectChange) {
+    const subraceUrl = event.value;
+    if (!subraceUrl) {
+      this.selectedSubrace = null;
+      return;
+    }
+    this.#dnd5eApiService.getRaceDetails<Subrace>(subraceUrl).subscribe(subrace => {
+      this.selectedSubrace = subrace;
+      this.#detectChanges.markForCheck();
+    })
+  }
 
 }
