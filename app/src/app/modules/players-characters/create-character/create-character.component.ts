@@ -8,11 +8,12 @@ import {MatRadioModule} from "@angular/material/radio";
 import {MatSelectChange, MatSelectModule} from "@angular/material/select";
 import {Dnd5eApiService} from "../../../data-services/dnd5e-api.service";
 import {Race, RaceReference, Subrace} from "../../../data-services/models/race";
+import {RaceDetailsComponent} from "../race-details/race-details.component";
 
 @Component({
   selector: 'app-create-character',
   standalone: true,
-  imports: [MatStepperModule, MatButton, ReactiveFormsModule, MatFormFieldModule, MatInput, MatRadioModule, MatSelectModule],
+  imports: [MatStepperModule, MatButton, ReactiveFormsModule, MatFormFieldModule, MatInput, MatRadioModule, MatSelectModule, RaceDetailsComponent],
   templateUrl: './create-character.component.html',
   styleUrl: './create-character.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -24,10 +25,8 @@ export class CreateCharacterComponent {
   #detectChanges = inject(ChangeDetectorRef);
 
   races: RaceReference[] = [];
-  selectedSubrace: Subrace | null = null;
+  selectedSubrace: Subrace | undefined | null;
   selectedRaceDetail: Race | undefined;
-  // mainRace: Race | undefined;
-
 
   raceCharacterForm = this.#formBuilder.group({
     race: ['', Validators.required],
@@ -37,7 +36,6 @@ export class CreateCharacterComponent {
   nameCharacterForm = this.#formBuilder.group({
     name: ['', Validators.required],
     gender: ['', Validators.required],
-    // race: ['', Validators.required],
   });
 
   constructor() {

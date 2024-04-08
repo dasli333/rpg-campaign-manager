@@ -2,7 +2,7 @@
   <mat-step [stepControl]="raceCharacterForm" label="Rasa">
     <form [formGroup]="raceCharacterForm">
       <mat-form-field color="accent">
-        <mat-select placeholder="Wybierz rasę" formControlName="race" (selectionChange)="onRaceChange($event)">
+        <mat-select placeholder="Choose race" formControlName="race" (selectionChange)="onRaceChange($event)">
           @for (race of races; track race.index) {
             <mat-option [value]="race.url">{{ race.name }}</mat-option>
           }
@@ -11,7 +11,7 @@
 
       @if (selectedRaceDetail?.subraces?.length) {
         <mat-form-field color="accent">
-          <mat-select placeholder="Wybierz podrasę" formControlName="subrace" (selectionChange)="onSubraceChange($event)">
+          <mat-select placeholder="Select subrace" formControlName="subrace" (selectionChange)="onSubraceChange($event)">
             <mat-option value=""></mat-option>
             @for (subrace of selectedRaceDetail?.subraces; track subrace.name) {
               <mat-option [value]="subrace.url">{{ subrace.name }}</mat-option>
@@ -21,48 +21,7 @@
       }
     </form>
 
-    @if (selectedRaceDetail) {
-      <div class="race-description">
-        <p>{{selectedRaceDetail.alignment}}</p>
-
-        <h3>Traits</h3>
-        @for (trait of selectedRaceDetail.traits; track trait.name) {
-          <p>{{trait.name}}</p>
-        }
-        <div class="ability-bonuses">
-          <h3>Ability Bonuses</h3>
-          @for (ability_bonus of selectedRaceDetail.ability_bonuses; track ability_bonus.ability_score.name) {
-            <p>{{ability_bonus.ability_score.name}} +{{ability_bonus.bonus}}</p>
-          }
-          @for (ability_bonus of selectedSubrace?.ability_bonuses; track ability_bonus.ability_score.name) {
-            <p>{{ability_bonus.ability_score.name}} +{{ability_bonus.bonus}}</p>
-          }
-
-          @if (selectedRaceDetail.ability_bonus_options) {
-            <h3>Ability Bonus Options</h3>
-            <p>You can choose to increase your ability scores
-              from the following ability scores:
-              @for (option of selectedRaceDetail.ability_bonus_options.from.options; track option.ability_score.name) {
-                {{ option.ability_score.name }} +{{ option.bonus }},
-              }
-              ({{selectedRaceDetail.ability_bonus_options.choose}} total)
-            </p>
-          }
-        </div>
-      </div>
-    }
-
-
-    @if (selectedSubrace) {
-      <div class="subrace-description">
-        <p>{{selectedSubrace.desc}}</p>
-
-        <h3>Traits</h3>
-        @for (trait of selectedSubrace.racial_traits; track trait.name) {
-          <p>{{trait.name}}</p>
-        }
-      </div>
-    }
+    <app-race-details [selectedRaceDetail]="selectedRaceDetail" [selectedSubrace]="selectedSubrace"></app-race-details>
 
     <button mat-button matStepperNext [disabled]="raceCharacterForm.invalid">Next</button>
   </mat-step>

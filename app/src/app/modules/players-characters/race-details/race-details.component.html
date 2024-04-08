@@ -1,0 +1,42 @@
+@if (selectedRaceDetail) {
+  <div class="race-description">
+    <p>{{selectedRaceDetail.alignment}}</p>
+
+    <h3>Traits</h3>
+    @for (trait of selectedRaceDetail.traits; track trait.name) {
+      <p>{{trait.name}}</p>
+    }
+    <div class="ability-bonuses">
+      <h3>Ability Bonuses</h3>
+      @for (ability_bonus of selectedRaceDetail.ability_bonuses; track ability_bonus.ability_score.name) {
+        <p>{{ability_bonus.ability_score.name}} +{{ability_bonus.bonus}}</p>
+      }
+      @for (ability_bonus of selectedSubrace?.ability_bonuses; track ability_bonus.ability_score.name) {
+        <p>{{ability_bonus.ability_score.name}} +{{ability_bonus.bonus}}</p>
+      }
+
+      @if (selectedRaceDetail.ability_bonus_options) {
+        <h3>Ability Bonus Options</h3>
+        <p>You can choose to increase your ability scores
+          from the following ability scores:
+          @for (option of selectedRaceDetail.ability_bonus_options.from.options; track option.ability_score.name) {
+            {{ option.ability_score.name }} +{{ option.bonus }},
+          }
+          ({{selectedRaceDetail.ability_bonus_options.choose}} total)
+        </p>
+      }
+    </div>
+  </div>
+}
+
+
+@if (selectedSubrace) {
+  <div class="subrace-description">
+    <p>{{selectedSubrace.desc}}</p>
+
+    <h3>Traits</h3>
+    @for (trait of selectedSubrace.racial_traits; track trait.name) {
+      <p>{{trait.name}}</p>
+    }
+  </div>
+}
