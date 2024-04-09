@@ -1,5 +1,5 @@
 <mat-stepper [linear]="true" #stepper>
-  <mat-step [stepControl]="raceCharacterForm" label="Rasa">
+  <mat-step [stepControl]="raceCharacterForm" label="Race">
     <form [formGroup]="raceCharacterForm">
       <mat-form-field color="accent">
         <mat-select placeholder="Choose race" formControlName="race" (selectionChange)="onRaceChange($event)">

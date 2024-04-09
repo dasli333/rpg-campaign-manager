@@ -1,42 +1,64 @@
 @if (selectedRaceDetail) {
-  <div class="race-description">
-    <p>{{selectedRaceDetail.alignment}}</p>
-
-    <h3>Traits</h3>
-    @for (trait of selectedRaceDetail.traits; track trait.name) {
-      <p>{{trait.name}}</p>
-    }
-    <div class="ability-bonuses">
+  <mat-card>
+    <mat-card-title>{{ selectedRaceDetail.name }}</mat-card-title>
+    <mat-card-content>
+      <p>{{ selectedRaceDetail.alignment }}</p>
+      <p>{{ selectedRaceDetail.age }}</p>
       <h3>Ability Bonuses</h3>
-      @for (ability_bonus of selectedRaceDetail.ability_bonuses; track ability_bonus.ability_score.name) {
-        <p>{{ability_bonus.ability_score.name}} +{{ability_bonus.bonus}}</p>
-      }
-      @for (ability_bonus of selectedSubrace?.ability_bonuses; track ability_bonus.ability_score.name) {
-        <p>{{ability_bonus.ability_score.name}} +{{ability_bonus.bonus}}</p>
-      }
+      <ul>
+        @for (ability_bonus of selectedRaceDetail.ability_bonuses; track ability_bonus.ability_score.name) {
+          <li>
+            {{ ability_bonus.ability_score.name }}: +{{ ability_bonus.bonus }}
+          </li>
+        }
 
-      @if (selectedRaceDetail.ability_bonus_options) {
-        <h3>Ability Bonus Options</h3>
-        <p>You can choose to increase your ability scores
-          from the following ability scores:
-          @for (option of selectedRaceDetail.ability_bonus_options.from.options; track option.ability_score.name) {
-            {{ option.ability_score.name }} +{{ option.bonus }},
+        @if (selectedRaceDetail.ability_bonus_options) {
+          <li>
+            You can choose to increase your ability scores
+              from the following ability scores:
+              @for (option of selectedRaceDetail.ability_bonus_options.from.options; track option.ability_score.name) {
+                {{ option.ability_score.name }} +{{ option.bonus }},
+              }
+              ({{selectedRaceDetail.ability_bonus_options.choose}} total)
+
+          </li>
+        }
+      </ul>
+
+      <h3>Traits</h3>
+      <mat-list>
+        @for (trait of selectedRaceDetail.traits; track trait.name) {
+          <mat-list-item>
+            {{ trait.name }}
+          </mat-list-item>
+        }
+      </mat-list>
+
+      @if (selectedSubrace) {
+        <mat-divider></mat-divider>
+        <mat-list>
+          <h3 mat-subheader>Subrace Details: {{ selectedSubrace.name }}</h3>
+          <p>{{ selectedSubrace.desc }}</p>
+          <h4>Ability Bonuses</h4>
+          <ul>
+            @for (ability_bonus of selectedSubrace.ability_bonuses; track ability_bonus.ability_score.name) {
+              <li>
+                {{ ability_bonus.ability_score.name }}: +{{ ability_bonus.bonus }}
+              </li>
+            }
+          </ul>
+        </mat-list>
+
+        <h3>Subrace Traits</h3>
+        <mat-list>
+          @for (trait of selectedSubrace.racial_traits; track trait.name) {
+            <mat-list-item>
+              {{ trait.name }}
+            </mat-list-item>
           }
-          ({{selectedRaceDetail.ability_bonus_options.choose}} total)
-        </p>
+        </mat-list>
       }
-    </div>
-  </div>
-}
 
-
-@if (selectedSubrace) {
-  <div class="subrace-description">
-    <p>{{selectedSubrace.desc}}</p>
-
-    <h3>Traits</h3>
-    @for (trait of selectedSubrace.racial_traits; track trait.name) {
-      <p>{{trait.name}}</p>
-    }
-  </div>
+    </mat-card-content>
+  </mat-card>
 }
