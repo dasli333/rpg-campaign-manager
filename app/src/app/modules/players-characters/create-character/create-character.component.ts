@@ -9,6 +9,7 @@ import {MatSelectChange, MatSelectModule} from "@angular/material/select";
 import {Dnd5eApiService} from "../../../data-services/dnd5e-api.service";
 import {Race, RaceReference, Subrace} from "../../../data-services/models/race";
 import {RaceDetailsComponent} from "../race-details/race-details.component";
+import {Trait} from "../../../data-services/models/trait";
 
 @Component({
   selector: 'app-create-character',
@@ -25,6 +26,7 @@ export class CreateCharacterComponent {
   #detectChanges = inject(ChangeDetectorRef);
 
   races: RaceReference[] = [];
+  traits: Trait[] = [];
   selectedSubrace: Subrace | undefined | null;
   selectedRaceDetail: Race | undefined;
 
@@ -42,6 +44,12 @@ export class CreateCharacterComponent {
     this.#dnd5eApiService.getRaces().subscribe(races => {
       this.races = races.results;
     });
+
+    this.#dnd5eApiService.getTraits().subscribe(traits => {
+      this.traits = traits.data.traits;
+      console.log(this.traits);
+      // console.log(traits);
+    });
   }
 
   onRaceChange(event: MatSelectChange) {
@@ -51,7 +59,13 @@ export class CreateCharacterComponent {
       this.selectedRaceDetail = raceDetail;
       this.selectedSubrace = null;
       this.raceCharacterForm.get('subrace')?.reset();
-      this.#detectChanges.markForCheck();
+
+      // this.#dnd5eApiService.getTraits().subscribe(traits => {
+      //   console.log(traits);
+      // });
+
+      // this.#detectChanges.markForCheck();
+
     })
   }
 

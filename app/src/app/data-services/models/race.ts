@@ -1,3 +1,5 @@
+import {TraitReference} from "./trait";
+
 export interface Race {
   index: string;
   name: string;
@@ -74,7 +76,7 @@ interface ProficiencyItemOption {
   item: ProficiencyReference;
 }
 
-interface SubraceReference {
+export interface SubraceReference {
   index: string;
   name: string;
   url: string;
@@ -86,7 +88,7 @@ export interface RaceReference {
   url: string;
 }
 
-interface ProficiencyReference {
+export interface ProficiencyReference {
   index: string;
   name: string;
   url: string;
@@ -112,10 +114,5 @@ interface LanguageItemOption {
   item: LanguageReference;
 }
 
-interface TraitReference {
-  index: string;
-  name: string;
-  url: string;
-  desc?: string[]; // Assuming description might be part of traits in other scenarios
-}
+
 
