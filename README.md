@@ -71,3 +71,7 @@ Navigate to `http://localhost:4200/` in your web browser to view the application
 - [NestJS](https://nestjs.com/) - The framework used for the backend.
 - [MongoDB](https://www.mongodb.com/) - Database system.
 
+## Data Sources
+
+This project uses the [D&D 5e API](https://www.dnd5eapi.co) to fetch data related to Dungeons & Dragons 5th Edition
+
