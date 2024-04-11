@@ -1,6 +1,8 @@
 
 # RPG Campaign Manager
 
+<img src="app/src/assets/images/logo.webp" width="200" alt="Logo">
+
 Welcome to the RPG Campaign Manager, an application designed to enhance your role-playing game sessions by allowing you to store campaigns, create characters, manage story logs, and much more. Built with Angular, NestJS, and MongoDB, this application offers a robust and user-friendly platform for managing all aspects of your RPG campaigns.
 
 ## Features
