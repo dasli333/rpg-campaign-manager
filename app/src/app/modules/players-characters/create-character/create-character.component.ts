@@ -42,41 +42,35 @@ export class CreateCharacterComponent {
 
   constructor() {
     this.#dnd5eApiService.getRaces().subscribe(races => {
-      this.races = races.results;
+      this.races = races.data.races;
     });
 
     this.#dnd5eApiService.getTraits().subscribe(traits => {
       this.traits = traits.data.traits;
       console.log(this.traits);
-      // console.log(traits);
     });
   }
 
   onRaceChange(event: MatSelectChange) {
-    const raceUrl = event.value
-    if (!raceUrl) return;
-    this.#dnd5eApiService.getRaceDetails<Race>(raceUrl).subscribe(raceDetail => {
-      this.selectedRaceDetail = raceDetail;
+    const raceIndex = event.value
+    if (!raceIndex) return;
+    this.#dnd5eApiService.getRaceDetails(raceIndex).subscribe(raceDetail => {
+      this.selectedRaceDetail = raceDetail.data.race;
       this.selectedSubrace = null;
+      console.log(this.selectedRaceDetail);
       this.raceCharacterForm.get('subrace')?.reset();
-
-      // this.#dnd5eApiService.getTraits().subscribe(traits => {
-      //   console.log(traits);
-      // });
-
-      // this.#detectChanges.markForCheck();
-
+      this.#detectChanges.markForCheck();
     })
   }
 
   onSubraceChange(event: MatSelectChange) {
-    const subraceUrl = event.value;
-    if (!subraceUrl) {
+    const subraceIndex = event.value;
+    if (!subraceIndex) {
       this.selectedSubrace = null;
       return;
     }
-    this.#dnd5eApiService.getRaceDetails<Subrace>(subraceUrl).subscribe(subrace => {
-      this.selectedSubrace = subrace;
+    this.#dnd5eApiService.getSubraceDetails(subraceIndex).subscribe(subrace => {
+      this.selectedSubrace = subrace.data.subrace;
       this.#detectChanges.markForCheck();
     })
   }

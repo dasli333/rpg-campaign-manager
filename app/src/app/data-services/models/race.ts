@@ -85,7 +85,6 @@ export interface SubraceReference {
 export interface RaceReference {
   index: string;
   name: string;
-  url: string;
 }
 
 export interface ProficiencyReference {

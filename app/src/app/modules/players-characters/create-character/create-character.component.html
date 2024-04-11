@@ -4,7 +4,7 @@
       <mat-form-field color="accent">
         <mat-select placeholder="Choose race" formControlName="race" (selectionChange)="onRaceChange($event)">
           @for (race of races; track race.index) {
-            <mat-option [value]="race.url">{{ race.name }}</mat-option>
+            <mat-option [value]="race.index">{{ race.name }}</mat-option>
           }
         </mat-select>
       </mat-form-field>
@@ -14,14 +14,17 @@
           <mat-select placeholder="Select subrace" formControlName="subrace" (selectionChange)="onSubraceChange($event)">
             <mat-option value=""></mat-option>
             @for (subrace of selectedRaceDetail?.subraces; track subrace.name) {
-              <mat-option [value]="subrace.url">{{ subrace.name }}</mat-option>
+              <mat-option [value]="subrace.index">{{ subrace.name }}</mat-option>
             }
           </mat-select>
         </mat-form-field>
       }
     </form>
 
-    <app-race-details [selectedRaceDetail]="selectedRaceDetail" [selectedSubrace]="selectedSubrace"></app-race-details>
+    <app-race-details
+      [traits]="traits"
+      [selectedRaceDetail]="selectedRaceDetail"
+      [selectedSubrace]="selectedSubrace"></app-race-details>
 
     <button mat-button matStepperNext [disabled]="raceCharacterForm.invalid">Next</button>
   </mat-step>
