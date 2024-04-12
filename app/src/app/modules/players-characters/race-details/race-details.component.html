@@ -30,8 +30,8 @@
         @for (trait of selectedRaceDetail.traits; track trait.name) {
           <mat-list-item>
             {{ trait.name }}
+            <app-info-tooltip [tooltipText]="getTraitDescription(trait.index)"></app-info-tooltip>
           </mat-list-item>
-<!--          TODO: Add tooltip for trait description-->
         }
       </mat-list>
 

@@ -26,7 +26,9 @@
       [selectedRaceDetail]="selectedRaceDetail"
       [selectedSubrace]="selectedSubrace"></app-race-details>
 
-    <button mat-button matStepperNext [disabled]="raceCharacterForm.invalid">Next</button>
+    <div class="action-buttons">
+      <button mat-button matStepperNext [disabled]="raceCharacterForm.invalid" color="accent">Next</button>
+    </div>
   </mat-step>
   <mat-step [stepControl]="nameCharacterForm" label="Name and gender">
     <form [formGroup]="nameCharacterForm">
@@ -38,12 +40,16 @@
         <mat-radio-button value="female">Female</mat-radio-button>
       </mat-radio-group>
     </form>
-    <button mat-button matStepperNext [disabled]="nameCharacterForm.invalid">Next</button>
-    <button mat-button matStepperPrevious>Back</button>
-    <button mat-button matStepperNext>Next</button>
+    <div class="action-buttons">
+      <button mat-button matStepperNext [disabled]="nameCharacterForm.invalid" color="accent">Next</button>
+      <button mat-button matStepperPrevious>Back</button>
+    </div>
+
   </mat-step>
   <mat-step label="Step 3">
-    <button mat-button matStepperPrevious>Back</button>
-    <button mat-button (click)="stepper.reset()">Reset</button>
+    <div class="action-buttons">
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button (click)="stepper.reset()">Reset</button>
+    </div>
   </mat-step>
 </mat-stepper>

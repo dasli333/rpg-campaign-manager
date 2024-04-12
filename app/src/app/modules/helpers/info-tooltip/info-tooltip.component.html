@@ -1,3 +1,6 @@
-<button mat-icon-button [matTooltip]="tooltipText || ''" aria-label="Info">
+<button mat-icon-button aria-label="Info" #tooltip="matTooltip"
+        [matTooltip]="tooltipText || ''"
+        [matTooltipPosition]="tooltipPosition"
+        (click)="tooltip.show()">
   <mat-icon>info</mat-icon>
 </button>

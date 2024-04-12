@@ -1,7 +1,7 @@
 import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
 import {MatIconButton} from "@angular/material/button";
 import {MatIcon} from "@angular/material/icon";
-import {MatTooltip} from "@angular/material/tooltip";
+import {MatTooltip, TooltipPosition} from "@angular/material/tooltip";
 
 @Component({
   selector: 'app-info-tooltip',
@@ -18,4 +18,5 @@ import {MatTooltip} from "@angular/material/tooltip";
 export class InfoTooltipComponent {
 
   @Input({required: true}) tooltipText: string | undefined;
+  @Input() tooltipPosition: TooltipPosition = 'right'
 }
