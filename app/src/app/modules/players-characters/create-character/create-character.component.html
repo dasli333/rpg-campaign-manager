@@ -30,6 +30,22 @@
       <button mat-button matStepperNext [disabled]="raceCharacterForm.invalid" color="accent">Next</button>
     </div>
   </mat-step>
+  <mat-step [stepControl]="classCharacterForm" label="Class">
+    <form [formGroup]="classCharacterForm">
+      <mat-form-field color="accent">
+        <mat-select placeholder="Choose class" formControlName="class" (selectionChange)="onClassChange($event)">
+          @for (characterClass of classes; track characterClass.index) {
+            <mat-option [value]="characterClass.index">{{ characterClass.name }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+    </form>
+    <div class="action-buttons">
+      <button mat-button matStepperNext [disabled]="classCharacterForm.invalid" color="accent">Next</button>
+      <button mat-button matStepperPrevious>Back</button>
+    </div>
+
+  </mat-step>
   <mat-step [stepControl]="nameCharacterForm" label="Name and gender">
     <form [formGroup]="nameCharacterForm">
       <mat-form-field>

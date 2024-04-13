@@ -1,4 +1,5 @@
-import {ProficiencyReference, RaceReference, SubraceReference} from "./race";
+import {RaceReference, SubraceReference} from "./race";
+import {ProficiencyReference} from "./proficiency";
 
 export interface Trait {
   index: string;

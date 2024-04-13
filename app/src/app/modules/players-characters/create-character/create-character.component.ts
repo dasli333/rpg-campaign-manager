@@ -10,6 +10,7 @@ import {Dnd5eApiService} from "../../../data-services/dnd5e-api.service";
 import {Race, RaceReference, Subrace} from "../../../data-services/models/race";
 import {RaceDetailsComponent} from "../race-details/race-details.component";
 import {Trait} from "../../../data-services/models/trait";
+import {CharacterClassReference} from "../../../data-services/models/character-class";
 
 @Component({
   selector: 'app-create-character',
@@ -27,17 +28,24 @@ export class CreateCharacterComponent {
 
   races: RaceReference[] = [];
   traits: Trait[] = [];
+  classes: CharacterClassReference[] = [];
   selectedSubrace: Subrace | undefined | null;
   selectedRaceDetail: Race | undefined;
 
-  raceCharacterForm = this.#formBuilder.group({
-    race: ['', Validators.required],
-    subrace: [''],
-  });
+
 
   nameCharacterForm = this.#formBuilder.group({
     name: ['', Validators.required],
     gender: ['', Validators.required],
+  });
+
+  classCharacterForm = this.#formBuilder.group({
+    class: ['', Validators.required],
+  });
+
+  raceCharacterForm = this.#formBuilder.group({
+    race: ['', Validators.required],
+    subrace: [''],
   });
 
   constructor() {
@@ -48,6 +56,10 @@ export class CreateCharacterComponent {
     this.#dnd5eApiService.getTraits().subscribe(traits => {
       this.traits = traits.data.traits;
       console.log(this.traits);
+    });
+
+    this.#dnd5eApiService.getClasses().subscribe(classes => {
+      this.classes = classes.data.classes;
     });
   }
 
@@ -73,6 +85,14 @@ export class CreateCharacterComponent {
       this.selectedSubrace = subrace.data.subrace;
       this.#detectChanges.markForCheck();
     })
+  }
+
+  onClassChange(event: MatSelectChange) {
+    const classIndex = event.value;
+    if (!classIndex) {
+      return;
+    }
+    console.log(classIndex);
   }
 
 }

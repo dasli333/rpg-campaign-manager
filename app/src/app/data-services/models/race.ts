@@ -1,4 +1,5 @@
 import {TraitReference} from "./trait";
+import {ProficiencyOption, ProficiencyReference} from "./proficiency";
 
 export interface Race {
   index: string;
@@ -61,21 +62,6 @@ interface AbilityScoreReference {
   url: string;
 }
 
-interface ProficiencyOption {
-  desc: string;
-  choose: number;
-  type: string;
-  from: {
-    option_set_type: string;
-    options: ProficiencyItemOption[];
-  };
-}
-
-interface ProficiencyItemOption {
-  option_type: string;
-  item: ProficiencyReference;
-}
-
 export interface SubraceReference {
   index: string;
   name: string;
@@ -85,12 +71,6 @@ export interface SubraceReference {
 export interface RaceReference {
   index: string;
   name: string;
-}
-
-export interface ProficiencyReference {
-  index: string;
-  name: string;
-  url: string;
 }
 
 interface LanguageReference {
