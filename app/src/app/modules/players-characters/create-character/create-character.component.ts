@@ -10,12 +10,13 @@ import {Dnd5eApiService} from "../../../data-services/dnd5e-api.service";
 import {Race, RaceReference, Subrace} from "../../../data-services/models/race";
 import {RaceDetailsComponent} from "../race-details/race-details.component";
 import {Trait} from "../../../data-services/models/trait";
-import {CharacterClassReference} from "../../../data-services/models/character-class";
+import {CharacterClass, CharacterClassReference} from "../../../data-services/models/character-class";
+import {ClassDetailsComponent} from "../class-details/class-details.component";
 
 @Component({
   selector: 'app-create-character',
   standalone: true,
-  imports: [MatStepperModule, MatButton, ReactiveFormsModule, MatFormFieldModule, MatInput, MatRadioModule, MatSelectModule, RaceDetailsComponent],
+  imports: [MatStepperModule, MatButton, ReactiveFormsModule, MatFormFieldModule, MatInput, MatRadioModule, MatSelectModule, RaceDetailsComponent, ClassDetailsComponent],
   templateUrl: './create-character.component.html',
   styleUrl: './create-character.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -31,6 +32,7 @@ export class CreateCharacterComponent {
   classes: CharacterClassReference[] = [];
   selectedSubrace: Subrace | undefined | null;
   selectedRaceDetail: Race | undefined;
+  selectedClassDetail: CharacterClass | undefined;
 
 
 
@@ -92,7 +94,10 @@ export class CreateCharacterComponent {
     if (!classIndex) {
       return;
     }
-    console.log(classIndex);
+    this.#dnd5eApiService.getClassDetails(classIndex).subscribe(classDetail => {
+      this.selectedClassDetail = classDetail.data.class;
+      this.#detectChanges.markForCheck();
+    })
   }
 
 }

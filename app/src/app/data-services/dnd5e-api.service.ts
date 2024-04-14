@@ -4,7 +4,7 @@ import {HttpClient} from "@angular/common/http";
 import {Apollo} from "apollo-angular";
 import {gql} from "@apollo/client";
 import {Trait} from "./models/trait";
-import {CharacterClassReference} from "./models/character-class";
+import {CharacterClass, CharacterClassReference} from "./models/character-class";
 
 @Injectable({
   providedIn: 'root'
@@ -130,6 +130,28 @@ export class Dnd5eApiService {
           classes {
             index
             name
+          }
+        }
+      `
+    });
+  }
+
+  getClassDetails(index: string) {
+    return this.#apollo.query<{ class: CharacterClass }>({
+      query: gql`
+        query {
+          class(index: "${index}") {
+            index
+            name
+            hit_die
+            proficiencies {
+              index
+              name
+            }
+            subclasses {
+              index
+              name
+            }
           }
         }
       `

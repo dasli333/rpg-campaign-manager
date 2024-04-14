@@ -40,6 +40,10 @@
         </mat-select>
       </mat-form-field>
     </form>
+
+    <app-class-details
+      [selectedClassDetail]="selectedClassDetail"></app-class-details>
+
     <div class="action-buttons">
       <button mat-button matStepperNext [disabled]="classCharacterForm.invalid" color="accent">Next</button>
       <button mat-button matStepperPrevious>Back</button>
