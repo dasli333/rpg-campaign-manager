@@ -22,7 +22,7 @@
     </form>
 
     <app-race-details
-      [traits]="traits"
+      [traits]="traits()"
       [selectedRaceDetail]="selectedRaceDetail"
       [selectedSubrace]="selectedSubrace"></app-race-details>
 
@@ -50,6 +50,48 @@
     </div>
 
   </mat-step>
+
+  <mat-step [stepControl]="proficiencyCharacterForm" label="Proficiencies">
+
+<!--    <section class="example-section" [formGroup]="proficiencyCharacterForm">-->
+<!--      <h4>Select Proficiencies</h4>-->
+<!--      @for (proficiency of selectedClassDetail?.proficiency_choices; track proficiency.desc) {-->
+<!--        @for (option of proficiency.from.options; track option.item.index) {-->
+<!--          <p>-->
+<!--            <mat-checkbox [formControlName]="option.item.index">{{ option.item.name }}</mat-checkbox>-->
+<!--          </p>-->
+<!--        }-->
+<!--      }-->
+<!--    </section>-->
+
+<!--    <form [formGroup]="proficiencyCharacterForm">-->
+<!--      <h3>Select Proficiencies</h3>-->
+<!--      @for (proficiency of selectedClassDetail?.proficiency_choices; track proficiency.desc) {-->
+<!--        <mat-form-field color="accent">-->
+<!--          <mat-select placeholder="Choose proficiency" formControlName="proficiency" (selectionChange)="onProficiencyChange($event)">-->
+<!--            @for (option of proficiency.from.options; track option.item.index) {-->
+<!--              <mat-option [value]="option.item.index">{{ option.item.name }}</mat-option>-->
+<!--            }-->
+<!--          </mat-select>-->
+<!--        </mat-form-field>-->
+<!--      }-->
+<!--    </form>-->
+
+
+
+<!--    <section class="example-section" [formGroup]="toppings">-->
+<!--      <h4>You chose:</h4>-->
+<!--      {{toppings.value | json}}-->
+<!--    </section>-->
+
+
+    <div class="action-buttons">
+      <button mat-button matStepperNext [disabled]="proficiencyCharacterForm.invalid" color="accent">Next</button>
+      <button mat-button matStepperPrevious>Back</button>
+    </div>
+
+  </mat-step>
+
   <mat-step [stepControl]="nameCharacterForm" label="Name and gender">
     <form [formGroup]="nameCharacterForm">
       <mat-form-field>

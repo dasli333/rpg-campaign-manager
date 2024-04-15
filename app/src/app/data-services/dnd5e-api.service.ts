@@ -5,6 +5,7 @@ import {Apollo} from "apollo-angular";
 import {gql} from "@apollo/client";
 import {Trait} from "./models/trait";
 import {CharacterClass, CharacterClassReference} from "./models/character-class";
+import {Observable, shareReplay} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +15,8 @@ export class Dnd5eApiService {
   #apiUrl = 'https://www.dnd5eapi.co';
   #http = inject(HttpClient);
   #apollo = inject(Apollo);
+
+  #classDetailsCache: { [index: string]: Observable<CharacterClass> } = {};
 
   constructor() {
   }
@@ -136,26 +139,58 @@ export class Dnd5eApiService {
     });
   }
 
+  // getClassDetails(index: string) {
+  //   return this.#apollo.query<{ class: CharacterClass }>({
+  //     query: gql`
+  //       query {
+  //         class(index: "${index}") {
+  //           index
+  //           name
+  //           hit_die
+  //           proficiencies {
+  //             index
+  //             name
+  //           }
+  //           proficiency_choices {
+  //             choose
+  //             type
+  //             from {
+  //               option_set_type
+  //               options {
+  //                 option_type
+  //                 item {
+  //                   index
+  //                   name
+  //                 }
+  //               }
+  //             }
+  //           }
+  //           subclasses {
+  //             index
+  //             name
+  //           }
+  //           spellcasting {
+  //             spellcasting_ability {
+  //               name
+  //             }
+  //             info {
+  //               name
+  //               desc
+  //             }
+  //           }
+  //         }
+  //       }
+  //     `
+  //   });
+  // }
+
   getClassDetails(index: string) {
-    return this.#apollo.query<{ class: CharacterClass }>({
-      query: gql`
-        query {
-          class(index: "${index}") {
-            index
-            name
-            hit_die
-            proficiencies {
-              index
-              name
-            }
-            subclasses {
-              index
-              name
-            }
-          }
-        }
-      `
-    });
+    if (!this.#classDetailsCache[index]) {
+      this.#classDetailsCache[index] = this.#http.get<CharacterClass>(`${this.#apiUrl}/api/classes/${index}`).pipe(
+        shareReplay(1)
+      );
+    }
+    return this.#classDetailsCache[index];
   }
 }
 

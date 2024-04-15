@@ -5,8 +5,8 @@
     </mat-card-header>
 
     <mat-card-content>
-      <h3>Hit Dice</h3>
-      <p>{{ selectedClassDetail.hit_die }}</p>
+      <h3>Hit Dice {{selectedClassDetail.hit_die}}</h3>
+      <mat-divider></mat-divider>
 
       <h3>Class Features</h3>
       <mat-list>
@@ -16,6 +16,19 @@
           </mat-list-item>
         }
       </mat-list>
+      <mat-divider></mat-divider>
+
+      @if (selectedClassDetail.spellcasting) {
+        <h3>Spellcasting</h3>
+        <p>Spellcasting ability: {{ selectedClassDetail.spellcasting.spellcasting_ability.name }}</p>
+
+        @for (spell of selectedClassDetail.spellcasting.info; track spell.name) {
+          <h4> {{spell.name }}</h4>
+          <p> {{spell.desc }}</p>
+        }
+      }
+
+      <mat-divider></mat-divider>
     </mat-card-content>
   </mat-card>
 }
