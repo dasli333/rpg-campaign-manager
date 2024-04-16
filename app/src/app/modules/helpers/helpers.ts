@@ -1,6 +1,6 @@
 import {AbstractControl, FormArray, FormGroup, ValidationErrors, ValidatorFn} from '@angular/forms';
 
-export function minSelectedCheckboxes(min = 1): ValidatorFn {
+export function exactSelectedCheckboxes(value = 1): ValidatorFn {
   const validator: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
     let totalSelected = 0;
 
@@ -10,7 +10,7 @@ export function minSelectedCheckboxes(min = 1): ValidatorFn {
         .reduce((prev, next) => next ? prev + next : prev, 0);
     }
 
-    return totalSelected >= min ? null : { required: true };
+    return totalSelected === value ? null : { required: true };
   };
 
   return validator;

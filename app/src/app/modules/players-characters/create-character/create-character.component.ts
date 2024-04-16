@@ -14,7 +14,7 @@ import {ClassDetailsComponent} from "../class-details/class-details.component";
 import {PlayerCharacterDataService} from "../player-character-data.service";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {MatDivider} from "@angular/material/divider";
-import {minSelectedCheckboxes} from "../../helpers/helpers";
+import {exactSelectedCheckboxes} from "../../helpers/helpers";
 
 @Component({
   selector: 'app-create-character',
@@ -81,7 +81,7 @@ export class CreateCharacterComponent {
   buildProficienciesChoices(){
     const groups = new FormArray<any>([]);
     this.selectedClassDetail?.proficiency_choices.forEach(proficiency => {
-      const group = new FormGroup({}, minSelectedCheckboxes(3));
+      const group = new FormGroup({}, exactSelectedCheckboxes(proficiency.choose));
       proficiency.from.options.forEach(option => {
         const controlName = option.item.index;
         group.addControl(controlName, this.#formBuilder.control(false));
