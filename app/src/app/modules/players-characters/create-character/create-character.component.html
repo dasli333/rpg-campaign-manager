@@ -53,37 +53,23 @@
 
   <mat-step [stepControl]="proficiencyCharacterForm" label="Proficiencies">
 
-<!--    <section class="example-section" [formGroup]="proficiencyCharacterForm">-->
-<!--      <h4>Select Proficiencies</h4>-->
-<!--      @for (proficiency of selectedClassDetail?.proficiency_choices; track proficiency.desc) {-->
-<!--        @for (option of proficiency.from.options; track option.item.index) {-->
-<!--          <p>-->
-<!--            <mat-checkbox [formControlName]="option.item.index">{{ option.item.name }}</mat-checkbox>-->
-<!--          </p>-->
-<!--        }-->
-<!--      }-->
-<!--    </section>-->
-
-<!--    <form [formGroup]="proficiencyCharacterForm">-->
-<!--      <h3>Select Proficiencies</h3>-->
-<!--      @for (proficiency of selectedClassDetail?.proficiency_choices; track proficiency.desc) {-->
-<!--        <mat-form-field color="accent">-->
-<!--          <mat-select placeholder="Choose proficiency" formControlName="proficiency" (selectionChange)="onProficiencyChange($event)">-->
-<!--            @for (option of proficiency.from.options; track option.item.index) {-->
-<!--              <mat-option [value]="option.item.index">{{ option.item.name }}</mat-option>-->
-<!--            }-->
-<!--          </mat-select>-->
-<!--        </mat-form-field>-->
-<!--      }-->
-<!--    </form>-->
+    <section class="example-section" [formGroup]="proficiencyCharacterForm">
+      <div formArrayName="proficiencies">
+        @for (proficiency of selectedClassDetail?.proficiency_choices; track proficiency.desc) {
+          <div [formGroupName]="$index">
+            <h3>{{ proficiency.desc }}</h3>
+            @for (option of proficiency.from.options; track option.item.index) {
+              <p>
+                <mat-checkbox [formControlName]="option.item.index">{{ option.item.name }}</mat-checkbox>
+              </p>
+            }
+          </div>
+          <mat-divider></mat-divider>
+        }
+      </div>
 
 
-
-<!--    <section class="example-section" [formGroup]="toppings">-->
-<!--      <h4>You chose:</h4>-->
-<!--      {{toppings.value | json}}-->
-<!--    </section>-->
-
+    </section>
 
     <div class="action-buttons">
       <button mat-button matStepperNext [disabled]="proficiencyCharacterForm.invalid" color="accent">Next</button>

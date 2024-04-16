@@ -1,7 +1,7 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, inject} from '@angular/core';
 import {MatStepperModule} from "@angular/material/stepper";
 import {MatButton} from "@angular/material/button";
-import {FormBuilder, ReactiveFormsModule, Validators} from "@angular/forms";
+import {FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInput} from "@angular/material/input";
 import {MatRadioModule} from "@angular/material/radio";
@@ -13,6 +13,8 @@ import {CharacterClass, CharacterClassReference} from "../../../data-services/mo
 import {ClassDetailsComponent} from "../class-details/class-details.component";
 import {PlayerCharacterDataService} from "../player-character-data.service";
 import {MatCheckboxModule} from "@angular/material/checkbox";
+import {MatDivider} from "@angular/material/divider";
+import {minSelectedCheckboxes} from "../../helpers/helpers";
 
 @Component({
   selector: 'app-create-character',
@@ -26,7 +28,7 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
     MatSelectModule,
     MatCheckboxModule,
     RaceDetailsComponent,
-    ClassDetailsComponent],
+    ClassDetailsComponent, MatDivider],
   templateUrl: './create-character.component.html',
   styleUrl: './create-character.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -76,15 +78,18 @@ export class CreateCharacterComponent {
     });
   }
 
-  buildProficienciesChoices() {
-    const group = {};
-    this.selectedClassDetail?.proficiency_choices.forEach((proficiency) => {
-      proficiency.from.options.forEach((option) => {
+  buildProficienciesChoices(){
+    const groups = new FormArray<any>([]);
+    this.selectedClassDetail?.proficiency_choices.forEach(proficiency => {
+      const group = new FormGroup({}, minSelectedCheckboxes(3));
+      proficiency.from.options.forEach(option => {
         const controlName = option.item.index;
-        (group as {[key: string]: any})[controlName] = this.#formBuilder.control(false);
+        group.addControl(controlName, this.#formBuilder.control(false));
       });
+
+      groups.push(group);
     });
-    return this.#formBuilder.group(group);
+    return groups;
   }
 
   onRaceChange(event: MatSelectChange) {
@@ -117,13 +122,13 @@ export class CreateCharacterComponent {
     }
     this.#dnd5eApiService.getClassDetails(classIndex).subscribe(classDetail => {
       this.selectedClassDetail = classDetail;
-      // this.proficiencyCharacterForm.setControl('proficiencies', this.buildProficienciesChoices());
-      // console.log(this.proficiencyCharacterForm)
+      this.proficiencyCharacterForm.setControl('proficiencies', this.buildProficienciesChoices());
       this.#detectChanges.markForCheck();
     })
   }
 
   onProficiencyChange(event: MatSelectChange) {
+    // TODO: Implement this method
     const proficiencyIndex = event.value;
     if (!proficiencyIndex) {
       return;
