@@ -55,13 +55,15 @@
 
     <section class="example-section" [formGroup]="proficiencyCharacterForm">
       <div formArrayName="proficiencies">
-        @for (proficiency of selectedClassDetail?.proficiency_choices; track proficiency.desc) {
+        @for (proficiency of proficiencyChoices; track proficiency.desc) {
           <div [formGroupName]="$index">
             <h3>{{ proficiency.desc }}</h3>
-            @for (option of proficiency.from.options; track option.item.index) {
-              <p>
-                <mat-checkbox [formControlName]="option.item.index">{{ option.item.name }}</mat-checkbox>
-              </p>
+            @for (option of proficiency.from.options; track option.item?.index) {
+              @if (option.item) {
+                <p>
+                  <mat-checkbox [formControlName]="option.item.index">{{ option.item.name }}</mat-checkbox>
+                </p>
+              }
             }
           </div>
           <mat-divider></mat-divider>

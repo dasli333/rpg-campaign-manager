@@ -11,7 +11,7 @@ export interface ProficiencyDetail {
   type: string;
   name: string;
   classes: CharacterClassReference[];
-  races: any[]; // Empty array, can be defined more specifically if races objects are known
+  races: any[];
   url: string;
   reference: {
     index: string;
@@ -32,5 +32,6 @@ export interface ProficiencyOption {
 
 interface ProficiencyItemOption {
   option_type: string;
-  item: ProficiencyReference;
+  item?: ProficiencyReference;
+  choice?: ProficiencyOption;
 }

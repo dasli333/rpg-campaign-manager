@@ -46,6 +46,7 @@ export class CreateCharacterComponent {
   selectedSubrace: Subrace | undefined | null;
   selectedRaceDetail: Race | undefined;
   selectedClassDetail: CharacterClass | undefined;
+  proficiencyChoices: any[] = [];
 
 
   raceCharacterForm = this.#formBuilder.group({
@@ -81,13 +82,29 @@ export class CreateCharacterComponent {
   buildProficienciesChoices(){
     const groups = new FormArray<any>([]);
     this.selectedClassDetail?.proficiency_choices.forEach(proficiency => {
-      const group = new FormGroup({}, exactSelectedCheckboxes(proficiency.choose));
+      let group: FormGroup | null = new FormGroup({}, exactSelectedCheckboxes(proficiency.choose));
+      const proficiencyChoice = proficiency;
       proficiency.from.options.forEach(option => {
-        const controlName = option.item.index;
-        group.addControl(controlName, this.#formBuilder.control(false));
+        if (option.item) {
+          const controlName = option.item.index;
+          (group as FormGroup).addControl(controlName, this.#formBuilder.control(false));
+        } else if (option.choice) {
+          group = null;
+          const optionChoiceClone = structuredClone(option.choice);
+          optionChoiceClone.desc = "Choose " + option.choice.choose + " from the following " + option.choice.desc;
+          this.proficiencyChoices.push(optionChoiceClone);
+          const groupForChoice = new FormGroup({}, exactSelectedCheckboxes(option.choice.choose));
+          option.choice.from.options.forEach(choice => {
+            const controlName = choice.item?.index || '';
+            groupForChoice.addControl(controlName, this.#formBuilder.control(false));
+          })
+          groups.push(groupForChoice);
+        }
       });
-
-      groups.push(group);
+      if (group) {
+        this.proficiencyChoices.push(proficiencyChoice);
+        groups.push(group);
+      }
     });
     return groups;
   }
