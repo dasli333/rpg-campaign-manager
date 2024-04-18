@@ -11,3 +11,26 @@ form {
 .action-buttons {
   margin-top: 8px;
 }
+
+.ability-scores {
+  display: flex;
+  flex-direction: row;
+
+  .ability-scores-info {
+    margin-left: 16px;
+  }
+}
+
+.ability-scores-buttons {
+  display: flex;
+  flex-direction: column;
+
+  app-info-tooltip {
+    vertical-align: sub;
+  }
+}
+
+.ability-scores-radio-group {
+  display: flex;
+  flex-direction: column;
+}

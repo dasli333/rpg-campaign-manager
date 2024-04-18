@@ -6,6 +6,8 @@ import {gql} from "@apollo/client";
 import {Trait} from "./models/trait";
 import {CharacterClass, CharacterClassReference} from "./models/character-class";
 import {Observable, shareReplay} from "rxjs";
+import {AbilityScore} from "./models/ability-score";
+import {Skill} from "./models/skill";
 
 @Injectable({
   providedIn: 'root'
@@ -126,6 +128,39 @@ export class Dnd5eApiService {
     });
   }
 
+  getAbilityScores() {
+    return this.#apollo.query<{ abilityScores: AbilityScore[] }>({
+      query: gql`
+        query {
+          abilityScores {
+            index
+            name
+            full_name
+            desc
+          }
+        }
+      `
+    });
+  }
+
+  getSkills() {
+    return this.#apollo.query<{ skills: Skill[] }>({
+      query: gql`
+        query {
+          skills {
+            index
+            name
+            desc
+            ability_score {
+              index
+              name
+            }
+          }
+        }
+      `
+    });
+  }
+
   getClasses() {
     return this.#apollo.query<{ classes: CharacterClassReference[] }>({
       query: gql`
@@ -138,51 +173,6 @@ export class Dnd5eApiService {
       `
     });
   }
-
-  // getClassDetails(index: string) {
-  //   return this.#apollo.query<{ class: CharacterClass }>({
-  //     query: gql`
-  //       query {
-  //         class(index: "${index}") {
-  //           index
-  //           name
-  //           hit_die
-  //           proficiencies {
-  //             index
-  //             name
-  //           }
-  //           proficiency_choices {
-  //             choose
-  //             type
-  //             from {
-  //               option_set_type
-  //               options {
-  //                 option_type
-  //                 item {
-  //                   index
-  //                   name
-  //                 }
-  //               }
-  //             }
-  //           }
-  //           subclasses {
-  //             index
-  //             name
-  //           }
-  //           spellcasting {
-  //             spellcasting_ability {
-  //               name
-  //             }
-  //             info {
-  //               name
-  //               desc
-  //             }
-  //           }
-  //         }
-  //       }
-  //     `
-  //   });
-  // }
 
   getClassDetails(index: string) {
     if (!this.#classDetailsCache[index]) {

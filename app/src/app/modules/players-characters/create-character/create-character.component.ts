@@ -1,7 +1,16 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, inject} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, signal} from '@angular/core';
 import {MatStepperModule} from "@angular/material/stepper";
 import {MatButton} from "@angular/material/button";
-import {FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
+import {
+  AbstractControl,
+  FormArray,
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  ValidationErrors,
+  ValidatorFn,
+  Validators
+} from "@angular/forms";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInput} from "@angular/material/input";
 import {MatRadioModule} from "@angular/material/radio";
@@ -15,6 +24,8 @@ import {PlayerCharacterDataService} from "../player-character-data.service";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {MatDivider} from "@angular/material/divider";
 import {exactSelectedCheckboxes} from "../../helpers/helpers";
+import {TitleCasePipe} from "@angular/common";
+import {InfoTooltipComponent} from "../../helpers/info-tooltip/info-tooltip.component";
 
 @Component({
   selector: 'app-create-character',
@@ -27,8 +38,9 @@ import {exactSelectedCheckboxes} from "../../helpers/helpers";
     MatRadioModule,
     MatSelectModule,
     MatCheckboxModule,
+    MatRadioModule,
     RaceDetailsComponent,
-    ClassDetailsComponent, MatDivider],
+    ClassDetailsComponent, MatDivider, TitleCasePipe, InfoTooltipComponent],
   templateUrl: './create-character.component.html',
   styleUrl: './create-character.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -39,9 +51,13 @@ export class CreateCharacterComponent {
   #dnd5eApiService = inject(Dnd5eApiService);
   #playerCharacterDaraService = inject(PlayerCharacterDataService);
   #detectChanges = inject(ChangeDetectorRef);
+  #defaultScores = [15, 14, 13, 12, 10, 8];
 
+  rolledScores: number[] = []
   races: RaceReference[] = [];
   traits = this.#playerCharacterDaraService.traits;
+  abilityScores = this.#playerCharacterDaraService.abilityScores;
+  defaultValuesMode = signal(false);
   classes: CharacterClassReference[] = [];
   selectedSubrace: Subrace | undefined | null;
   selectedRaceDetail: Race | undefined;
@@ -62,6 +78,16 @@ export class CreateCharacterComponent {
     proficiencies: this.buildProficienciesChoices()
   });
 
+  abilityScoreCharacterForm = this.#formBuilder.group({
+    str: [3, [Validators.required, Validators.min(3), Validators.max(18)]],
+    dex: [3, [Validators.required, Validators.min(3), Validators.max(18)]],
+    con: [3, [Validators.required, Validators.min(3), Validators.max(18)]],
+    int: [3, [Validators.required, Validators.min(3), Validators.max(18)]],
+    wis: [3, [Validators.required, Validators.min(3), Validators.max(18)]],
+    cha: [3, [Validators.required, Validators.min(3), Validators.max(18)]]
+  }, {validators: this.defaultValuesSelectedCorrectly()});
+
+
   nameCharacterForm = this.#formBuilder.group({
     name: ['', Validators.required],
     gender: ['', Validators.required],
@@ -78,6 +104,8 @@ export class CreateCharacterComponent {
       this.classes = classes.data.classes;
     });
   }
+
+
 
   buildProficienciesChoices(){
     const groups = new FormArray<any>([]);
@@ -144,13 +172,63 @@ export class CreateCharacterComponent {
     })
   }
 
-  onProficiencyChange(event: MatSelectChange) {
-    // TODO: Implement this method
-    const proficiencyIndex = event.value;
-    if (!proficiencyIndex) {
-      return;
-    }
-    this.#playerCharacterDaraService.setProficiencies([...this.#playerCharacterDaraService.proficiencies(), proficiencyIndex]);
+  setDefaultValues(): void {
+    this.defaultValuesMode.set(true);
+    this.abilityScoreCharacterForm.setValue({
+      str: 8, dex: 10, con: 12, int: 13, wis: 14, cha: 15
+    });
   }
 
+  rollValues(): void {
+    this.defaultValuesMode.set(false);
+    this.rolledScores = [];
+    const dice = 6;
+    const rolls = 4;
+    this.abilityScores().forEach(ability => {
+      const  diceRolls = [];
+      for (let i = 0; i < rolls; i++) {
+        const roll = Math.floor(Math.random() * dice) + 1;
+        console.log(roll);
+        diceRolls.push(roll);
+      }
+      diceRolls.sort((a, b) => a - b);
+      diceRolls.shift();
+      const total = diceRolls.reduce((prev, next) => prev + next, 0);
+      this.rolledScores.push(total);
+      this.abilityScoreCharacterForm.controls[ability.index].setValue(total);
+      // const rolledValue = Math.floor(Math.random() * (18 - 3 + 1)) + 3; // Random number between 3 and 18
+    });
+  }
+
+  private defaultValuesSelectedCorrectly(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const scores = this.defaultValuesMode() ? this.#defaultScores : this.rolledScores;
+      const group = control as FormGroup;
+      const formValues = Object.values(group.controls).map(control => control.value);
+      const scoreCounts = scores.reduce((counts, score) => {
+        counts[score] = (counts[score] || 0) + 1;
+        return counts;
+      }, {} as Record<number, number>);
+
+      for (const value of formValues) {
+        if (scoreCounts[value]) {
+          scoreCounts[value]--;
+        } else {
+          return { defaultValuesSelectedIncorrectly: true };
+        }
+      }
+
+      for (const count of Object.values(scoreCounts)) {
+        if (count !== 0) {
+          return { defaultValuesSelectedIncorrectly: true };
+        }
+      }
+
+      return null;
+    };
+  }
+
+  resetValues(): void {
+    this.abilityScoreCharacterForm.reset();
+  }
 }

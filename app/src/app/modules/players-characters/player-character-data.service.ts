@@ -1,6 +1,8 @@
 import {Injectable, signal, WritableSignal} from '@angular/core';
 import {ProficiencyReference} from "../../data-services/models/proficiency";
 import {Trait} from "../../data-services/models/trait";
+import {AbilityScore} from "../../data-services/models/ability-score";
+import {Skill} from "../../data-services/models/skill";
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +17,12 @@ export class PlayerCharacterDataService {
   #traits: WritableSignal<Trait[]> = signal([]);
   traits = this.#traits.asReadonly();
 
+  #abilityScores: WritableSignal<AbilityScore[]> = signal([]);
+  abilityScores = this.#abilityScores.asReadonly();
+
+  #skills: WritableSignal<Skill[]> = signal([]);
+  skills = this.#skills.asReadonly();
+
 
   constructor() { }
 
@@ -24,6 +32,14 @@ export class PlayerCharacterDataService {
 
   setTraits(traits: Trait[]) {
     this.#traits.set(traits)
+  }
+
+  setAbilitiesScores(abilityScores: AbilityScore[]) {
+    this.#abilityScores.set(abilityScores)
+  }
+
+  setSkills(skills: Skill[]) {
+    this.#skills.set(skills)
   }
 
 }
