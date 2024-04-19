@@ -15,3 +15,25 @@ export interface AbilityScoreReference {
   url: string;
 }
 
+export interface AbilityBonus {
+  ability_score: AbilityScoreReference
+  bonus: number;
+}
+
+export interface AbilityBonusOptions {
+  choose: number;
+  type: string;
+  from: AbilityBonusOptionSet;
+}
+
+interface AbilityBonusOptionSet {
+  option_set_type: string;
+  options: AbilityBonusOption[];
+}
+
+interface AbilityBonusOption {
+  option_type: string;
+  ability_score: AbilityScoreReference;
+  bonus: number;
+}
+

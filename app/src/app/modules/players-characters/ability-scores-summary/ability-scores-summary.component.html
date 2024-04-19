@@ -1,0 +1,57 @@
+@if (raceBonuses.length > 0) {
+  <h3>Race Bonuses</h3>
+  <ul>
+    @for (bonus of raceBonuses; track bonus.ability_score.index) {
+      <li>{{ bonus.ability_score.name }}: +{{ bonus.bonus }}</li>
+    }
+  </ul>
+}
+
+@if (subraceBonuses.length > 0) {
+  <h3>Subrace Bonuses</h3>
+  <ul>
+    @for (bonus of subraceBonuses; track bonus.ability_score.index) {
+      <li>{{ bonus.ability_score.name }}: +{{ bonus.bonus }}</li>
+    }
+  </ul>
+}
+
+@if (raceChoiceBonuses) {
+  <section class="race-choice-bonuses-section" [formGroup]="raceChoiceBonusForm">
+    <h3>Increase {{ raceChoiceBonuses.choose }} ability scores</h3>
+    <div formGroupName="raceBonus">
+      @for (bonus of raceChoiceBonuses.from.options; track bonus.ability_score.index) {
+        <p>
+          <mat-checkbox [formControlName]="bonus.ability_score.index" >{{ bonus.ability_score.name }} + {{ bonus.bonus }}</mat-checkbox>
+        </p>
+        <mat-divider></mat-divider>
+      }
+    </div>
+  </section>
+}
+
+@if (subraceChoiceBonuses) {
+  <section class="subrace-choice-bonuses-section">
+    <h3>Increase {{ subraceChoiceBonuses.choose }} ability scores</h3>
+    <div formGroupName="subraceBonus">
+      @for (bonus of subraceChoiceBonuses.from.options; track bonus.ability_score.index) {
+        <p>
+          <mat-checkbox>{{ bonus.ability_score.name }} + {{ bonus.bonus }}</mat-checkbox>
+        </p>
+        <mat-divider></mat-divider>
+      }
+    </div>
+  </section>
+}
+
+<h3>Final ability scores:</h3>
+<ul>
+  @for (abilityScore of getAbilityScores; track abilityScore) {
+    <li>{{ getFinalAbilityScore(abilityScore[0], abilityScore[1]) }}</li>
+  }
+
+<!--  @for ([index, score] of Object.entries(abilityScores)) {-->
+<!--    <li>{{ index }}: {{ score }}</li>-->
+<!--  }-->
+</ul>
+

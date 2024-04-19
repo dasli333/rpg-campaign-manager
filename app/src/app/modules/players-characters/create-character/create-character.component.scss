@@ -12,11 +12,24 @@ form {
   margin-top: 8px;
 }
 
+.ability-scores-mode-selection {
+  display: flex;
+  flex-direction: row;
+
+  .ability-scores-buttons {
+    width: 300px;
+  }
+
+  .ability-scores-info {
+    margin-left: 16px;
+  }
+}
+
 .ability-scores {
   display: flex;
   flex-direction: row;
 
-  .ability-scores-info {
+  .ability-scores-summary {
     margin-left: 16px;
   }
 }

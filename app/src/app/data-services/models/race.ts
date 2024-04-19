@@ -1,5 +1,6 @@
 import {TraitReference} from "./trait";
 import {ProficiencyOption, ProficiencyReference} from "./proficiency";
+import {AbilityBonus, AbilityBonusOptions} from "./ability-score";
 
 export interface Race {
   index: string;
@@ -31,34 +32,6 @@ export interface Subrace {
   languages: LanguageReference[]; // Assuming this might be filled in other scenarios
   language_options: LanguageOption;
   racial_traits: TraitReference[];
-  url: string;
-}
-
-interface AbilityBonus {
-  ability_score: AbilityScoreReference
-  bonus: number;
-}
-
-interface AbilityBonusOptions {
-  choose: number;
-  type: string;
-  from: AbilityBonusOptionSet;
-}
-
-interface AbilityBonusOptionSet {
-  option_set_type: string;
-  options: AbilityBonusOption[];
-}
-
-interface AbilityBonusOption {
-  option_type: string;
-  ability_score: AbilityScoreReference;
-  bonus: number;
-}
-
-interface AbilityScoreReference {
-  index: string;
-  name: string;
   url: string;
 }
 

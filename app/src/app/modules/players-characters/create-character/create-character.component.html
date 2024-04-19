@@ -82,6 +82,42 @@
 
   <mat-step [stepControl]="abilityScoreCharacterForm" label="Ability Scores">
     <h3>Roll or set your ability scores</h3>
+    <div class="ability-scores-mode-selection">
+      <div class="ability-scores-buttons">
+        <mat-radio-group class="ability-scores-radio-group" aria-label="Select an option" (change)="enableAbilityScoreForm()">
+          <div>
+            <mat-radio-button value="1" (change)="setDefaultValues()">Use Default Values</mat-radio-button>
+            <app-info-tooltip tooltipText="You can use default values: 15, 14, 13, 12, 10, 8"></app-info-tooltip>
+          </div>
+
+          <div>
+            <mat-radio-button value="2" (change)="rollValues()">Roll Values</mat-radio-button>
+            <app-info-tooltip tooltipText="You can roll 4d6 and drop the lowest value. It is done 6 times after that assign them all to your character’s ability scores"></app-info-tooltip>
+          </div>
+
+          <div>
+            <mat-radio-button value="3" (change)="setManualValues()">Set Manual Values</mat-radio-button>
+            <app-info-tooltip tooltipText="You can set your ability scores manually"></app-info-tooltip>
+          </div>
+        </mat-radio-group>
+
+        <div>
+          <button mat-button color="accent" (click)="resetValues()">Reset Values</button>
+        </div>
+      </div>
+
+      <div class="ability-scores-info">
+        @if (defaultValuesMode() === AbilityScoreMode.DEFAULT) {
+          <p>For each field select one default value</p>
+          <p>Default values: 15, 14, 13, 12, 10, 8</p>
+        } @else if (defaultValuesMode() === AbilityScoreMode.ROLLED) {
+          <p>For each field select one rolled value</p>
+          <p>Your rolled scores: {{ rolledScores.join(', ') }}</p>
+        }
+      </div>
+    </div>
+
+
     <div class="ability-scores">
       <div class="ability-scores-form">
         <form [formGroup]="abilityScoreCharacterForm">
@@ -100,63 +136,27 @@
             </div>
           }
         </form>
-        @if (abilityScoreCharacterForm.invalid && abilityScoreCharacterForm.dirty) {
+        @if (abilityScoreCharacterForm.invalid && abilityScoreCharacterForm.dirty && defaultValuesMode() !== AbilityScoreMode.MANUAL) {
           <mat-error>Please make sure you use each value once</mat-error>
         }
       </div>
 
-<!--      <div class="ability-scores-summary">-->
-<!--        <app-ability-scores-summary-->
-<!--          [abilityScores]="abilityScores"-->
-<!--          [abilityModifiers]="abilityModifiers"></app-ability-scores-summary>-->
-
-      <div class="ability-scores-info">
-        @if (defaultValuesMode()) {
-          <p>For each field select one default value</p>
-          <p>Default values: 15, 14, 13, 12, 10, 8</p>
-        } @else if (rolledScores.length > 0) {
-          <p>For each field select one rolled value</p>
-          <p>Your rolled scores: {{ rolledScores.join(', ') }}</p>
-        }
-      </div>
-
-<!--      <div class="ability-scores-summary">-->
-<!--        <app-ability-scores-summary-->
-<!--          [abilityScores]="abilityScores"-->
-<!--          [abilityModifiers]="abilityModifiers"></app-ability-scores-summary>-->
-<!--      </div>-->
-    </div>
-
-
-
-
-    <div class="ability-scores-buttons">
-
-      <mat-radio-group class="ability-scores-radio-group" aria-label="Select an option">
-        <div>
-          <mat-radio-button value="1" (change)="setDefaultValues()">Use Default Values</mat-radio-button>
-          <app-info-tooltip tooltipText="You can use default values: 15, 14, 13, 12, 10, 8"></app-info-tooltip>
+        <div class="ability-scores-summary">
+          @if (abilityScoreCharacterForm.enabled) {
+            <app-ability-scores-summary
+              [abilityScores]="abilityScoreCharacterForm.value"
+              [setRaceBonuses]="selectedRaceDetail?.ability_bonuses"
+              [setRaceChoiceBonuses]="selectedRaceDetail?.ability_bonus_options"
+              [setSubraceBonuses]="selectedSubrace?.ability_bonuses"
+              [setSubraceChoiceBonuses]="selectedSubrace?.ability_bonus_options"
+            ></app-ability-scores-summary>
+          }
         </div>
 
-        <div>
-          <mat-radio-button value="2" (change)="rollValues()">Roll Values</mat-radio-button>
-          <app-info-tooltip tooltipText="You can roll 4d6 and drop the lowest value. It is done 6 times after that assign them all to your character’s ability scores"></app-info-tooltip>
-        </div>
-      </mat-radio-group>
-
-      <div>
-        <button mat-button color="accent" (click)="resetValues()">Reset Values</button>
-      </div>
     </div>
-
-
-
-<!--    <app-ability-scores-->
-<!--      [abilityScores]="abilityScores"-->
-<!--      [abilityModifiers]="abilityModifiers"></app-ability-scores>-->
 
     <div class="action-buttons">
-      <button mat-button matStepperNext [disabled]="abilityScoreCharacterForm.invalid" color="accent">Next</button>
+      <button mat-button matStepperNext [disabled]="abilityScoreCharacterForm.invalid || abilityScoreCharacterForm.disabled" color="accent">Next</button>
       <button mat-button matStepperPrevious>Back</button>
     </div>
   </mat-step>
