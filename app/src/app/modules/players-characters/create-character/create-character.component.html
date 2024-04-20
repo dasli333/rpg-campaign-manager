@@ -121,7 +121,7 @@
     <div class="ability-scores">
       <div class="ability-scores-form">
         <form [formGroup]="abilityScoreCharacterForm">
-          @for (ability of abilityScores(); track ability) {
+          @for (ability of abilityScoresInOrder(); track ability) {
             <div class="ability-score-field">
               <mat-form-field>
                 <mat-label>{{ability.full_name | titlecase}}</mat-label>
@@ -130,9 +130,6 @@
                   <mat-error>Enter a value between 3 and 18</mat-error>
                 }
               </mat-form-field>
-              <div class="bonus">
-<!--                {{ ability.modifier }}-->
-              </div>
             </div>
           }
         </form>
@@ -149,6 +146,7 @@
               [setRaceChoiceBonuses]="selectedRaceDetail?.ability_bonus_options"
               [setSubraceBonuses]="selectedSubrace?.ability_bonuses"
               [setSubraceChoiceBonuses]="selectedSubrace?.ability_bonus_options"
+              (isErrorInForm)="isErrorInAbilityScoreBonusForm($event)"
             ></app-ability-scores-summary>
           }
         </div>
@@ -156,7 +154,7 @@
     </div>
 
     <div class="action-buttons">
-      <button mat-button matStepperNext [disabled]="abilityScoreCharacterForm.invalid || abilityScoreCharacterForm.disabled" color="accent">Next</button>
+      <button mat-button matStepperNext [disabled]="abilityScoreCharacterForm.invalid || abilityScoreCharacterForm.disabled || errorInAbilityScoreBonusForm" color="accent">Next</button>
       <button mat-button matStepperPrevious>Back</button>
     </div>
   </mat-step>

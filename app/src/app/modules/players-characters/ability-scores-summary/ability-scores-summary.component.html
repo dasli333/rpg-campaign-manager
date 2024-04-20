@@ -27,11 +27,14 @@
         <mat-divider></mat-divider>
       }
     </div>
+    @if (raceChoiceBonusForm.invalid) {
+      <mat-error>You must choose {{ raceChoiceBonuses.choose }} ability scores</mat-error>
+    }
   </section>
 }
 
 @if (subraceChoiceBonuses) {
-  <section class="subrace-choice-bonuses-section">
+  <section class="subrace-choice-bonuses-section" [formGroup]="subraceChoiceBonusForm">
     <h3>Increase {{ subraceChoiceBonuses.choose }} ability scores</h3>
     <div formGroupName="subraceBonus">
       @for (bonus of subraceChoiceBonuses.from.options; track bonus.ability_score.index) {
@@ -41,6 +44,9 @@
         <mat-divider></mat-divider>
       }
     </div>
+    @if (subraceChoiceBonusForm.invalid) {
+      <mat-error>You must choose {{ subraceChoiceBonuses.choose }} ability scores</mat-error>
+    }
   </section>
 }
 

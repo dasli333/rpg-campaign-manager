@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, OnInit, signal} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, computed, inject, OnInit, signal} from '@angular/core';
 import {MatStepperModule} from "@angular/material/stepper";
 import {MatButton} from "@angular/material/button";
 import {
@@ -60,17 +60,25 @@ export class CreateCharacterComponent implements OnInit {
   #detectChanges = inject(ChangeDetectorRef);
   #defaultScores = [15, 14, 13, 12, 10, 8];
 
+  #abilityScoresOrder = ['str', 'dex', 'con', 'int', 'wis', 'cha'];
+
+
   rolledScores: number[] = []
   races: RaceReference[] = [];
   traits = this.#playerCharacterDaraService.traits;
-  abilityScores = this.#playerCharacterDaraService.abilityScores;
+  abilityScoresInOrder = computed(() => {
+    return [...this.#playerCharacterDaraService.abilityScores()]
+      .sort((keyA, keyB) => {
+        return this.#abilityScoresOrder.indexOf(keyA.index) - this.#abilityScoresOrder.indexOf(keyB.index)
+      });
+  })
   defaultValuesMode = signal<AbilityScoreMode | null>(null);
   classes: CharacterClassReference[] = [];
   selectedSubrace: Subrace | undefined | null;
   selectedRaceDetail: Race | undefined;
   selectedClassDetail: CharacterClass | undefined;
   proficiencyChoices: any[] = [];
-
+  errorInAbilityScoreBonusForm = false;
 
   raceCharacterForm = this.#formBuilder.group({
     race: ['', Validators.required],
@@ -101,7 +109,6 @@ export class CreateCharacterComponent implements OnInit {
   });
 
 
-
   constructor() {
     this.#dnd5eApiService.getRaces().subscribe(races => {
       this.races = races.data.races;
@@ -117,8 +124,7 @@ export class CreateCharacterComponent implements OnInit {
   }
 
 
-
-  buildProficienciesChoices(){
+  buildProficienciesChoices() {
     this.proficiencyChoices = [];
     const groups = new FormArray<any>([]);
     this.selectedClassDetail?.proficiency_choices.forEach(proficiency => {
@@ -196,8 +202,8 @@ export class CreateCharacterComponent implements OnInit {
     this.rolledScores = [];
     const dice = 6;
     const rolls = 4;
-    this.abilityScores().forEach(ability => {
-      const  diceRolls = [];
+    this.abilityScoresInOrder().forEach(ability => {
+      const diceRolls = [];
       for (let i = 0; i < rolls; i++) {
         const roll = Math.floor(Math.random() * dice) + 1;
         diceRolls.push(roll);
@@ -212,6 +218,19 @@ export class CreateCharacterComponent implements OnInit {
 
   setManualValues(): void {
     this.defaultValuesMode.set(AbilityScoreMode.MANUAL);
+    this.abilityScoreCharacterForm.reset();
+  }
+
+  isErrorInAbilityScoreBonusForm(value: boolean) {
+    this.errorInAbilityScoreBonusForm = value;
+    this.#detectChanges.detectChanges();
+  }
+
+  enableAbilityScoreForm(): void {
+    this.abilityScoreCharacterForm.enable();
+  }
+
+  resetValues(): void {
     this.abilityScoreCharacterForm.reset();
   }
 
@@ -233,26 +252,18 @@ export class CreateCharacterComponent implements OnInit {
         if (scoreCounts[value]) {
           scoreCounts[value]--;
         } else {
-          return { defaultValuesSelectedIncorrectly: true };
+          return {defaultValuesSelectedIncorrectly: true};
         }
       }
 
       for (const count of Object.values(scoreCounts)) {
         if (count !== 0) {
-          return { defaultValuesSelectedIncorrectly: true };
+          return {defaultValuesSelectedIncorrectly: true};
         }
       }
 
       return null;
     };
-  }
-
-  enableAbilityScoreForm(): void {
-    this.abilityScoreCharacterForm.enable();
-  }
-
-  resetValues(): void {
-    this.abilityScoreCharacterForm.reset();
   }
 
   protected readonly AbilityScoreMode = AbilityScoreMode;
