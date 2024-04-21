@@ -11,7 +11,8 @@
 
       @if (selectedRaceDetail?.subraces?.length) {
         <mat-form-field color="accent">
-          <mat-select placeholder="Select subrace" formControlName="subrace" (selectionChange)="onSubraceChange($event)">
+          <mat-select placeholder="Select subrace" formControlName="subrace"
+                      (selectionChange)="onSubraceChange($event)">
             <mat-option value=""></mat-option>
             @for (subrace of selectedRaceDetail?.subraces; track subrace.name) {
               <mat-option [value]="subrace.index">{{ subrace.name }}</mat-option>
@@ -84,7 +85,8 @@
     <h3>Roll or set your ability scores</h3>
     <div class="ability-scores-mode-selection">
       <div class="ability-scores-buttons">
-        <mat-radio-group class="ability-scores-radio-group" aria-label="Select an option" (change)="enableAbilityScoreForm()">
+        <mat-radio-group class="ability-scores-radio-group" aria-label="Select an option"
+                         (change)="enableAbilityScoreForm()">
           <div>
             <mat-radio-button value="1" (change)="setDefaultValues()">Use Default Values</mat-radio-button>
             <app-info-tooltip tooltipText="You can use default values: 15, 14, 13, 12, 10, 8"></app-info-tooltip>
@@ -92,7 +94,8 @@
 
           <div>
             <mat-radio-button value="2" (change)="rollValues()">Roll Values</mat-radio-button>
-            <app-info-tooltip tooltipText="You can roll 4d6 and drop the lowest value. It is done 6 times after that assign them all to your character’s ability scores"></app-info-tooltip>
+            <app-info-tooltip
+              tooltipText="You can roll 4d6 and drop the lowest value. It is done 6 times after that assign them all to your character’s ability scores"></app-info-tooltip>
           </div>
 
           <div>
@@ -124,8 +127,9 @@
           @for (ability of abilityScoresInOrder(); track ability) {
             <div class="ability-score-field">
               <mat-form-field>
-                <mat-label>{{ability.full_name | titlecase}}</mat-label>
-                <input matInput type="number" placeholder="{{ability.full_name | titlecase}}" [formControlName]="ability.index">
+                <mat-label>{{ ability.full_name | titlecase }}</mat-label>
+                <input matInput type="number" placeholder="{{ability.full_name | titlecase}}"
+                       [formControlName]="ability.index">
                 @if (abilityScoreCharacterForm.controls[ability.index].hasError('min') || abilityScoreCharacterForm.controls[ability.index].hasError('max')) {
                   <mat-error>Enter a value between 3 and 18</mat-error>
                 }
@@ -138,23 +142,26 @@
         }
       </div>
 
-        <div class="ability-scores-summary">
-          @if (abilityScoreCharacterForm.enabled) {
-            <app-ability-scores-summary
-              [abilityScores]="abilityScoreCharacterForm.value"
-              [setRaceBonuses]="selectedRaceDetail?.ability_bonuses"
-              [setRaceChoiceBonuses]="selectedRaceDetail?.ability_bonus_options"
-              [setSubraceBonuses]="selectedSubrace?.ability_bonuses"
-              [setSubraceChoiceBonuses]="selectedSubrace?.ability_bonus_options"
-              (isErrorInForm)="isErrorInAbilityScoreBonusForm($event)"
-            ></app-ability-scores-summary>
-          }
-        </div>
+      <div class="ability-scores-summary">
+        @if (abilityScoreCharacterForm.enabled) {
+          <app-ability-scores-summary
+            [abilityScores]="abilityScoreCharacterForm.value"
+            [setRaceBonuses]="selectedRaceDetail?.ability_bonuses"
+            [setRaceChoiceBonuses]="selectedRaceDetail?.ability_bonus_options"
+            [setSubraceBonuses]="selectedSubrace?.ability_bonuses"
+            [setSubraceChoiceBonuses]="selectedSubrace?.ability_bonus_options"
+            (isErrorInForm)="isErrorInAbilityScoreBonusForm($event)"
+          ></app-ability-scores-summary>
+        }
+      </div>
 
     </div>
 
     <div class="action-buttons">
-      <button mat-button matStepperNext [disabled]="abilityScoreCharacterForm.invalid || abilityScoreCharacterForm.disabled || errorInAbilityScoreBonusForm" color="accent">Next</button>
+      <button mat-button matStepperNext
+              [disabled]="abilityScoreCharacterForm.invalid || abilityScoreCharacterForm.disabled || errorInAbilityScoreBonusForm"
+              color="accent">Next
+      </button>
       <button mat-button matStepperPrevious>Back</button>
     </div>
   </mat-step>

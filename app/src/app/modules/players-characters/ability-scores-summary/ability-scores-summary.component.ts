@@ -86,6 +86,21 @@ export class AbilityScoresSummaryComponent {
       }
     });
 
+    if (this.raceChoiceBonuses && this.raceChoiceBonusForm.value.raceBonus) {
+      const raceBonus = this.raceChoiceBonusForm.value.raceBonus as { [key: string]: boolean };
+      if (raceBonus[abilityScoreIndex]) {
+        const bonusOption = this.raceChoiceBonuses.from.options.find(option => option.ability_score.index === abilityScoreIndex);
+        bonusModifier += bonusOption?.bonus || 0;
+      }
+    }
+
+    if (this.subraceChoiceBonuses && this.subraceChoiceBonusForm.value.subraceBonus) {
+      const subraceBonus = this.subraceChoiceBonusForm.value.subraceBonus as { [key: string]: boolean };
+      if (subraceBonus[abilityScoreIndex]) {
+        const bonusOption = this.subraceChoiceBonuses.from.options.find(option => option.ability_score.index === abilityScoreIndex);
+        bonusModifier += bonusOption?.bonus || 0;
+      }
+    }
 
     const finalValue = abilityValue ? abilityValue + bonusModifier : null;
     return abilityValue ? abilityScoreIndex.toUpperCase() + " " + finalValue : 'N/A';
