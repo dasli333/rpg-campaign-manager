@@ -8,6 +8,7 @@ import {CharacterClass, CharacterClassReference} from "./models/character-class"
 import {Observable, shareReplay} from "rxjs";
 import {AbilityScore} from "./models/ability-score";
 import {Skill} from "./models/skill";
+import {Alignment} from "./models/alignment";
 
 @Injectable({
   providedIn: 'root'
@@ -181,6 +182,21 @@ export class Dnd5eApiService {
       );
     }
     return this.#classDetailsCache[index];
+  }
+
+  getAlignments() {
+    return this.#apollo.query<{ alignments: Alignment[] }>({
+      query: gql`
+        query {
+          alignments {
+            index
+            name
+            abbreviation
+            desc
+          }
+        }
+      `
+    });
   }
 }
 

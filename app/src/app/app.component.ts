@@ -37,5 +37,11 @@ export class AppComponent implements OnInit {
     ).subscribe(skills => {
       this.#playerCharacterDaraService.setSkills(skills.data.skills);
     });
+
+    this.#dnd5eApiService.getAlignments().pipe(
+      shareReplay(1)
+    ).subscribe(alignments => {
+      this.#playerCharacterDaraService.setAlignments(alignments.data.alignments);
+    });
   }
 }

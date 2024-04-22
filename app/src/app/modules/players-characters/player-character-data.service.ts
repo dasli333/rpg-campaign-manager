@@ -3,6 +3,7 @@ import {ProficiencyReference} from "../../data-services/models/proficiency";
 import {Trait} from "../../data-services/models/trait";
 import {AbilityScore} from "../../data-services/models/ability-score";
 import {Skill} from "../../data-services/models/skill";
+import {Alignment} from "../../data-services/models/alignment";
 
 @Injectable({
   providedIn: 'root'
@@ -23,6 +24,9 @@ export class PlayerCharacterDataService {
   #skills: WritableSignal<Skill[]> = signal([]);
   skills = this.#skills.asReadonly();
 
+  #alignments: WritableSignal<Alignment[]> = signal([]);
+  alignments = this.#alignments.asReadonly();
+
 
   constructor() { }
 
@@ -40,6 +44,10 @@ export class PlayerCharacterDataService {
 
   setSkills(skills: Skill[]) {
     this.#skills.set(skills)
+  }
+
+  setAlignments(alignments: Alignment[]) {
+    this.#alignments.set(alignments)
   }
 
 }
