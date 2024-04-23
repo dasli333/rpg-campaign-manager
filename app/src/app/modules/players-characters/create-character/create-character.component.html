@@ -126,7 +126,7 @@
         <form [formGroup]="abilityScoreCharacterForm">
           @for (ability of abilityScoresInOrder(); track ability) {
             <div class="ability-score-field">
-              <mat-form-field>
+              <mat-form-field color="accent">
                 <mat-label>{{ ability.full_name | titlecase }}</mat-label>
                 <input matInput type="number" placeholder="{{ability.full_name | titlecase}}"
                        [formControlName]="ability.index">
@@ -166,19 +166,38 @@
     </div>
   </mat-step>
 
-  <mat-step [stepControl]="nameCharacterForm" label="Name and gender">
-    <form [formGroup]="nameCharacterForm">
-      <mat-form-field>
+  <mat-step [stepControl]="characterDetailsForm" label="Name and gender">
+    <form [formGroup]="characterDetailsForm">
+      <mat-form-field color="accent">
         <input matInput placeholder="Name" formControlName="name">
       </mat-form-field>
       <mat-radio-group aria-label="Select an option" formControlName="gender">
         <mat-radio-button value="male">Male</mat-radio-button>
         <mat-radio-button value="female">Female</mat-radio-button>
       </mat-radio-group>
-<!--      TODO: Add alignment selector-->
+      <div class="input-with-info-tooltip">
+        <mat-form-field color="accent">
+          <mat-label>Age</mat-label>
+          <input matInput type="number" formControlName="age" required>
+        </mat-form-field>
+        <app-info-tooltip [tooltipText]="selectedRaceDetail?.age" [tooltipPosition]="'above'"></app-info-tooltip>
+      </div>
+
+      <div class="input-with-info-tooltip">
+        <mat-form-field color="accent">
+          <mat-select placeholder="Choose alignment" formControlName="alignment" (selectionChange)="onAlignmentChange($event)">
+            @for (alignment of alignments(); track alignment.index) {
+              <mat-option [value]="alignment.index">{{ alignment.name }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+        <app-info-tooltip [tooltipText]="selectedRaceDetail?.alignment" [tooltipPosition]="'above'"></app-info-tooltip>
+      </div>
+
+      <p>{{ selectedAlignment?.desc }}</p>
     </form>
     <div class="action-buttons">
-      <button mat-button matStepperNext [disabled]="nameCharacterForm.invalid" color="accent">Next</button>
+      <button mat-button matStepperNext [disabled]="characterDetailsForm.invalid" color="accent">Next</button>
       <button mat-button matStepperPrevious>Back</button>
     </div>
 

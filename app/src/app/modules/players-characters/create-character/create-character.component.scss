@@ -6,6 +6,11 @@ form {
   mat-form-field {
     width: 300px;
   }
+
+  .input-with-info-tooltip {
+    display: flex;
+    flex-direction: row;
+  }
 }
 
 .action-buttons {

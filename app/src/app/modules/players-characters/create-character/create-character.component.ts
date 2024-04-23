@@ -27,6 +27,7 @@ import {exactSelectedCheckboxes} from "../../helpers/helpers";
 import {TitleCasePipe} from "@angular/common";
 import {InfoTooltipComponent} from "../../helpers/info-tooltip/info-tooltip.component";
 import {AbilityScoresSummaryComponent} from "../ability-scores-summary/ability-scores-summary.component";
+import {Alignment} from "../../../data-services/models/alignment";
 
 enum AbilityScoreMode {
   DEFAULT,
@@ -66,6 +67,7 @@ export class CreateCharacterComponent implements OnInit {
   rolledScores: number[] = []
   races: RaceReference[] = [];
   traits = this.#playerCharacterDaraService.traits;
+  alignments = this.#playerCharacterDaraService.alignments;
   abilityScoresInOrder = computed(() => {
     return [...this.#playerCharacterDaraService.abilityScores()]
       .sort((keyA, keyB) => {
@@ -77,6 +79,7 @@ export class CreateCharacterComponent implements OnInit {
   selectedSubrace: Subrace | undefined | null;
   selectedRaceDetail: Race | undefined;
   selectedClassDetail: CharacterClass | undefined;
+  selectedAlignment: Alignment | undefined;
   proficiencyChoices: any[] = [];
   errorInAbilityScoreBonusForm = false;
 
@@ -103,9 +106,11 @@ export class CreateCharacterComponent implements OnInit {
   }, {validators: this.defaultValuesSelectedCorrectly()});
 
 
-  nameCharacterForm = this.#formBuilder.group({
+  characterDetailsForm = this.#formBuilder.group({
     name: ['', Validators.required],
     gender: ['', Validators.required],
+    age: ['', Validators.required],
+    alignment: ['', Validators.required],
   });
 
 
@@ -188,6 +193,16 @@ export class CreateCharacterComponent implements OnInit {
       this.proficiencyCharacterForm.setControl('proficiencies', this.buildProficienciesChoices());
       this.#detectChanges.markForCheck();
     })
+  }
+
+  onAlignmentChange(event: MatSelectChange) {
+    const alignmentIndex = event.value;
+
+    if (!alignmentIndex) {
+      return;
+    }
+
+    this.selectedAlignment = this.alignments().find(alignment => alignment.index === alignmentIndex);
   }
 
   setDefaultValues(): void {
