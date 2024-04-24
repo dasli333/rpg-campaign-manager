@@ -166,7 +166,7 @@
     </div>
   </mat-step>
 
-  <mat-step [stepControl]="characterDetailsForm" label="Name and gender">
+  <mat-step [stepControl]="characterDetailsForm" label="Character details">
     <form [formGroup]="characterDetailsForm">
       <mat-form-field color="accent">
         <input matInput placeholder="Name" formControlName="name">
@@ -185,6 +185,19 @@
 
       <div class="input-with-info-tooltip">
         <mat-form-field color="accent">
+          <mat-label>Height [cm]</mat-label>
+          <input matInput type="number" formControlName="height" required>
+        </mat-form-field>
+        <app-info-tooltip [tooltipText]="selectedRaceDetail?.size_description" [tooltipPosition]="'above'"></app-info-tooltip>
+      </div>
+
+      <mat-form-field color="accent">
+        <mat-label>Weight [kg]</mat-label>
+        <input matInput type="number" formControlName="weight" required>
+      </mat-form-field>
+
+      <div class="input-with-info-tooltip">
+        <mat-form-field color="accent">
           <mat-select placeholder="Choose alignment" formControlName="alignment" (selectionChange)="onAlignmentChange($event)">
             @for (alignment of alignments(); track alignment.index) {
               <mat-option [value]="alignment.index">{{ alignment.name }}</mat-option>
@@ -195,6 +208,9 @@
       </div>
 
       <p>{{ selectedAlignment?.desc }}</p>
+
+      <app-image-upload [imageControl]="imageControl" (removeImage)="onRemoveImage()"></app-image-upload>
+
     </form>
     <div class="action-buttons">
       <button mat-button matStepperNext [disabled]="characterDetailsForm.invalid" color="accent">Next</button>

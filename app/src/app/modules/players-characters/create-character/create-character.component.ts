@@ -4,7 +4,7 @@ import {MatButton} from "@angular/material/button";
 import {
   AbstractControl,
   FormArray,
-  FormBuilder,
+  FormBuilder, FormControl,
   FormGroup,
   ReactiveFormsModule,
   ValidationErrors,
@@ -24,10 +24,11 @@ import {PlayerCharacterDataService} from "../player-character-data.service";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {MatDivider} from "@angular/material/divider";
 import {exactSelectedCheckboxes} from "../../helpers/helpers";
-import {TitleCasePipe} from "@angular/common";
+import {NgClass, TitleCasePipe} from "@angular/common";
 import {InfoTooltipComponent} from "../../helpers/info-tooltip/info-tooltip.component";
 import {AbilityScoresSummaryComponent} from "../ability-scores-summary/ability-scores-summary.component";
 import {Alignment} from "../../../data-services/models/alignment";
+import {ImageUploadComponent} from "../../helpers/image-upload/image-upload.component";
 
 enum AbilityScoreMode {
   DEFAULT,
@@ -48,7 +49,7 @@ enum AbilityScoreMode {
     MatCheckboxModule,
     MatRadioModule,
     RaceDetailsComponent,
-    ClassDetailsComponent, MatDivider, TitleCasePipe, InfoTooltipComponent, AbilityScoresSummaryComponent],
+    ClassDetailsComponent, MatDivider, TitleCasePipe, InfoTooltipComponent, AbilityScoresSummaryComponent, NgClass, ImageUploadComponent],
   templateUrl: './create-character.component.html',
   styleUrl: './create-character.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -61,13 +62,19 @@ export class CreateCharacterComponent implements OnInit {
   #detectChanges = inject(ChangeDetectorRef);
   #defaultScores = [15, 14, 13, 12, 10, 8];
 
-  #abilityScoresOrder = ['str', 'dex', 'con', 'int', 'wis', 'cha'];
 
+  #abilityScoresOrder = ['str', 'dex', 'con', 'int', 'wis', 'cha'];
+  #alignmentOrder = ['lawful-good', 'neutral-good', 'chaotic-good', 'lawful-neutral', 'neutral', 'chaotic-neutral', 'lawful-evil', 'neutral-evil', 'chaotic-evil'];
 
   rolledScores: number[] = []
   races: RaceReference[] = [];
   traits = this.#playerCharacterDaraService.traits;
-  alignments = this.#playerCharacterDaraService.alignments;
+  alignments = computed(() => {
+    return [...this.#playerCharacterDaraService.alignments()]
+      .sort((keyA, keyB) => {
+        return this.#alignmentOrder.indexOf(keyA.index) - this.#alignmentOrder.indexOf(keyB.index)
+      });
+  });
   abilityScoresInOrder = computed(() => {
     return [...this.#playerCharacterDaraService.abilityScores()]
       .sort((keyA, keyB) => {
@@ -110,9 +117,15 @@ export class CreateCharacterComponent implements OnInit {
     name: ['', Validators.required],
     gender: ['', Validators.required],
     age: ['', Validators.required],
+    height: ['', Validators.required],
+    weight: ['', Validators.required],
     alignment: ['', Validators.required],
+    image: ['', Validators.required],
   });
 
+  get imageControl(): FormControl {
+    return this.characterDetailsForm.get('image') as FormControl;
+  }
 
   constructor() {
     this.#dnd5eApiService.getRaces().subscribe(races => {
@@ -247,6 +260,10 @@ export class CreateCharacterComponent implements OnInit {
 
   resetValues(): void {
     this.abilityScoreCharacterForm.reset();
+  }
+
+  onRemoveImage() {
+    this.characterDetailsForm.get('image')?.reset();
   }
 
   private defaultValuesSelectedCorrectly(): ValidatorFn {

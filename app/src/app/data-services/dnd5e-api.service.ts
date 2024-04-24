@@ -46,6 +46,7 @@ export class Dnd5eApiService {
             name
             alignment
             age
+            size_description
             ability_bonuses {
               ability_score {
                 index
