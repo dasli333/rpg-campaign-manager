@@ -88,6 +88,7 @@ export class CreateCharacterComponent implements OnInit {
   selectedClassDetail: CharacterClass | undefined;
   selectedAlignment: Alignment | undefined;
   proficiencyChoices: any[] = [];
+  characterImage: File | null = null;
   errorInAbilityScoreBonusForm = false;
 
   raceCharacterForm = this.#formBuilder.group({
@@ -121,6 +122,14 @@ export class CreateCharacterComponent implements OnInit {
     weight: ['', Validators.required],
     alignment: ['', Validators.required],
     image: ['', Validators.required],
+  });
+
+  personalCharacteristicsForm = this.#formBuilder.group({
+    background: ['', Validators.required],
+    personalityTraits: ['', Validators.required],
+    ideals: ['', Validators.required],
+    bonds: ['', Validators.required],
+    flaws: ['', Validators.required],
   });
 
   get imageControl(): FormControl {
@@ -260,6 +269,10 @@ export class CreateCharacterComponent implements OnInit {
 
   resetValues(): void {
     this.abilityScoreCharacterForm.reset();
+  }
+
+  onFileSelected(file: File) {
+    this.characterImage = file;
   }
 
   onRemoveImage() {

@@ -209,7 +209,7 @@
 
       <p>{{ selectedAlignment?.desc }}</p>
 
-      <app-image-upload [imageControl]="imageControl" (removeImage)="onRemoveImage()"></app-image-upload>
+      <app-image-upload [imageControl]="imageControl" (fileSelected)="onFileSelected($event)" (removeImage)="onRemoveImage()"></app-image-upload>
 
     </form>
     <div class="action-buttons">
@@ -218,10 +218,75 @@
     </div>
 
   </mat-step>
-  <mat-step label="Step 3">
+  <mat-step label="Personal Characteristics">
+    <div class="personal-characteristics-form">
+      <h3>Personal Characteristics</h3>
+      <p>Fill in the following fields to create your character's personality traits, ideals, bonds, and flaws.</p>
+      <form [formGroup]="personalCharacteristicsForm">
+        <div class="characteristic-row">
+          <mat-form-field color="accent">
+            <mat-label>Background</mat-label>
+            <input matInput type="text" formControlName="background">
+          </mat-form-field>
+          <div class="example">
+            <h3>Example <app-info-tooltip [tooltipText]="'Write down your character’s background. You can use the example as a guide.'"
+                                          [tooltipPosition]="'above'"></app-info-tooltip></h3>
+            <p>I was, in fact, raised by wolves.</p>
+          </div>
+        </div>
+        <div class="characteristic-row">
+          <mat-form-field color="accent">
+            <mat-label>Personality Traits</mat-label>
+            <textarea matInput formControlName="personalityTraits" rows="5"></textarea>
+          </mat-form-field>
+          <div class="example">
+            <h3>Example <app-info-tooltip [tooltipText]="'Write down your character’s personality traits. You can use the example as a guide.'"
+                                          [tooltipPosition]="'above'"></app-info-tooltip></h3>
+            <p>I idolize a particular hero of my faith, and constantly refer to that person's deeds and example.</p>
+            <p>ghfhfg</p>
+          </div>
+        </div>
+        <div class="characteristic-row">
+          <mat-form-field color="accent">
+            <mat-label>Ideals</mat-label>
+            <textarea matInput formControlName="ideals" rows="5"></textarea>
+          </mat-form-field>
+          <div class="example">
+            <h3>Example <app-info-tooltip [tooltipText]="'Write down your character’s ideals. You can use the example as a guide.'"
+                                          [tooltipPosition]="'above'"></app-info-tooltip></h3>
+            <p>Tradition. The ancient traditions of worship and sacrifice must be preserved and upheld.</p>
+          </div>
+        </div>
+        <div class="characteristic-row">
+          <mat-form-field color="accent">
+            <mat-label>Bonds</mat-label>
+            <textarea matInput formControlName="bonds" rows="5"></textarea>
+          </mat-form-field>
+          <div class="example">
+            <app-info-tooltip [tooltipText]="'Write down your character’s bonds. You can use the example as a guide.'"
+                              [tooltipPosition]="'above'"></app-info-tooltip>
+            <h3>Example <app-info-tooltip [tooltipText]="'Write down your character’s bonds. You can use the example as a guide.'"
+                                          [tooltipPosition]="'above'"></app-info-tooltip></h3>
+            <p>I would die to recover an ancient artifact of my faith that was lost long ago.</p>
+          </div>
+        </div>
+        <div class="characteristic-row">
+          <mat-form-field color="accent">
+            <mat-label>Flaws</mat-label>
+            <textarea matInput formControlName="flaws" rows="5"></textarea>
+          </mat-form-field>
+          <div class="example">
+            <h3>Example <app-info-tooltip [tooltipText]="'Write down your character’s flaws. You can use the example as a guide.'"
+                                          [tooltipPosition]="'above'"></app-info-tooltip></h3>
+            <p>I judge others harshly, and myself even more severely.</p>
+          </div>
+        </div>
+      </form>
+    </div>
+
     <div class="action-buttons">
+      <button mat-button matStepperNext [disabled]="personalCharacteristicsForm.invalid" color="accent">Next</button>
       <button mat-button matStepperPrevious>Back</button>
-      <button mat-button (click)="stepper.reset()">Reset</button>
     </div>
   </mat-step>
 </mat-stepper>

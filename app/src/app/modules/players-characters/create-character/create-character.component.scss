@@ -52,3 +52,20 @@ form {
   display: flex;
   flex-direction: column;
 }
+
+.personal-characteristics-form {
+  form {
+    .characteristic-row {
+      display: flex;
+      flex-direction: row;
+
+      .example {
+        margin-left: 16px;
+
+        app-info-tooltip {
+          vertical-align: sub;
+        }
+      }
+    }
+  }
+}
