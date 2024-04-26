@@ -222,16 +222,17 @@
     <div class="personal-characteristics-form">
       <h3>Personal Characteristics</h3>
       <p>Fill in the following fields to create your character's personality traits, ideals, bonds, and flaws.</p>
+      <p>On the right side you can find examples</p>
       <form [formGroup]="personalCharacteristicsForm">
         <div class="characteristic-row">
           <mat-form-field color="accent">
             <mat-label>Background</mat-label>
             <input matInput type="text" formControlName="background">
           </mat-form-field>
+          <app-info-tooltip [tooltipText]="'Write down your character’s background. Other examples are: Criminal, Folk Hero, Noble, Soldier'"
+                            [tooltipPosition]="'above'"></app-info-tooltip>
           <div class="example">
-            <h3>Example <app-info-tooltip [tooltipText]="'Write down your character’s background. You can use the example as a guide.'"
-                                          [tooltipPosition]="'above'"></app-info-tooltip></h3>
-            <p>I was, in fact, raised by wolves.</p>
+            <p>Acolyte</p>
           </div>
         </div>
         <div class="characteristic-row">
@@ -239,11 +240,11 @@
             <mat-label>Personality Traits</mat-label>
             <textarea matInput formControlName="personalityTraits" rows="5"></textarea>
           </mat-form-field>
+          <app-info-tooltip [tooltipText]="'Give your character 2 personality traits'"
+                            [tooltipPosition]="'above'"></app-info-tooltip>
           <div class="example">
-            <h3>Example <app-info-tooltip [tooltipText]="'Write down your character’s personality traits. You can use the example as a guide.'"
-                                          [tooltipPosition]="'above'"></app-info-tooltip></h3>
             <p>I idolize a particular hero of my faith, and constantly refer to that person's deeds and example.</p>
-            <p>ghfhfg</p>
+            <p>I can find common ground between the fiercest enemies, empathizing with them and always working toward peace.</p>
           </div>
         </div>
         <div class="characteristic-row">
@@ -251,9 +252,10 @@
             <mat-label>Ideals</mat-label>
             <textarea matInput formControlName="ideals" rows="5"></textarea>
           </mat-form-field>
+          <app-info-tooltip [tooltipText]="'Describe 1 ideal of your character'"
+                            [tooltipPosition]="'above'"></app-info-tooltip>
           <div class="example">
-            <h3>Example <app-info-tooltip [tooltipText]="'Write down your character’s ideals. You can use the example as a guide.'"
-                                          [tooltipPosition]="'above'"></app-info-tooltip></h3>
+
             <p>Tradition. The ancient traditions of worship and sacrifice must be preserved and upheld.</p>
           </div>
         </div>
@@ -262,11 +264,9 @@
             <mat-label>Bonds</mat-label>
             <textarea matInput formControlName="bonds" rows="5"></textarea>
           </mat-form-field>
+          <app-info-tooltip [tooltipText]="'Write down 1 bond of your character'"
+                            [tooltipPosition]="'above'"></app-info-tooltip>
           <div class="example">
-            <app-info-tooltip [tooltipText]="'Write down your character’s bonds. You can use the example as a guide.'"
-                              [tooltipPosition]="'above'"></app-info-tooltip>
-            <h3>Example <app-info-tooltip [tooltipText]="'Write down your character’s bonds. You can use the example as a guide.'"
-                                          [tooltipPosition]="'above'"></app-info-tooltip></h3>
             <p>I would die to recover an ancient artifact of my faith that was lost long ago.</p>
           </div>
         </div>
@@ -275,9 +275,9 @@
             <mat-label>Flaws</mat-label>
             <textarea matInput formControlName="flaws" rows="5"></textarea>
           </mat-form-field>
+          <app-info-tooltip [tooltipText]="'Write down 1 flaw of your character'"
+                            [tooltipPosition]="'above'"></app-info-tooltip>
           <div class="example">
-            <h3>Example <app-info-tooltip [tooltipText]="'Write down your character’s flaws. You can use the example as a guide.'"
-                                          [tooltipPosition]="'above'"></app-info-tooltip></h3>
             <p>I judge others harshly, and myself even more severely.</p>
           </div>
         </div>
