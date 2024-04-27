@@ -12,7 +12,6 @@ export interface ProficiencyDetail {
   name: string;
   classes: CharacterClassReference[];
   races: any[];
-  url: string;
   reference: {
     index: string;
     name: string;
@@ -34,4 +33,28 @@ interface ProficiencyItemOption {
   option_type: string;
   item?: ProficiencyReference;
   choice?: ProficiencyOption;
+}
+
+export interface Proficiencies {
+  WEAPONS: ProficiencyDetail[];
+  ARTISANS_TOOLS: ProficiencyDetail[];
+  SKILLS: ProficiencyDetail[];
+  ARMOR: ProficiencyDetail[];
+  MUSICAL_INSTRUMENTS: ProficiencyDetail[];
+  SAVING_THROWS: ProficiencyDetail[];
+  OTHER: ProficiencyDetail[];
+  GAMING_SETS: ProficiencyDetail[];
+  VEHICLES: ProficiencyDetail[];
+}
+
+export enum ProficiencyType {
+  WEAPONS = "WEAPONS",
+  ARTISANS_TOOLS = "ARTISANS_TOOLS",
+  SKILLS = "SKILLS",
+  ARMOR = "ARMOR",
+  MUSICAL_INSTRUMENTS = "MUSICAL_INSTRUMENTS",
+  SAVING_THROWS = "SAVING_THROWS",
+  OTHER = "OTHER",
+  GAMING_SETS = "GAMING_SETS",
+  VEHICLES = "VEHICLES"
 }

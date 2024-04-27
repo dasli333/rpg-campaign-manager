@@ -1,9 +1,10 @@
 import {Injectable, signal, WritableSignal} from '@angular/core';
-import {ProficiencyReference} from "../../data-services/models/proficiency";
+import {Proficiencies, ProficiencyDetail} from "../../data-services/models/proficiency";
 import {Trait} from "../../data-services/models/trait";
 import {AbilityScore} from "../../data-services/models/ability-score";
 import {Skill} from "../../data-services/models/skill";
 import {Alignment} from "../../data-services/models/alignment";
+import {Language} from "../../data-services/models/language";
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,7 @@ export class PlayerCharacterDataService {
 
   // TODO: Implement the following properties
 
-  #proficiencies: WritableSignal<ProficiencyReference[]> = signal([]);
+  #proficiencies: WritableSignal<Proficiencies> = signal({WEAPONS: [], ARMOR: [], ARTISANS_TOOLS: [], SKILLS: [], SAVING_THROWS: [], OTHER: [], GAMING_SETS: [], VEHICLES: [], MUSICAL_INSTRUMENTS: []})
   proficiencies = this.#proficiencies.asReadonly();
 
   #traits: WritableSignal<Trait[]> = signal([]);
@@ -27,11 +28,22 @@ export class PlayerCharacterDataService {
   #alignments: WritableSignal<Alignment[]> = signal([]);
   alignments = this.#alignments.asReadonly();
 
+  #languages: WritableSignal<Language[]> = signal([]);
+  languages = this.#languages.asReadonly();
+
 
   constructor() { }
 
-  setProficiencies(proficiencies: ProficiencyReference[]) {
+  setProficiencies(proficiencies: Proficiencies) {
     this.#proficiencies.set(proficiencies)
+  }
+
+  updateProficiencyType(type: keyof Proficiencies, proficiencies: ProficiencyDetail[]) {
+    this.#proficiencies.update((proficienciesMap) => {
+      proficienciesMap[type] = proficiencies;
+      return proficienciesMap;
+    });
+
   }
 
   setTraits(traits: Trait[]) {
@@ -48,6 +60,10 @@ export class PlayerCharacterDataService {
 
   setAlignments(alignments: Alignment[]) {
     this.#alignments.set(alignments)
+  }
+
+  setLanguages(languages: Language[]) {
+    this.#languages.set(languages)
   }
 
 }

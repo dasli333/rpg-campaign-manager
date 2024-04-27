@@ -9,6 +9,8 @@ import {Observable, shareReplay} from "rxjs";
 import {AbilityScore} from "./models/ability-score";
 import {Skill} from "./models/skill";
 import {Alignment} from "./models/alignment";
+import {ProficiencyDetail} from "./models/proficiency";
+import {Language} from "./models/language";
 
 @Injectable({
   providedIn: 'root'
@@ -27,18 +29,18 @@ export class Dnd5eApiService {
   getRaces() {
     return this.#apollo.query<{ races: RaceReference[] }>({
       query: gql`
-      query {
-        races {
-          index
-          name
+        query {
+          races {
+            index
+            name
+          }
         }
-      }
-    `
+      `
     });
   }
 
   getRaceDetails(index: string) {
-    return this.#apollo.query<{race: Race}>({
+    return this.#apollo.query<{ race: Race }>({
       query: gql`
         query {
           race(index: "${index}") {
@@ -95,25 +97,25 @@ export class Dnd5eApiService {
   getSubraceDetails(index: string) {
     return this.#apollo.query<{ subrace: Subrace }>({
       query: gql`
-    query {
-      subrace(index: "${index}") {
-        index
-        name
-        desc
-        ability_bonuses {
-          ability_score {
+        query {
+          subrace(index: "${index}") {
             index
             name
+            desc
+            ability_bonuses {
+              ability_score {
+                index
+                name
+              }
+              bonus
+            }
+            racial_traits {
+              index
+              name
+            }
           }
-          bonus
         }
-        racial_traits {
-          index
-          name
-        }
-      }
-    }
-  `
+      `
     });
   }
 
@@ -194,6 +196,38 @@ export class Dnd5eApiService {
             name
             abbreviation
             desc
+          }
+        }
+      `
+    });
+  }
+
+  getProficienciesByType(type: string) {
+    return this.#apollo.query<{ proficiencies: ProficiencyDetail[] }>({
+      query: gql`
+        query {
+          proficiencies(type: ${type}) {
+            index
+            name
+            type
+          }
+        }
+      `
+    });
+  }
+
+  getBackgroundChoiceProficiencies() {
+    return this.#apollo.query<{ proficiencies: ProficiencyDetail[], languages: Language[] }>({
+      query: gql`
+        query {
+          proficiencies(type: [OTHER, ARTISANS_TOOLS, VEHICLES, GAMING_SETS, MUSICAL_INSTRUMENTS, SKILLS]) {
+            name
+            type
+            index
+          }
+          languages {
+            index
+            name
           }
         }
       `

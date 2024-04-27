@@ -29,6 +29,14 @@ import {InfoTooltipComponent} from "../../helpers/info-tooltip/info-tooltip.comp
 import {AbilityScoresSummaryComponent} from "../ability-scores-summary/ability-scores-summary.component";
 import {Alignment} from "../../../data-services/models/alignment";
 import {ImageUploadComponent} from "../../helpers/image-upload/image-upload.component";
+import {
+  Proficiencies,
+  ProficiencyDetail,
+  ProficiencyReference,
+  ProficiencyType
+} from "../../../data-services/models/proficiency";
+import {MatExpansionModule} from "@angular/material/expansion";
+import {Language} from "../../../data-services/models/language";
 
 enum AbilityScoreMode {
   DEFAULT,
@@ -48,6 +56,7 @@ enum AbilityScoreMode {
     MatSelectModule,
     MatCheckboxModule,
     MatRadioModule,
+    MatExpansionModule,
     RaceDetailsComponent,
     ClassDetailsComponent, MatDivider, TitleCasePipe, InfoTooltipComponent, AbilityScoresSummaryComponent, NgClass, ImageUploadComponent],
   templateUrl: './create-character.component.html',
@@ -58,7 +67,7 @@ export class CreateCharacterComponent implements OnInit {
 
   #formBuilder = inject(FormBuilder);
   #dnd5eApiService = inject(Dnd5eApiService);
-  #playerCharacterDaraService = inject(PlayerCharacterDataService);
+  #playerCharacterDataService = inject(PlayerCharacterDataService);
   #detectChanges = inject(ChangeDetectorRef);
   #defaultScores = [15, 14, 13, 12, 10, 8];
 
@@ -68,15 +77,15 @@ export class CreateCharacterComponent implements OnInit {
 
   rolledScores: number[] = []
   races: RaceReference[] = [];
-  traits = this.#playerCharacterDaraService.traits;
+  traits = this.#playerCharacterDataService.traits;
   alignments = computed(() => {
-    return [...this.#playerCharacterDaraService.alignments()]
+    return [...this.#playerCharacterDataService.alignments()]
       .sort((keyA, keyB) => {
         return this.#alignmentOrder.indexOf(keyA.index) - this.#alignmentOrder.indexOf(keyB.index)
       });
   });
   abilityScoresInOrder = computed(() => {
-    return [...this.#playerCharacterDaraService.abilityScores()]
+    return [...this.#playerCharacterDataService.abilityScores()]
       .sort((keyA, keyB) => {
         return this.#abilityScoresOrder.indexOf(keyA.index) - this.#abilityScoresOrder.indexOf(keyB.index)
       });
@@ -88,6 +97,8 @@ export class CreateCharacterComponent implements OnInit {
   selectedClassDetail: CharacterClass | undefined;
   selectedAlignment: Alignment | undefined;
   proficiencyChoices: any[] = [];
+  proficiencies = this.#playerCharacterDataService.proficiencies;
+  languageChoices = this.#playerCharacterDataService.languages;
   characterImage: File | null = null;
   errorInAbilityScoreBonusForm = false;
 
@@ -132,6 +143,11 @@ export class CreateCharacterComponent implements OnInit {
     flaws: ['', Validators.required],
   });
 
+  backgroundSkillsForm = this.#formBuilder.group({
+    skills: this.setControlForSkills(),
+    proficiencies: this.setControlForProficiencies(),
+  });
+
   get imageControl(): FormControl {
     return this.characterDetailsForm.get('image') as FormControl;
   }
@@ -144,12 +160,42 @@ export class CreateCharacterComponent implements OnInit {
     this.#dnd5eApiService.getClasses().subscribe(classes => {
       this.classes = classes.data.classes;
     });
+
+    this.#dnd5eApiService.getBackgroundChoiceProficiencies().subscribe(setOfSkills => {
+      this.#playerCharacterDataService.setLanguages(setOfSkills.data.languages);
+      this.updateProficiencies(setOfSkills.data.proficiencies);
+      // TODO: add max checkboxes validation
+      this.backgroundSkillsForm.setControl('skills', this.setControlForSkills());
+      this.backgroundSkillsForm.setControl('proficiencies', this.setControlForProficiencies());
+    });
   }
 
   ngOnInit(): void {
     this.abilityScoreCharacterForm.disable();
   }
 
+  setControlForSkills() {
+    const skills = this.#playerCharacterDataService.proficiencies().SKILLS;
+    const formGroup = new FormGroup({});
+    skills.forEach(skill => {
+      formGroup.addControl(skill.index, this.#formBuilder.control(false));
+    });
+    return formGroup;
+  }
+
+  setControlForProficiencies() {
+    const proficiencies = this.#playerCharacterDataService.proficiencies();
+    const languages = this.languageChoices();
+    const backgroundProficiencies = proficiencies.ARTISANS_TOOLS.concat(proficiencies.GAMING_SETS, proficiencies.MUSICAL_INSTRUMENTS, proficiencies.VEHICLES, proficiencies.OTHER);
+    const formGroup = new FormGroup({});
+    backgroundProficiencies.forEach(proficiency => {
+      formGroup.addControl(proficiency.index, this.#formBuilder.control(false));
+    });
+    languages.forEach(language => {
+      formGroup.addControl(language.index, this.#formBuilder.control(false));
+    });
+    return formGroup;
+  }
 
   buildProficienciesChoices() {
     this.proficiencyChoices = [];
@@ -309,6 +355,22 @@ export class CreateCharacterComponent implements OnInit {
 
       return null;
     };
+  }
+
+  private updateProficiencies(proficiencies: ProficiencyDetail[]) {
+    const skills = proficiencies.filter(proficiency => proficiency.type === ProficiencyType.SKILLS);
+    const artisansTools = proficiencies.filter(proficiency => proficiency.type === ProficiencyType.ARTISANS_TOOLS);
+    const vehicles = proficiencies.filter(proficiency => proficiency.type === ProficiencyType.VEHICLES);
+    const gamingSets = proficiencies.filter(proficiency => proficiency.type === ProficiencyType.GAMING_SETS);
+    const musicalInstruments = proficiencies.filter(proficiency => proficiency.type === ProficiencyType.MUSICAL_INSTRUMENTS);
+    const other = proficiencies.filter(proficiency => proficiency.type === ProficiencyType.OTHER);
+
+    this.#playerCharacterDataService.updateProficiencyType(ProficiencyType.SKILLS, skills);
+    this.#playerCharacterDataService.updateProficiencyType(ProficiencyType.ARTISANS_TOOLS, artisansTools);
+    this.#playerCharacterDataService.updateProficiencyType(ProficiencyType.VEHICLES, vehicles);
+    this.#playerCharacterDataService.updateProficiencyType(ProficiencyType.GAMING_SETS, gamingSets);
+    this.#playerCharacterDataService.updateProficiencyType(ProficiencyType.MUSICAL_INSTRUMENTS, musicalInstruments);
+    this.#playerCharacterDataService.updateProficiencyType(ProficiencyType.OTHER, other);
   }
 
   protected readonly AbilityScoreMode = AbilityScoreMode;

@@ -69,3 +69,18 @@ form {
     }
   }
 }
+
+.sections-container {
+  display: flex;
+  flex-direction: row;
+
+  .section {
+    width: 400px;
+  }
+
+  .right-section {
+    margin-left: 20px;
+    padding-left: 20px;
+    border-left: 1px solid #e0e0e0;
+  }
+}
