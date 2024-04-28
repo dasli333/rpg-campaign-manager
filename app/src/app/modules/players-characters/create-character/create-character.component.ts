@@ -164,9 +164,9 @@ export class CreateCharacterComponent implements OnInit {
     this.#dnd5eApiService.getBackgroundChoiceProficiencies().subscribe(setOfSkills => {
       this.#playerCharacterDataService.setLanguages(setOfSkills.data.languages);
       this.updateProficiencies(setOfSkills.data.proficiencies);
-      // TODO: add max checkboxes validation
       this.backgroundSkillsForm.setControl('skills', this.setControlForSkills());
       this.backgroundSkillsForm.setControl('proficiencies', this.setControlForProficiencies());
+      // TODO: add equipment?
     });
   }
 
@@ -176,7 +176,7 @@ export class CreateCharacterComponent implements OnInit {
 
   setControlForSkills() {
     const skills = this.#playerCharacterDataService.proficiencies().SKILLS;
-    const formGroup = new FormGroup({});
+    const formGroup = new FormGroup({}, exactSelectedCheckboxes(2));
     skills.forEach(skill => {
       formGroup.addControl(skill.index, this.#formBuilder.control(false));
     });
@@ -187,7 +187,7 @@ export class CreateCharacterComponent implements OnInit {
     const proficiencies = this.#playerCharacterDataService.proficiencies();
     const languages = this.languageChoices();
     const backgroundProficiencies = proficiencies.ARTISANS_TOOLS.concat(proficiencies.GAMING_SETS, proficiencies.MUSICAL_INSTRUMENTS, proficiencies.VEHICLES, proficiencies.OTHER);
-    const formGroup = new FormGroup({});
+    const formGroup = new FormGroup({}, exactSelectedCheckboxes(2));
     backgroundProficiencies.forEach(proficiency => {
       formGroup.addControl(proficiency.index, this.#formBuilder.control(false));
     });

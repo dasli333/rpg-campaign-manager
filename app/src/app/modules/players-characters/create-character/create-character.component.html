@@ -1,161 +1,4 @@
 <mat-stepper [linear]="true">
-
-  <mat-step [stepControl]="backgroundSkillsForm" label="Proficiencies">
-    <div class="sections-container">
-      <div class="left-section section">
-        <h3>Choose 2 skills</h3>
-        <mat-accordion>
-          <mat-expansion-panel>
-            <mat-expansion-panel-header>
-              <mat-panel-title>Skills</mat-panel-title>
-            </mat-expansion-panel-header>
-            <section [formGroup]="backgroundSkillsForm">
-              <div formArrayName="skills">
-                @for (proficiency of proficiencies().SKILLS; track proficiency.index) {
-                  <div>
-                    <p>
-                      <mat-checkbox [formControlName]="proficiency.index">{{ proficiency.name }}</mat-checkbox>
-                    </p>
-                  </div>
-                  <mat-divider></mat-divider>
-                }
-              </div>
-            </section>
-          </mat-expansion-panel>
-        </mat-accordion>
-      </div>
-
-      <div class="right-section section">
-        <h3>Choose total 2 from proficiencies and languages</h3>
-        <mat-accordion>
-          <mat-expansion-panel>
-            <mat-expansion-panel-header>
-              <mat-panel-title>Artisan Tools</mat-panel-title>
-            </mat-expansion-panel-header>
-            <section [formGroup]="backgroundSkillsForm">
-              <div formArrayName="proficiencies">
-                @for (proficiency of proficiencies().ARTISANS_TOOLS; track proficiency.index) {
-                  <div>
-                    <p>
-                      <mat-checkbox [formControlName]="proficiency.index">{{ proficiency.name }}</mat-checkbox>
-                    </p>
-                  </div>
-                  <mat-divider></mat-divider>
-                }
-              </div>
-            </section>
-          </mat-expansion-panel>
-        </mat-accordion>
-
-        <mat-accordion>
-          <mat-expansion-panel>
-            <mat-expansion-panel-header>
-              <mat-panel-title>Vehicles</mat-panel-title>
-            </mat-expansion-panel-header>
-            <section [formGroup]="backgroundSkillsForm">
-              <div formArrayName="proficiencies">
-                @for (proficiency of proficiencies().VEHICLES; track proficiency.index) {
-                  <div>
-                    <p>
-                      <mat-checkbox [formControlName]="proficiency.index">{{ proficiency.name }}</mat-checkbox>
-                    </p>
-                  </div>
-                  <mat-divider></mat-divider>
-                }
-              </div>
-            </section>
-          </mat-expansion-panel>
-        </mat-accordion>
-
-        <mat-accordion>
-          <mat-expansion-panel>
-            <mat-expansion-panel-header>
-              <mat-panel-title>Gaming Sets</mat-panel-title>
-            </mat-expansion-panel-header>
-            <section [formGroup]="backgroundSkillsForm">
-              <div formArrayName="proficiencies">
-                @for (proficiency of proficiencies().GAMING_SETS; track proficiency.index) {
-                  <div>
-                    <p>
-                      <mat-checkbox [formControlName]="proficiency.index">{{ proficiency.name }}</mat-checkbox>
-                    </p>
-                  </div>
-                  <mat-divider></mat-divider>
-                }
-              </div>
-            </section>
-          </mat-expansion-panel>
-        </mat-accordion>
-
-        <mat-accordion>
-          <mat-expansion-panel>
-            <mat-expansion-panel-header>
-              <mat-panel-title>Musical Instruments</mat-panel-title>
-            </mat-expansion-panel-header>
-            <section [formGroup]="backgroundSkillsForm">
-              <div formArrayName="proficiencies">
-                @for (proficiency of proficiencies().MUSICAL_INSTRUMENTS; track proficiency.index) {
-                  <div>
-                    <p>
-                      <mat-checkbox [formControlName]="proficiency.index">{{ proficiency.name }}</mat-checkbox>
-                    </p>
-                  </div>
-                  <mat-divider></mat-divider>
-                }
-              </div>
-            </section>
-          </mat-expansion-panel>
-        </mat-accordion>
-
-        <mat-accordion>
-          <mat-expansion-panel>
-            <mat-expansion-panel-header>
-              <mat-panel-title>Other</mat-panel-title>
-            </mat-expansion-panel-header>
-            <section [formGroup]="backgroundSkillsForm">
-              <div formArrayName="proficiencies">
-                @for (proficiency of proficiencies().OTHER; track proficiency.index) {
-                  <div>
-                    <p>
-                      <mat-checkbox [formControlName]="proficiency.index">{{ proficiency.name }}</mat-checkbox>
-                    </p>
-                  </div>
-                  <mat-divider></mat-divider>
-                }
-              </div>
-            </section>
-          </mat-expansion-panel>
-        </mat-accordion>
-
-        <mat-accordion>
-          <mat-expansion-panel>
-            <mat-expansion-panel-header>
-              <mat-panel-title>Languages</mat-panel-title>
-            </mat-expansion-panel-header>
-            <section [formGroup]="backgroundSkillsForm">
-              <div formArrayName="proficiencies">
-                @for (proficiency of languageChoices(); track proficiency.index) {
-                  <div>
-                    <p>
-                      <mat-checkbox [formControlName]="proficiency.index">{{ proficiency.name }}</mat-checkbox>
-                    </p>
-                  </div>
-                  <mat-divider></mat-divider>
-                }
-              </div>
-            </section>
-          </mat-expansion-panel>
-        </mat-accordion>
-      </div>
-    </div>
-
-    <div class="action-buttons">
-      <button mat-button matStepperNext [disabled]="backgroundSkillsForm.invalid" color="accent">Next</button>
-      <button mat-button matStepperPrevious>Back</button>
-    </div>
-
-  </mat-step>
-
   <mat-step [stepControl]="raceCharacterForm" label="Race">
     <form [formGroup]="raceCharacterForm">
       <mat-form-field color="accent">
@@ -445,5 +288,162 @@
       <button mat-button matStepperNext [disabled]="personalCharacteristicsForm.invalid" color="accent">Next</button>
       <button mat-button matStepperPrevious>Back</button>
     </div>
+  </mat-step>
+  <mat-step [stepControl]="backgroundSkillsForm" label="Proficiencies">
+    <div class="sections-container">
+      <div class="left-section section">
+        <h3>Choose 2 skills</h3>
+        <mat-accordion>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>Skills</mat-panel-title>
+            </mat-expansion-panel-header>
+            <section [formGroup]="backgroundSkillsForm">
+              <div formArrayName="skills">
+                @for (proficiency of proficiencies().SKILLS; track proficiency.index) {
+                  <div>
+                    <p>
+                      <mat-checkbox [formControlName]="proficiency.index">{{ proficiency.name }}</mat-checkbox>
+                    </p>
+                  </div>
+                  <mat-divider></mat-divider>
+                }
+              </div>
+            </section>
+          </mat-expansion-panel>
+        </mat-accordion>
+      </div>
+
+      <div class="right-section section">
+        <h3>Choose total 2 from proficiencies and languages</h3>
+        <mat-accordion>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>Artisan Tools</mat-panel-title>
+            </mat-expansion-panel-header>
+            <section [formGroup]="backgroundSkillsForm">
+              <div formArrayName="proficiencies">
+                @for (proficiency of proficiencies().ARTISANS_TOOLS; track proficiency.index) {
+                  <div>
+                    <p>
+                      <mat-checkbox [formControlName]="proficiency.index">{{ proficiency.name }}</mat-checkbox>
+                    </p>
+                  </div>
+                  <mat-divider></mat-divider>
+                }
+              </div>
+            </section>
+          </mat-expansion-panel>
+        </mat-accordion>
+
+        <mat-accordion>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>Vehicles</mat-panel-title>
+            </mat-expansion-panel-header>
+            <section [formGroup]="backgroundSkillsForm">
+              <div formArrayName="proficiencies">
+                @for (proficiency of proficiencies().VEHICLES; track proficiency.index) {
+                  <div>
+                    <p>
+                      <mat-checkbox [formControlName]="proficiency.index">{{ proficiency.name }}</mat-checkbox>
+                    </p>
+                  </div>
+                  <mat-divider></mat-divider>
+                }
+              </div>
+            </section>
+          </mat-expansion-panel>
+        </mat-accordion>
+
+        <mat-accordion>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>Gaming Sets</mat-panel-title>
+            </mat-expansion-panel-header>
+            <section [formGroup]="backgroundSkillsForm">
+              <div formArrayName="proficiencies">
+                @for (proficiency of proficiencies().GAMING_SETS; track proficiency.index) {
+                  <div>
+                    <p>
+                      <mat-checkbox [formControlName]="proficiency.index">{{ proficiency.name }}</mat-checkbox>
+                    </p>
+                  </div>
+                  <mat-divider></mat-divider>
+                }
+              </div>
+            </section>
+          </mat-expansion-panel>
+        </mat-accordion>
+
+        <mat-accordion>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>Musical Instruments</mat-panel-title>
+            </mat-expansion-panel-header>
+            <section [formGroup]="backgroundSkillsForm">
+              <div formArrayName="proficiencies">
+                @for (proficiency of proficiencies().MUSICAL_INSTRUMENTS; track proficiency.index) {
+                  <div>
+                    <p>
+                      <mat-checkbox [formControlName]="proficiency.index">{{ proficiency.name }}</mat-checkbox>
+                    </p>
+                  </div>
+                  <mat-divider></mat-divider>
+                }
+              </div>
+            </section>
+          </mat-expansion-panel>
+        </mat-accordion>
+
+        <mat-accordion>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>Other</mat-panel-title>
+            </mat-expansion-panel-header>
+            <section [formGroup]="backgroundSkillsForm">
+              <div formArrayName="proficiencies">
+                @for (proficiency of proficiencies().OTHER; track proficiency.index) {
+                  <div>
+                    <p>
+                      <mat-checkbox [formControlName]="proficiency.index">{{ proficiency.name }}</mat-checkbox>
+                    </p>
+                  </div>
+                  <mat-divider></mat-divider>
+                }
+              </div>
+            </section>
+          </mat-expansion-panel>
+        </mat-accordion>
+
+        <mat-accordion>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>Languages</mat-panel-title>
+            </mat-expansion-panel-header>
+            <section [formGroup]="backgroundSkillsForm">
+              <div formArrayName="proficiencies">
+                @for (proficiency of languageChoices(); track proficiency.index) {
+                  <div>
+                    <p>
+                      <mat-checkbox [formControlName]="proficiency.index">{{ proficiency.name }}</mat-checkbox>
+                    </p>
+                  </div>
+                  <mat-divider></mat-divider>
+                }
+              </div>
+            </section>
+          </mat-expansion-panel>
+        </mat-accordion>
+      </div>
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <div class="action-buttons">
+      <button mat-button matStepperNext [disabled]="backgroundSkillsForm.invalid" color="accent">Next</button>
+      <button mat-button matStepperPrevious>Back</button>
+    </div>
+
   </mat-step>
 </mat-stepper>

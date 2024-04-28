@@ -61,6 +61,7 @@ form {
 
       .example {
         margin-left: 16px;
+        padding-top: 15px;
 
         app-info-tooltip {
           vertical-align: sub;
@@ -73,6 +74,7 @@ form {
 .sections-container {
   display: flex;
   flex-direction: row;
+  margin-bottom: 8px;
 
   .section {
     width: 400px;
