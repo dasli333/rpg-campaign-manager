@@ -30,13 +30,12 @@ import {AbilityScoresSummaryComponent} from "../ability-scores-summary/ability-s
 import {Alignment} from "../../../data-services/models/alignment";
 import {ImageUploadComponent} from "../../helpers/image-upload/image-upload.component";
 import {
-  Proficiencies,
   ProficiencyDetail,
-  ProficiencyReference,
   ProficiencyType
 } from "../../../data-services/models/proficiency";
 import {MatExpansionModule} from "@angular/material/expansion";
-import {Language} from "../../../data-services/models/language";
+import {CharacterSummaryComponent, CharacterSummaryData} from "./character-summary/character-summary.component";
+import {StepperSelectionEvent} from "@angular/cdk/stepper";
 
 enum AbilityScoreMode {
   DEFAULT,
@@ -58,7 +57,7 @@ enum AbilityScoreMode {
     MatRadioModule,
     MatExpansionModule,
     RaceDetailsComponent,
-    ClassDetailsComponent, MatDivider, TitleCasePipe, InfoTooltipComponent, AbilityScoresSummaryComponent, NgClass, ImageUploadComponent],
+    ClassDetailsComponent, MatDivider, TitleCasePipe, InfoTooltipComponent, AbilityScoresSummaryComponent, NgClass, ImageUploadComponent, CharacterSummaryComponent],
   templateUrl: './create-character.component.html',
   styleUrl: './create-character.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -101,6 +100,7 @@ export class CreateCharacterComponent implements OnInit {
   languageChoices = this.#playerCharacterDataService.languages;
   characterImage: File | null = null;
   errorInAbilityScoreBonusForm = false;
+  characterSummary: CharacterSummaryData | undefined;
 
   raceCharacterForm = this.#formBuilder.group({
     race: ['', Validators.required],
@@ -173,6 +173,51 @@ export class CreateCharacterComponent implements OnInit {
   ngOnInit(): void {
     this.abilityScoreCharacterForm.disable();
   }
+
+  onStepChange(event: StepperSelectionEvent) {
+    if (event.selectedIndex === 7) {
+      const proficiencies = this.proficiencyChoices
+      // TODO: set proficiencies
+      // const backgroundProficiencies = this.backgroundSkillsForm.value.proficiencies;
+      // const skills = this.backgroundSkillsForm.value.skills;
+      this.characterSummary = {
+        image: this.imageControl.value,
+        characterDetails: {
+          name: this.characterDetailsForm.value.name || '',
+          gender: this.characterDetailsForm.value.gender || '',
+          age: Number(this.characterDetailsForm.value.age) || 0,
+          height: this.characterDetailsForm.value.height || '',
+          weight: this.characterDetailsForm.value.weight || '',
+          alignment: this.characterDetailsForm.value.alignment || '',
+          image: this.characterDetailsForm.value.image || '',
+        },
+        raceDetails: {
+          race: this.selectedRaceDetail?.name || '',
+          subrace: this.selectedSubrace?.name || '',
+        },
+        className: this.selectedClassDetail?.name || '',
+        personalCharacteristics: {
+          background: this.personalCharacteristicsForm.value.background || '',
+          personalityTraits: this.personalCharacteristicsForm.value.personalityTraits || '',
+          ideals: this.personalCharacteristicsForm.value.ideals || '',
+          bonds: this.personalCharacteristicsForm.value.bonds || '',
+          flaws: this.personalCharacteristicsForm.value.flaws || '',
+        },
+        abilityScores: {
+          strength: this.abilityScoreCharacterForm.value.str || 0,
+          dexterity: this.abilityScoreCharacterForm.value.dex || 0,
+          constitution: this.abilityScoreCharacterForm.value.con || 0,
+          intelligence: this.abilityScoreCharacterForm.value.int || 0,
+          wisdom: this.abilityScoreCharacterForm.value.wis || 0,
+          charisma: this.abilityScoreCharacterForm.value.cha || 0,
+        },
+        selectedSkills: proficiencies
+      }
+
+      console.log(this.characterSummary)
+    }
+  }
+
 
   setControlForSkills() {
     const skills = this.#playerCharacterDataService.proficiencies().SKILLS;

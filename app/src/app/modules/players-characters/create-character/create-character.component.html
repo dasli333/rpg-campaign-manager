@@ -1,4 +1,4 @@
-<mat-stepper [linear]="true">
+<mat-stepper [linear]="true" (selectionChange)="onStepChange($event)">
   <mat-step [stepControl]="raceCharacterForm" label="Race">
     <form [formGroup]="raceCharacterForm">
       <mat-form-field color="accent">
@@ -289,7 +289,8 @@
       <button mat-button matStepperPrevious>Back</button>
     </div>
   </mat-step>
-  <mat-step [stepControl]="backgroundSkillsForm" label="Proficiencies">
+  <mat-step [stepControl]="backgroundSkillsForm" label="Background Proficiencies">
+    <h3>Choose 2 skills and 2 from set of proficiencies and languages which result from your background</h3>
     <div class="sections-container">
       <div class="left-section section">
         <h3>Choose 2 skills</h3>
@@ -445,5 +446,9 @@
       <button mat-button matStepperPrevious>Back</button>
     </div>
 
+  </mat-step>
+
+  <mat-step>
+    <app-character-summary [characterSummaryData]="characterSummary"></app-character-summary>
   </mat-step>
 </mat-stepper>
