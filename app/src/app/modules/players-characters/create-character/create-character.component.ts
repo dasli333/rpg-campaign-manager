@@ -218,6 +218,10 @@ export class CreateCharacterComponent implements OnInit {
     }
   }
 
+  saveCharacter() {
+    // TODO: implement
+  }
+
 
   setControlForSkills() {
     const skills = this.#playerCharacterDataService.proficiencies().SKILLS;

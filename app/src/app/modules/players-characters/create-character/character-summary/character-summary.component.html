@@ -1,1 +1,29 @@
-<p>character-summary works!</p>
+@if (characterSummaryData) {
+  <h2>{{ characterSummaryData.characterDetails.name }}</h2>
+  <img [src]="characterSummaryData.image" alt="Character Image">
+  <p>Gender: {{ characterSummaryData.characterDetails.gender }}</p>
+  <p>Age: {{ characterSummaryData.characterDetails.age }}</p>
+  <p>Height: {{ characterSummaryData.characterDetails.height }}</p>
+  <p>Weight: {{ characterSummaryData.characterDetails.weight }}</p>
+  <p>Alignment: {{ characterSummaryData.characterDetails.alignment }}</p>
+  <p>Race: {{ characterSummaryData.raceDetails.race }}</p>
+  <p>Subrace: {{ characterSummaryData.raceDetails.subrace }}</p>
+  <p>Class: {{ characterSummaryData.className }}</p>
+  <p>Background: {{ characterSummaryData.personalCharacteristics.background }}</p>
+  <p>Personality Traits: {{ characterSummaryData.personalCharacteristics.personalityTraits }}</p>
+  <p>Ideals: {{ characterSummaryData.personalCharacteristics.ideals }}</p>
+  <p>Bonds: {{ characterSummaryData.personalCharacteristics.bonds }}</p>
+  <p>Flaws: {{ characterSummaryData.personalCharacteristics.flaws }}</p>
+  <p>Strength: {{ characterSummaryData.abilityScores.strength }}</p>
+  <p>Dexterity: {{ characterSummaryData.abilityScores.dexterity }}</p>
+  <p>Constitution: {{ characterSummaryData.abilityScores.constitution }}</p>
+  <p>Intelligence: {{ characterSummaryData.abilityScores.intelligence }}</p>
+  <p>Wisdom: {{ characterSummaryData.abilityScores.wisdom }}</p>
+  <p>Charisma: {{ characterSummaryData.abilityScores.charisma }}</p>
+  <p>Selected Skills:</p>
+  <ul>
+    @for (skill of characterSummaryData.selectedSkills; track skill) {
+      <li>{{ skill }}</li>
+    }
+  </ul>
+}
