@@ -450,10 +450,10 @@
 
   <mat-step>
     <app-character-summary [characterSummaryData]="characterSummary"></app-character-summary>
-  </mat-step>
 
-  <div class="action-buttons">
-    <button mat-button matStepperPrevious>Back</button>
-    <button mat-button (click)="saveCharacter()" color="accent">Save Character</button>
-  </div>
+    <div class="action-buttons">
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button (click)="saveCharacter()" color="accent">Save Character</button>
+    </div>
+  </mat-step>
 </mat-stepper>

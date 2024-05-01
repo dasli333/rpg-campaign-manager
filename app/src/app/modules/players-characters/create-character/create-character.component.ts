@@ -43,6 +43,10 @@ enum AbilityScoreMode {
   MANUAL
 }
 
+interface SkillsFormValues {
+  [key: string]: boolean;
+}
+
 @Component({
   selector: 'app-create-character',
   standalone: true,
@@ -95,7 +99,9 @@ export class CreateCharacterComponent implements OnInit {
   selectedRaceDetail: Race | undefined;
   selectedClassDetail: CharacterClass | undefined;
   selectedAlignment: Alignment | undefined;
+  selectedSkillsNames: string[] = [];
   proficiencyChoices: any[] = [];
+  allAvailableProficiencies: {index: string, name: string, type: string}[] = []
   proficiencies = this.#playerCharacterDataService.proficiencies;
   languageChoices = this.#playerCharacterDataService.languages;
   characterImage: File | null = null;
@@ -176,10 +182,32 @@ export class CreateCharacterComponent implements OnInit {
 
   onStepChange(event: StepperSelectionEvent) {
     if (event.selectedIndex === 7) {
-      const proficiencies = this.proficiencyChoices
-      // TODO: set proficiencies
-      // const backgroundProficiencies = this.backgroundSkillsForm.value.proficiencies;
-      // const skills = this.backgroundSkillsForm.value.skills;
+      this.selectedSkillsNames = [];
+      const selectedSkills: string[] = [];
+      this.proficiencyCharacterForm.value.proficiencies.forEach((proficiency: any[]) => {
+        for (const key in proficiency) {
+          if (proficiency[key]) {
+            selectedSkills.push(key);
+          }
+        }
+      });
+
+      console.log(this.backgroundSkillsForm.value);
+
+      for (const key in this.backgroundSkillsForm.value.skills) {
+        if ((this.backgroundSkillsForm.value.skills as SkillsFormValues)[key]) {
+          selectedSkills.push(key);
+        }
+      }
+
+      for (const key in this.backgroundSkillsForm.value.proficiencies) {
+        if ((this.backgroundSkillsForm.value.proficiencies as SkillsFormValues)[key]) {
+          selectedSkills.push(key);
+        }
+      }
+
+      this.selectedSkillsNames = this.allAvailableProficiencies.filter(proficiency => selectedSkills.includes(proficiency.index)).map(proficiency => proficiency.name + ' (' + proficiency.type + ')');
+
       this.characterSummary = {
         image: this.imageControl.value,
         characterDetails: {
@@ -211,7 +239,7 @@ export class CreateCharacterComponent implements OnInit {
           wisdom: this.abilityScoreCharacterForm.value.wis || 0,
           charisma: this.abilityScoreCharacterForm.value.cha || 0,
         },
-        selectedSkills: proficiencies
+        selectedSkills: this.selectedSkillsNames
       }
 
       console.log(this.characterSummary)
@@ -226,7 +254,9 @@ export class CreateCharacterComponent implements OnInit {
   setControlForSkills() {
     const skills = this.#playerCharacterDataService.proficiencies().SKILLS;
     const formGroup = new FormGroup({}, exactSelectedCheckboxes(2));
+    // TODO: disable already selected skills
     skills.forEach(skill => {
+      this.allAvailableProficiencies.push({index: skill.index, name: skill.name, type: skill.type});
       formGroup.addControl(skill.index, this.#formBuilder.control(false));
     });
     return formGroup;
@@ -238,9 +268,11 @@ export class CreateCharacterComponent implements OnInit {
     const backgroundProficiencies = proficiencies.ARTISANS_TOOLS.concat(proficiencies.GAMING_SETS, proficiencies.MUSICAL_INSTRUMENTS, proficiencies.VEHICLES, proficiencies.OTHER);
     const formGroup = new FormGroup({}, exactSelectedCheckboxes(2));
     backgroundProficiencies.forEach(proficiency => {
+      this.allAvailableProficiencies.push({index: proficiency.index, name: proficiency.name, type: proficiency.type});
       formGroup.addControl(proficiency.index, this.#formBuilder.control(false));
     });
     languages.forEach(language => {
+      this.allAvailableProficiencies.push({index: language.index, name: language.name, type: "LANGUAGES"});
       formGroup.addControl(language.index, this.#formBuilder.control(false));
     });
     return formGroup;
