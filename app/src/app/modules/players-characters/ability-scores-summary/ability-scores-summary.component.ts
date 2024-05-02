@@ -53,7 +53,8 @@ export class AbilityScoresSummaryComponent {
     }
   };
 
-  @Output() isErrorInForm = new EventEmitter<boolean>()
+  @Output() isErrorInForm = new EventEmitter<boolean>();
+  @Output() finalAbilityScores = new EventEmitter<Map<string, number | null>>();
 
 
   #formBuilder = inject(FormBuilder);
@@ -63,6 +64,7 @@ export class AbilityScoresSummaryComponent {
   raceChoiceBonuses: AbilityBonusOptions | undefined;
   subraceChoiceBonuses: AbilityBonusOptions | undefined;
   getAbilityScores: Map<string, number | null> = new Map();
+  valuesWithBonuses: Map<string, number | null> = new Map();
 
   raceChoiceBonusForm = this.#formBuilder.group({
     raceBonus: this.buildAbilityScoreOptions(true)
@@ -103,6 +105,10 @@ export class AbilityScoresSummaryComponent {
     }
 
     const finalValue = abilityValue ? abilityValue + bonusModifier : null;
+    if (finalValue && finalValue !== this.valuesWithBonuses.get(abilityScoreIndex)) {
+      this.valuesWithBonuses.set(abilityScoreIndex, finalValue);
+      this.finalAbilityScores.emit(this.valuesWithBonuses);
+    }
     return abilityValue ? abilityScoreIndex.toUpperCase() + " " + finalValue : 'N/A';
   }
 
@@ -124,6 +130,7 @@ export class AbilityScoresSummaryComponent {
     } else if (this.subraceChoiceBonuses) {
       this.isErrorInForm.emit(this.subraceChoiceBonusForm.invalid);
     }
+
   }
 
 }

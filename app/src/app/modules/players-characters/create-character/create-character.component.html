@@ -151,6 +151,7 @@
             [setSubraceBonuses]="selectedSubrace?.ability_bonuses"
             [setSubraceChoiceBonuses]="selectedSubrace?.ability_bonus_options"
             (isErrorInForm)="isErrorInAbilityScoreBonusForm($event)"
+            (finalAbilityScores)="setFinalAbilityScores($event)"
           ></app-ability-scores-summary>
         }
       </div>

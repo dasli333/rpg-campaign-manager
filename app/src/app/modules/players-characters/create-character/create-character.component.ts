@@ -100,6 +100,7 @@ export class CreateCharacterComponent implements OnInit {
   selectedClassDetail: CharacterClass | undefined;
   selectedAlignment: Alignment | undefined;
   selectedSkillsNames: string[] = [];
+  selectedAbilityScores: Map<string, number | null> = new Map();
   proficiencyChoices: any[] = [];
   allAvailableProficiencies: {index: string, name: string, type: string}[] = []
   proficiencies = this.#playerCharacterDataService.proficiencies;
@@ -232,18 +233,22 @@ export class CreateCharacterComponent implements OnInit {
           flaws: this.personalCharacteristicsForm.value.flaws || '',
         },
         abilityScores: {
-          strength: this.abilityScoreCharacterForm.value.str || 0,
-          dexterity: this.abilityScoreCharacterForm.value.dex || 0,
-          constitution: this.abilityScoreCharacterForm.value.con || 0,
-          intelligence: this.abilityScoreCharacterForm.value.int || 0,
-          wisdom: this.abilityScoreCharacterForm.value.wis || 0,
-          charisma: this.abilityScoreCharacterForm.value.cha || 0,
+          strength: this.selectedAbilityScores.get('str') || 0,
+          dexterity: this.selectedAbilityScores.get('dex') || 0,
+          constitution: this.selectedAbilityScores.get('con') || 0,
+          intelligence: this.selectedAbilityScores.get('int') || 0,
+          wisdom: this.selectedAbilityScores.get('wis') || 0,
+          charisma: this.selectedAbilityScores.get('cha') || 0,
         },
         selectedSkills: this.selectedSkillsNames
       }
 
       console.log(this.characterSummary)
     }
+  }
+
+  setFinalAbilityScores(scores: Map<string, number | null>) {
+    this.selectedAbilityScores = scores;
   }
 
   saveCharacter() {
