@@ -36,6 +36,7 @@ import {
 import {MatExpansionModule} from "@angular/material/expansion";
 import {CharacterSummaryComponent, CharacterSummaryData} from "./character-summary/character-summary.component";
 import {StepperSelectionEvent} from "@angular/cdk/stepper";
+import {Language} from "../../../data-services/models/language";
 
 enum AbilityScoreMode {
   DEFAULT,
@@ -101,8 +102,9 @@ export class CreateCharacterComponent implements OnInit {
   selectedAlignment: Alignment | undefined;
   selectedSkillsNames: string[] = [];
   selectedAbilityScores: Map<string, number | null> = new Map();
+  selectedProficiencies: string[] = [];
   proficiencyChoices: any[] = [];
-  allAvailableProficiencies: {index: string, name: string, type: string}[] = []
+  allAvailableProficiencies: { index: string, name: string, type: string }[] = []
   proficiencies = this.#playerCharacterDataService.proficiencies;
   languageChoices = this.#playerCharacterDataService.languages;
   characterImage: File | null = null;
@@ -182,6 +184,18 @@ export class CreateCharacterComponent implements OnInit {
   }
 
   onStepChange(event: StepperSelectionEvent) {
+    if (event.selectedIndex === 6) {
+      this.selectedProficiencies = [];
+      this.proficiencyCharacterForm.value.proficiencies.forEach((proficiency: any[]) => {
+        for (const key in proficiency) {
+          if (proficiency[key]) {
+            this.selectedProficiencies.push(key);
+          }
+        }
+      });
+      this.backgroundSkillsForm.reset();
+    }
+
     if (event.selectedIndex === 7) {
       this.selectedSkillsNames = [];
       const selectedSkills: string[] = [];
@@ -257,14 +271,45 @@ export class CreateCharacterComponent implements OnInit {
 
 
   setControlForSkills() {
-    const skills = this.#playerCharacterDataService.proficiencies().SKILLS;
+    let skills = this.#playerCharacterDataService.proficiencies().SKILLS;
     const formGroup = new FormGroup({}, exactSelectedCheckboxes(2));
-    // TODO: disable already selected skills
     skills.forEach(skill => {
       this.allAvailableProficiencies.push({index: skill.index, name: skill.name, type: skill.type});
       formGroup.addControl(skill.index, this.#formBuilder.control(false));
     });
     return formGroup;
+  }
+
+  getProficiencyByType(type: ProficiencyType | string) {
+    let proficiencies: ProficiencyDetail[] | Language[]
+
+    switch (type) {
+      case ProficiencyType.SKILLS:
+        proficiencies = this.proficiencies().SKILLS;
+        break;
+      case ProficiencyType.ARTISANS_TOOLS:
+        proficiencies = this.proficiencies().ARTISANS_TOOLS;
+        break;
+      case ProficiencyType.GAMING_SETS:
+        proficiencies = this.proficiencies().GAMING_SETS;
+        break;
+      case ProficiencyType.MUSICAL_INSTRUMENTS:
+        proficiencies = this.proficiencies().MUSICAL_INSTRUMENTS;
+        break;
+      case ProficiencyType.VEHICLES:
+        proficiencies = this.proficiencies().VEHICLES;
+        break;
+      case ProficiencyType.OTHER:
+        proficiencies = this.proficiencies().OTHER;
+        break;
+      case "LANGUAGES":
+        proficiencies = this.languageChoices();
+        break;
+      default:
+        proficiencies = [];
+    }
+
+    return proficiencies.filter(proficiency => !this.selectedProficiencies.includes(proficiency.index));
   }
 
   setControlForProficiencies() {
@@ -273,10 +318,16 @@ export class CreateCharacterComponent implements OnInit {
     const backgroundProficiencies = proficiencies.ARTISANS_TOOLS.concat(proficiencies.GAMING_SETS, proficiencies.MUSICAL_INSTRUMENTS, proficiencies.VEHICLES, proficiencies.OTHER);
     const formGroup = new FormGroup({}, exactSelectedCheckboxes(2));
     backgroundProficiencies.forEach(proficiency => {
+      if (this.selectedProficiencies.includes(proficiency.index)) {
+        return;
+      }
       this.allAvailableProficiencies.push({index: proficiency.index, name: proficiency.name, type: proficiency.type});
       formGroup.addControl(proficiency.index, this.#formBuilder.control(false));
     });
     languages.forEach(language => {
+      if (this.selectedProficiencies.includes(language.index)) {
+        return;
+      }
       this.allAvailableProficiencies.push({index: language.index, name: language.name, type: "LANGUAGES"});
       formGroup.addControl(language.index, this.#formBuilder.control(false));
     });
@@ -460,4 +511,5 @@ export class CreateCharacterComponent implements OnInit {
   }
 
   protected readonly AbilityScoreMode = AbilityScoreMode;
+  protected readonly ProficiencyType = ProficiencyType;
 }
