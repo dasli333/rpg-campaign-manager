@@ -29,6 +29,7 @@ export class ImageUploadComponent {
   @Input() imageControl = new FormControl();
   @Output() fileSelected = new EventEmitter<File>();
   @Output() removeImage = new EventEmitter<void>();
+  @Output() imagePreviewChanged = new EventEmitter<ArrayBuffer | string | null>();
 
   #changeDetectorRef = inject(ChangeDetectorRef);
 
@@ -39,6 +40,7 @@ export class ImageUploadComponent {
       const reader = new FileReader();
       reader.onload = () => {
         this.imagePreview = reader.result;
+        this.imagePreviewChanged.emit(reader.result);
         this.#changeDetectorRef.markForCheck();
       };
       reader.readAsDataURL(file);

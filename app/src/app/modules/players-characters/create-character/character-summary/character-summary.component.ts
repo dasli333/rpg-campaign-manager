@@ -1,7 +1,7 @@
 import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
 
 export interface CharacterSummaryData {
-  image: string
+  image: string | ArrayBuffer | null | undefined
   characterDetails: {
     name: string
     gender: string

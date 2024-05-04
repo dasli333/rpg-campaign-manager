@@ -104,6 +104,7 @@ export class CreateCharacterComponent implements OnInit {
   selectedAbilityScores: Map<string, number | null> = new Map();
   selectedProficiencies: string[] = [];
   proficiencyChoices: any[] = [];
+  imagePreview: string | ArrayBuffer | null | undefined = null;
   allAvailableProficiencies: { index: string, name: string, type: string }[] = []
   proficiencies = this.#playerCharacterDataService.proficiencies;
   languageChoices = this.#playerCharacterDataService.languages;
@@ -224,7 +225,7 @@ export class CreateCharacterComponent implements OnInit {
       this.selectedSkillsNames = this.allAvailableProficiencies.filter(proficiency => selectedSkills.includes(proficiency.index)).map(proficiency => proficiency.name + ' (' + proficiency.type + ')');
 
       this.characterSummary = {
-        image: this.imageControl.value,
+        image: this.imagePreview || '',
         characterDetails: {
           name: this.characterDetailsForm.value.name || '',
           gender: this.characterDetailsForm.value.gender || '',
@@ -259,6 +260,10 @@ export class CreateCharacterComponent implements OnInit {
 
       console.log(this.characterSummary)
     }
+  }
+
+  setImagePreview(image: string | ArrayBuffer | null | undefined) {
+    this.imagePreview = image
   }
 
   setFinalAbilityScores(scores: Map<string, number | null>) {
