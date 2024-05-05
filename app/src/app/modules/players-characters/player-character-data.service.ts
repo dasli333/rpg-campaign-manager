@@ -1,17 +1,19 @@
-import {Injectable, signal, WritableSignal} from '@angular/core';
+import {inject, Injectable, signal, WritableSignal} from '@angular/core';
 import {Proficiencies, ProficiencyDetail} from "../../data-services/models/proficiency";
 import {Trait} from "../../data-services/models/trait";
 import {AbilityScore} from "../../data-services/models/ability-score";
 import {Skill} from "../../data-services/models/skill";
 import {Alignment} from "../../data-services/models/alignment";
 import {Language} from "../../data-services/models/language";
+import {HttpService} from "../../http/http.service";
+import {PlayerCharacter} from "./interfaces/player-character";
 
 @Injectable({
   providedIn: 'root'
 })
 export class PlayerCharacterDataService {
 
-  // TODO: Implement the following properties
+  #httpService = inject(HttpService);
 
   #proficiencies: WritableSignal<Proficiencies> = signal({WEAPONS: [], ARMOR: [], ARTISANS_TOOLS: [], SKILLS: [], SAVING_THROWS: [], OTHER: [], GAMING_SETS: [], VEHICLES: [], MUSICAL_INSTRUMENTS: []})
   proficiencies = this.#proficiencies.asReadonly();
@@ -33,6 +35,11 @@ export class PlayerCharacterDataService {
 
 
   constructor() { }
+
+  saveCharacter(playerCharacter: PlayerCharacter) {
+    console.log(playerCharacter);
+    // this.#httpService.post<PlayerCharacter>('player-characters', playerCharacter).subscribe();
+  }
 
   setProficiencies(proficiencies: Proficiencies) {
     this.#proficiencies.set(proficiencies)

@@ -37,6 +37,7 @@ import {MatExpansionModule} from "@angular/material/expansion";
 import {CharacterSummaryComponent, CharacterSummaryData} from "./character-summary/character-summary.component";
 import {StepperSelectionEvent} from "@angular/cdk/stepper";
 import {Language} from "../../../data-services/models/language";
+import {PlayerCharacter} from "../interfaces/player-character";
 
 enum AbilityScoreMode {
   DEFAULT,
@@ -272,6 +273,16 @@ export class CreateCharacterComponent implements OnInit {
 
   saveCharacter() {
     // TODO: implement
+    const playerCharacter: PlayerCharacter = {
+      name: this.characterSummary?.characterDetails.name || '',
+      gender: this.characterSummary?.characterDetails.gender || '',
+      age: this.characterSummary?.characterDetails.age || 0,
+      // height: this.characterSummary?.characterDetails.height,
+      // weight: this.characterSummary?.characterDetails.weight,
+      // alignment: this.characterSummary?.characterDetails.alignment,
+      image: this.characterSummary?.characterDetails.image || '',
+    }
+    // this.#playerCharacterDataService.saveCharacter(playerCharacter).subscribe(() => { });
   }
 
 

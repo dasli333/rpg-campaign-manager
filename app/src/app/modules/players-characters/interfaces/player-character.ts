@@ -1,5 +1,6 @@
 import {Attributes} from "./attributes";
 
+// TODO: update the interface to include the new fields
 export interface PlayerCharacter {
   _id: string;
   name: string;
