@@ -272,16 +272,12 @@ export class CreateCharacterComponent implements OnInit {
   }
 
   saveCharacter() {
-    // TODO: implement
-    const playerCharacter: PlayerCharacter = {
-      name: this.characterSummary?.characterDetails.name || '',
-      gender: this.characterSummary?.characterDetails.gender || '',
-      age: this.characterSummary?.characterDetails.age || 0,
-      // height: this.characterSummary?.characterDetails.height,
-      // weight: this.characterSummary?.characterDetails.weight,
-      // alignment: this.characterSummary?.characterDetails.alignment,
-      image: this.characterSummary?.characterDetails.image || '',
+    // TODO: add race and class features
+    if (!this.characterSummary) {
+      return;
     }
+    const playerCharacter = new PlayerCharacter(this.characterSummary)
+    console.log(playerCharacter);
     // this.#playerCharacterDataService.saveCharacter(playerCharacter).subscribe(() => { });
   }
 
