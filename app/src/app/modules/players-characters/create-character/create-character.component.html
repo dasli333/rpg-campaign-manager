@@ -428,7 +428,7 @@
             </mat-expansion-panel-header>
             <section [formGroup]="backgroundSkillsForm">
               <div formArrayName="proficiencies">
-                @for (proficiency of getProficiencyByType("LANGUAGES"); track proficiency.index) {
+                @for (proficiency of languageChoices(); track proficiency.index) {
                   <div>
                     <p>
                       <mat-checkbox [formControlName]="proficiency.index">{{ proficiency.name }}</mat-checkbox>

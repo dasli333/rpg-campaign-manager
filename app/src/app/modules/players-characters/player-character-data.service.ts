@@ -1,5 +1,5 @@
 import {inject, Injectable, signal, WritableSignal} from '@angular/core';
-import {Proficiencies, ProficiencyDetail} from "../../data-services/models/proficiency";
+import {Proficiencies, ProficiencyDetail, ProficiencyReference} from "../../data-services/models/proficiency";
 import {Trait} from "../../data-services/models/trait";
 import {AbilityScore} from "../../data-services/models/ability-score";
 import {Skill} from "../../data-services/models/skill";
@@ -15,7 +15,7 @@ export class PlayerCharacterDataService {
 
   #httpService = inject(HttpService);
 
-  #proficiencies: WritableSignal<Proficiencies> = signal({WEAPONS: [], ARMOR: [], ARTISANS_TOOLS: [], SKILLS: [], SAVING_THROWS: [], OTHER: [], GAMING_SETS: [], VEHICLES: [], MUSICAL_INSTRUMENTS: []})
+  #proficiencies: WritableSignal<ProficiencyDetail[]> = signal([])
   proficiencies = this.#proficiencies.asReadonly();
 
   #traits: WritableSignal<Trait[]> = signal([]);
@@ -41,17 +41,17 @@ export class PlayerCharacterDataService {
     // this.#httpService.post<PlayerCharacter>('player-characters', playerCharacter).subscribe();
   }
 
-  setProficiencies(proficiencies: Proficiencies) {
-    this.#proficiencies.set(proficiencies)
+  setProficiencies(proficiencies: ProficiencyDetail[]) {
+    this.#proficiencies.update((p) => [...p, ...proficiencies]);
   }
 
-  updateProficiencyType(type: keyof Proficiencies, proficiencies: ProficiencyDetail[]) {
-    this.#proficiencies.update((proficienciesMap) => {
-      proficienciesMap[type] = proficiencies;
-      return proficienciesMap;
-    });
-
-  }
+  // updateProficiencyType(type: keyof Proficiencies, proficiencies: ProficiencyDetail[]) {
+  //   this.#proficiencies.update((proficienciesMap) => {
+  //     proficienciesMap[type] = proficiencies;
+  //     return proficienciesMap;
+  //   });
+  //
+  // }
 
   setTraits(traits: Trait[]) {
     this.#traits.set(traits)

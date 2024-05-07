@@ -1,4 +1,5 @@
 import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
+import {IProficiencies} from "../../interfaces/player-character";
 
 export interface CharacterSummaryData {
   image: string | ArrayBuffer | null | undefined
@@ -14,6 +15,7 @@ export interface CharacterSummaryData {
   raceDetails: {
     race: string
     subrace: string
+    traits: string[]
   }
   className: string
   personalCharacteristics: {
@@ -31,7 +33,8 @@ export interface CharacterSummaryData {
     wisdom: number
     charisma: number
   }
-  selectedSkills: string[]
+  selectedSkills: string[],
+  proficiencies: IProficiencies
 }
 
 @Component({

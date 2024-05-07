@@ -37,7 +37,8 @@ import {MatExpansionModule} from "@angular/material/expansion";
 import {CharacterSummaryComponent, CharacterSummaryData} from "./character-summary/character-summary.component";
 import {StepperSelectionEvent} from "@angular/cdk/stepper";
 import {Language} from "../../../data-services/models/language";
-import {PlayerCharacter} from "../interfaces/player-character";
+import {IProficiencies, PlayerCharacter} from "../interfaces/player-character";
+import {switchMap} from "rxjs";
 
 enum AbilityScoreMode {
   DEFAULT,
@@ -174,11 +175,16 @@ export class CreateCharacterComponent implements OnInit {
 
     this.#dnd5eApiService.getBackgroundChoiceProficiencies().subscribe(setOfSkills => {
       this.#playerCharacterDataService.setLanguages(setOfSkills.data.languages);
-      this.updateProficiencies(setOfSkills.data.proficiencies);
+      this.#playerCharacterDataService.setProficiencies(setOfSkills.data.proficiencies);
+      // this.updateProficiencies(setOfSkills.data.proficiencies);
       this.backgroundSkillsForm.setControl('skills', this.setControlForSkills());
       this.backgroundSkillsForm.setControl('proficiencies', this.setControlForProficiencies());
       // TODO: add equipment?
     });
+
+    this.#dnd5eApiService.getWeaponsArmorAndSavingThrowsProficiencies().subscribe(proficiencies => {
+      this.#playerCharacterDataService.setProficiencies(proficiencies.data.proficiencies);
+    })
   }
 
   ngOnInit(): void {
@@ -200,7 +206,7 @@ export class CreateCharacterComponent implements OnInit {
 
     if (event.selectedIndex === 7) {
       this.selectedSkillsNames = [];
-      const selectedSkills: string[] = [];
+      let selectedSkills: string[] = [];
       this.proficiencyCharacterForm.value.proficiencies.forEach((proficiency: any[]) => {
         for (const key in proficiency) {
           if (proficiency[key]) {
@@ -223,7 +229,75 @@ export class CreateCharacterComponent implements OnInit {
         }
       }
 
+      const raceStartingProficiencies = this.selectedRaceDetail?.starting_proficiencies?.map(proficiency => proficiency.index) || [];
+      const subraceStartingProficiencies = this.selectedSubrace?.starting_proficiencies?.map(proficiency => proficiency.index) || [];
+      const classProficiencies = this.selectedClassDetail?.proficiencies?.map(proficiency => proficiency.index) || [];
+
+      selectedSkills = selectedSkills.concat(raceStartingProficiencies, subraceStartingProficiencies, classProficiencies);
+      // TODO: fix (now it only display allAvailableProficiencies) - remember about languages
       this.selectedSkillsNames = this.allAvailableProficiencies.filter(proficiency => selectedSkills.includes(proficiency.index)).map(proficiency => proficiency.name + ' (' + proficiency.type + ')');
+
+
+      const proficiencies: IProficiencies = {
+        WEAPONS: [],
+        ARTISANS_TOOLS: [],
+        SKILLS: [],
+        ARMOR: [],
+        MUSICAL_INSTRUMENTS: [],
+        SAVING_THROWS: [],
+        OTHER: [],
+        GAMING_SETS: [],
+        VEHICLES: [],
+        LANGUAGES: []
+      }
+
+
+      selectedSkills.forEach(skill => {
+        const proficiency = this.proficiencies().find(proficiency => proficiency.index === skill);
+        if (!proficiency) {
+          const language = this.languageChoices().find(language => language.index === skill)?.name;
+          if (language) {
+            proficiencies.LANGUAGES.push(language);
+          }
+          return;
+        }
+        switch (proficiency.type) {
+          case ProficiencyType.WEAPONS:
+            proficiencies.WEAPONS.push(proficiency.name);
+            break;
+          case ProficiencyType.ARTISANS_TOOLS:
+            proficiencies.ARTISANS_TOOLS.push(proficiency.name);
+            break;
+          case ProficiencyType.SKILLS:
+            proficiencies.SKILLS.push(proficiency.name);
+            break;
+          case ProficiencyType.ARMOR:
+            proficiencies.ARMOR.push(proficiency.name);
+            break;
+          case ProficiencyType.MUSICAL_INSTRUMENTS:
+            proficiencies.MUSICAL_INSTRUMENTS.push(proficiency.name);
+            break;
+          case ProficiencyType.SAVING_THROWS:
+            proficiencies.SAVING_THROWS.push(proficiency.name);
+            break;
+          case ProficiencyType.OTHER:
+            proficiencies.OTHER.push(proficiency.name);
+            break;
+          case ProficiencyType.GAMING_SETS:
+            proficiencies.GAMING_SETS.push(proficiency.name);
+            break;
+          case ProficiencyType.VEHICLES:
+            proficiencies.VEHICLES.push(proficiency.name);
+            break;
+          case "LANGUAGES":
+            proficiencies.LANGUAGES.push(proficiency.name);
+            break;
+        }
+      });
+
+      const raceTraitsNames = this.selectedRaceDetail?.traits.map(trait => trait.name) || [];
+      const subraceTraitsNames = this.selectedSubrace?.racial_traits.map(trait => trait.name) || [];
+      const traitsNames = raceTraitsNames.concat(subraceTraitsNames);
 
       this.characterSummary = {
         image: this.imagePreview || '',
@@ -239,6 +313,7 @@ export class CreateCharacterComponent implements OnInit {
         raceDetails: {
           race: this.selectedRaceDetail?.name || '',
           subrace: this.selectedSubrace?.name || '',
+          traits: traitsNames
         },
         className: this.selectedClassDetail?.name || '',
         personalCharacteristics: {
@@ -256,7 +331,8 @@ export class CreateCharacterComponent implements OnInit {
           wisdom: this.selectedAbilityScores.get('wis') || 0,
           charisma: this.selectedAbilityScores.get('cha') || 0,
         },
-        selectedSkills: this.selectedSkillsNames
+        selectedSkills: this.selectedSkillsNames,
+        proficiencies: proficiencies,
       }
 
       console.log(this.characterSummary)
@@ -283,7 +359,7 @@ export class CreateCharacterComponent implements OnInit {
 
 
   setControlForSkills() {
-    let skills = this.#playerCharacterDataService.proficiencies().SKILLS;
+    let skills = this.getProficiencyByType(ProficiencyType.SKILLS)
     const formGroup = new FormGroup({}, exactSelectedCheckboxes(2));
     skills.forEach(skill => {
       this.allAvailableProficiencies.push({index: skill.index, name: skill.name, type: skill.type});
@@ -293,41 +369,21 @@ export class CreateCharacterComponent implements OnInit {
   }
 
   getProficiencyByType(type: ProficiencyType | string) {
-    let proficiencies: ProficiencyDetail[] | Language[]
+    return this.proficiencies().filter(proficiency => proficiency.type === type);
+  }
 
-    switch (type) {
-      case ProficiencyType.SKILLS:
-        proficiencies = this.proficiencies().SKILLS;
-        break;
-      case ProficiencyType.ARTISANS_TOOLS:
-        proficiencies = this.proficiencies().ARTISANS_TOOLS;
-        break;
-      case ProficiencyType.GAMING_SETS:
-        proficiencies = this.proficiencies().GAMING_SETS;
-        break;
-      case ProficiencyType.MUSICAL_INSTRUMENTS:
-        proficiencies = this.proficiencies().MUSICAL_INSTRUMENTS;
-        break;
-      case ProficiencyType.VEHICLES:
-        proficiencies = this.proficiencies().VEHICLES;
-        break;
-      case ProficiencyType.OTHER:
-        proficiencies = this.proficiencies().OTHER;
-        break;
-      case "LANGUAGES":
-        proficiencies = this.languageChoices();
-        break;
-      default:
-        proficiencies = [];
-    }
-
-    return proficiencies.filter(proficiency => !this.selectedProficiencies.includes(proficiency.index));
+  private getBackgroundProficiencies() {
+    return this.proficiencies().filter(proficiency => proficiency.type === ProficiencyType.ARTISANS_TOOLS
+      || proficiency.type === ProficiencyType.GAMING_SETS
+      || proficiency.type === ProficiencyType.MUSICAL_INSTRUMENTS
+      || proficiency.type === ProficiencyType.VEHICLES
+      || proficiency.type === ProficiencyType.OTHER);
   }
 
   setControlForProficiencies() {
     const proficiencies = this.#playerCharacterDataService.proficiencies();
     const languages = this.languageChoices();
-    const backgroundProficiencies = proficiencies.ARTISANS_TOOLS.concat(proficiencies.GAMING_SETS, proficiencies.MUSICAL_INSTRUMENTS, proficiencies.VEHICLES, proficiencies.OTHER);
+    const backgroundProficiencies = this.getBackgroundProficiencies();
     const formGroup = new FormGroup({}, exactSelectedCheckboxes(2));
     backgroundProficiencies.forEach(proficiency => {
       if (this.selectedProficiencies.includes(proficiency.index)) {
@@ -504,22 +560,6 @@ export class CreateCharacterComponent implements OnInit {
 
       return null;
     };
-  }
-
-  private updateProficiencies(proficiencies: ProficiencyDetail[]) {
-    const skills = proficiencies.filter(proficiency => proficiency.type === ProficiencyType.SKILLS);
-    const artisansTools = proficiencies.filter(proficiency => proficiency.type === ProficiencyType.ARTISANS_TOOLS);
-    const vehicles = proficiencies.filter(proficiency => proficiency.type === ProficiencyType.VEHICLES);
-    const gamingSets = proficiencies.filter(proficiency => proficiency.type === ProficiencyType.GAMING_SETS);
-    const musicalInstruments = proficiencies.filter(proficiency => proficiency.type === ProficiencyType.MUSICAL_INSTRUMENTS);
-    const other = proficiencies.filter(proficiency => proficiency.type === ProficiencyType.OTHER);
-
-    this.#playerCharacterDataService.updateProficiencyType(ProficiencyType.SKILLS, skills);
-    this.#playerCharacterDataService.updateProficiencyType(ProficiencyType.ARTISANS_TOOLS, artisansTools);
-    this.#playerCharacterDataService.updateProficiencyType(ProficiencyType.VEHICLES, vehicles);
-    this.#playerCharacterDataService.updateProficiencyType(ProficiencyType.GAMING_SETS, gamingSets);
-    this.#playerCharacterDataService.updateProficiencyType(ProficiencyType.MUSICAL_INSTRUMENTS, musicalInstruments);
-    this.#playerCharacterDataService.updateProficiencyType(ProficiencyType.OTHER, other);
   }
 
   protected readonly AbilityScoreMode = AbilityScoreMode;

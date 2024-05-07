@@ -49,6 +49,10 @@ export class Dnd5eApiService {
             alignment
             age
             size_description
+            starting_proficiencies {
+              index
+              name
+            }
             ability_bonuses {
               ability_score {
                 index
@@ -102,6 +106,10 @@ export class Dnd5eApiService {
             index
             name
             desc
+            starting_proficiencies {
+              index
+              name
+            }
             ability_bonuses {
               ability_score {
                 index
@@ -228,6 +236,20 @@ export class Dnd5eApiService {
           languages {
             index
             name
+          }
+        }
+      `
+    });
+  }
+
+  getWeaponsArmorAndSavingThrowsProficiencies() {
+    return this.#apollo.query<{ proficiencies: ProficiencyDetail[] }>({
+      query: gql`
+        query {
+          proficiencies(type: [WEAPONS, ARMOR, SAVING_THROWS]) {
+            name
+            type
+            index
           }
         }
       `
