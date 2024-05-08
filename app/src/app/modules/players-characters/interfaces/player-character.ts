@@ -26,7 +26,17 @@ export interface IPlayerCharacter {
   flaws: string;
   languages: string[];
   traits: string[];
-  proficiencies: IProficiencies;
+  // proficiencies: IProficiencies;
+  weapons_proficiencies: string[];
+  artisan_tools_proficiencies: string[];
+  skills_proficiencies: string[];
+  armor_proficiencies: string[];
+  musical_instruments_proficiencies: string[];
+  saving_throws_proficiencies: string[];
+  other_proficiencies: string[];
+  gaming_sets_proficiencies: string[];
+  vehicles_proficiencies: string[];
+  languages_proficiencies: string[];
   equipment: string[];
   spells: string[];
   features: string[];
@@ -69,18 +79,28 @@ export class PlayerCharacter implements IPlayerCharacter {
   languages: string[] = [];
   traits: string[];
   // TODO: maybe use similar structure as in the ProficiencyDetail
-  proficiencies: IProficiencies = {
-    WEAPONS: [],
-    ARTISANS_TOOLS: [],
-    SKILLS: [],
-    ARMOR: [],
-    MUSICAL_INSTRUMENTS: [],
-    SAVING_THROWS: [],
-    OTHER: [],
-    GAMING_SETS: [],
-    VEHICLES: [],
-    LANGUAGES: []
-  };
+  // proficiencies: IProficiencies = {
+  //   WEAPONS: [],
+  //   ARTISANS_TOOLS: [],
+  //   SKILLS: [],
+  //   ARMOR: [],
+  //   MUSICAL_INSTRUMENTS: [],
+  //   SAVING_THROWS: [],
+  //   OTHER: [],
+  //   GAMING_SETS: [],
+  //   VEHICLES: [],
+  //   LANGUAGES: []
+  // };
+  weapons_proficiencies: string[] = [];
+  artisan_tools_proficiencies: string[] = [];
+  skills_proficiencies: string[] = [];
+  armor_proficiencies: string[] = [];
+  musical_instruments_proficiencies: string[] = [];
+  saving_throws_proficiencies: string[] = [];
+  other_proficiencies: string[] = [];
+  gaming_sets_proficiencies: string[] = [];
+  vehicles_proficiencies: string[] = [];
+  languages_proficiencies: string[] = [];
   equipment: string[] = [];
   spells: string[] = [];
   features: string[] = [];
