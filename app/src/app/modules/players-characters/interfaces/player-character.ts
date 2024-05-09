@@ -17,7 +17,6 @@ export interface IPlayerCharacter {
   image: string;
   experiencePoints: number;
   attributes: Attributes;
-  skills: string[];
   alignment: string;
   background: string;
   personalityTraits: string;
@@ -27,6 +26,7 @@ export interface IPlayerCharacter {
   languages: string[];
   traits: string[];
   // proficiencies: IProficiencies;
+
   weapons_proficiencies: string[];
   artisan_tools_proficiencies: string[];
   skills_proficiencies: string[];
@@ -69,7 +69,6 @@ export class PlayerCharacter implements IPlayerCharacter {
   image: string = '';
   experiencePoints: number = 0;
   attributes: Attributes;
-  skills: string[];
   alignment: string;
   background: string;
   personalityTraits: string;
@@ -121,9 +120,17 @@ export class PlayerCharacter implements IPlayerCharacter {
     this.bonds = data.personalCharacteristics.bonds;
     this.flaws = data.personalCharacteristics.flaws;
     this.attributes = data.abilityScores;
-    // TODO: SKILLS not needed
-    this.skills = data.selectedSkills;
     this.traits = data.raceDetails.traits;
+    this.weapons_proficiencies = data.proficiencies.WEAPONS;
+    this.artisan_tools_proficiencies = data.proficiencies.ARTISANS_TOOLS;
+    this.skills_proficiencies = data.proficiencies.SKILLS;
+    this.armor_proficiencies = data.proficiencies.ARMOR;
+    this.musical_instruments_proficiencies = data.proficiencies.MUSICAL_INSTRUMENTS;
+    this.saving_throws_proficiencies = data.proficiencies.SAVING_THROWS;
+    this.other_proficiencies = data.proficiencies.OTHER;
+    this.gaming_sets_proficiencies = data.proficiencies.GAMING_SETS;
+    this.vehicles_proficiencies = data.proficiencies.VEHICLES;
+    this.languages_proficiencies = data.proficiencies.LANGUAGES;
   }
 
   addTraits(traits: string[]) {

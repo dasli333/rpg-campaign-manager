@@ -30,15 +30,12 @@ import {AbilityScoresSummaryComponent} from "../ability-scores-summary/ability-s
 import {Alignment} from "../../../data-services/models/alignment";
 import {ImageUploadComponent} from "../../helpers/image-upload/image-upload.component";
 import {
-  ProficiencyDetail,
   ProficiencyType
 } from "../../../data-services/models/proficiency";
 import {MatExpansionModule} from "@angular/material/expansion";
 import {CharacterSummaryComponent, CharacterSummaryData} from "./character-summary/character-summary.component";
 import {StepperSelectionEvent} from "@angular/cdk/stepper";
-import {Language} from "../../../data-services/models/language";
 import {IProficiencies, PlayerCharacter} from "../interfaces/player-character";
-import {switchMap} from "rxjs";
 
 enum AbilityScoreMode {
   DEFAULT,
@@ -104,11 +101,37 @@ export class CreateCharacterComponent implements OnInit {
   selectedAlignment: Alignment | undefined;
   selectedSkillsNames: string[] = [];
   selectedAbilityScores: Map<string, number | null> = new Map();
-  selectedProficiencies: string[] = [];
+  selectedProficiencies = signal<string[]>([]);
   proficiencyChoices: any[] = [];
   imagePreview: string | ArrayBuffer | null | undefined = null;
   allAvailableProficiencies: { index: string, name: string, type: string }[] = []
   proficiencies = this.#playerCharacterDataService.proficiencies;
+
+  artisansToolsProficiencies = computed(() => {
+    const proficiencies = this.proficiencies().filter(proficiency => proficiency.type === ProficiencyType.ARTISANS_TOOLS);
+    return proficiencies.filter(proficiency => !this.selectedProficiencies().includes(proficiency.index));
+  });
+  skillsProficiencies = computed(() => {
+    const proficiencies = this.proficiencies().filter(proficiency => proficiency.type === ProficiencyType.SKILLS);
+    return proficiencies.filter(proficiency => !this.selectedProficiencies().includes(proficiency.index));
+  });
+  musicalInstrumentsProficiencies = computed(() => {
+    const proficiencies = this.proficiencies().filter(proficiency => proficiency.type === ProficiencyType.MUSICAL_INSTRUMENTS);
+    return proficiencies.filter(proficiency => !this.selectedProficiencies().includes(proficiency.index));
+  });
+  gamingSetsProficiencies = computed(() => {
+    const proficiencies = this.proficiencies().filter(proficiency => proficiency.type === ProficiencyType.GAMING_SETS);
+    return proficiencies.filter(proficiency => !this.selectedProficiencies().includes(proficiency.index));
+  });
+  vehiclesProficiencies = computed(() => {
+    const proficiencies = this.proficiencies().filter(proficiency => proficiency.type === ProficiencyType.VEHICLES);
+    return proficiencies.filter(proficiency => !this.selectedProficiencies().includes(proficiency.index));
+  });
+  otherProficiencies = computed(() => {
+    const proficiencies = this.proficiencies().filter(proficiency => proficiency.type === ProficiencyType.OTHER);
+    return proficiencies.filter(proficiency => !this.selectedProficiencies().includes(proficiency.index));
+  });
+
   languageChoices = this.#playerCharacterDataService.languages;
   characterImage: File | null = null;
   errorInAbilityScoreBonusForm = false;
@@ -193,11 +216,11 @@ export class CreateCharacterComponent implements OnInit {
 
   onStepChange(event: StepperSelectionEvent) {
     if (event.selectedIndex === 6) {
-      this.selectedProficiencies = [];
+      this.selectedProficiencies.set([]);
       this.proficiencyCharacterForm.value.proficiencies.forEach((proficiency: any[]) => {
         for (const key in proficiency) {
           if (proficiency[key]) {
-            this.selectedProficiencies.push(key);
+            this.selectedProficiencies.update((proficiencies) => [...proficiencies, key]);
           }
         }
       });
@@ -348,7 +371,7 @@ export class CreateCharacterComponent implements OnInit {
   }
 
   saveCharacter() {
-    // TODO: add race and class features
+    // TODO: save character
     if (!this.characterSummary) {
       return;
     }
@@ -357,19 +380,14 @@ export class CreateCharacterComponent implements OnInit {
     // this.#playerCharacterDataService.saveCharacter(playerCharacter).subscribe(() => { });
   }
 
-
   setControlForSkills() {
-    let skills = this.getProficiencyByType(ProficiencyType.SKILLS)
+    let skills = this.skillsProficiencies();
     const formGroup = new FormGroup({}, exactSelectedCheckboxes(2));
     skills.forEach(skill => {
       this.allAvailableProficiencies.push({index: skill.index, name: skill.name, type: skill.type});
       formGroup.addControl(skill.index, this.#formBuilder.control(false));
     });
     return formGroup;
-  }
-
-  getProficiencyByType(type: ProficiencyType | string) {
-    return this.proficiencies().filter(proficiency => proficiency.type === type);
   }
 
   private getBackgroundProficiencies() {
@@ -381,19 +399,18 @@ export class CreateCharacterComponent implements OnInit {
   }
 
   setControlForProficiencies() {
-    const proficiencies = this.#playerCharacterDataService.proficiencies();
     const languages = this.languageChoices();
     const backgroundProficiencies = this.getBackgroundProficiencies();
     const formGroup = new FormGroup({}, exactSelectedCheckboxes(2));
     backgroundProficiencies.forEach(proficiency => {
-      if (this.selectedProficiencies.includes(proficiency.index)) {
+      if (this.selectedProficiencies().includes(proficiency.index)) {
         return;
       }
       this.allAvailableProficiencies.push({index: proficiency.index, name: proficiency.name, type: proficiency.type});
       formGroup.addControl(proficiency.index, this.#formBuilder.control(false));
     });
     languages.forEach(language => {
-      if (this.selectedProficiencies.includes(language.index)) {
+      if (this.selectedProficiencies().includes(language.index)) {
         return;
       }
       this.allAvailableProficiencies.push({index: language.index, name: language.name, type: "LANGUAGES"});
@@ -403,6 +420,7 @@ export class CreateCharacterComponent implements OnInit {
   }
 
   buildProficienciesChoices() {
+    // TODO: if race proficiency then not display in the list
     this.proficiencyChoices = [];
     const groups = new FormArray<any>([]);
     this.selectedClassDetail?.proficiency_choices.forEach(proficiency => {
@@ -563,5 +581,4 @@ export class CreateCharacterComponent implements OnInit {
   }
 
   protected readonly AbilityScoreMode = AbilityScoreMode;
-  protected readonly ProficiencyType = ProficiencyType;
 }

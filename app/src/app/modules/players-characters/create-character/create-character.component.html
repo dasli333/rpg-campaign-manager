@@ -54,7 +54,7 @@
 
   <mat-step [stepControl]="proficiencyCharacterForm" label="Proficiencies">
 
-    <section class="example-section" [formGroup]="proficiencyCharacterForm">
+    <section class="proficiency-section" [formGroup]="proficiencyCharacterForm">
       <div formArrayName="proficiencies">
         @for (proficiency of proficiencyChoices; track proficiency.desc) {
           <div [formGroupName]="$index">
@@ -305,7 +305,7 @@
             </mat-expansion-panel-header>
             <section [formGroup]="backgroundSkillsForm">
               <div formArrayName="skills">
-                @for (proficiency of getProficiencyByType(ProficiencyType.SKILLS); track proficiency.index) {
+                @for (proficiency of skillsProficiencies(); track proficiency.index) {
                   <div>
                     <p>
                       <mat-checkbox [formControlName]="proficiency.index">{{ proficiency.name }}</mat-checkbox>
@@ -328,7 +328,7 @@
             </mat-expansion-panel-header>
             <section [formGroup]="backgroundSkillsForm">
               <div formArrayName="proficiencies">
-                @for (proficiency of getProficiencyByType(ProficiencyType.ARTISANS_TOOLS); track proficiency.index) {
+                @for (proficiency of artisansToolsProficiencies(); track proficiency.index) {
                   <div>
                     <p>
                       <mat-checkbox [formControlName]="proficiency.index">{{ proficiency.name }}</mat-checkbox>
@@ -348,7 +348,7 @@
             </mat-expansion-panel-header>
             <section [formGroup]="backgroundSkillsForm">
               <div formArrayName="proficiencies">
-                @for (proficiency of getProficiencyByType(ProficiencyType.VEHICLES); track proficiency.index) {
+                @for (proficiency of vehiclesProficiencies(); track proficiency.index) {
                   <div>
                     <p>
                       <mat-checkbox [formControlName]="proficiency.index">{{ proficiency.name }}</mat-checkbox>
@@ -368,7 +368,7 @@
             </mat-expansion-panel-header>
             <section [formGroup]="backgroundSkillsForm">
               <div formArrayName="proficiencies">
-                @for (proficiency of getProficiencyByType(ProficiencyType.GAMING_SETS); track proficiency.index) {
+                @for (proficiency of gamingSetsProficiencies(); track proficiency.index) {
                   <div>
                     <p>
                       <mat-checkbox [formControlName]="proficiency.index">{{ proficiency.name }}</mat-checkbox>
@@ -388,7 +388,7 @@
             </mat-expansion-panel-header>
             <section [formGroup]="backgroundSkillsForm">
               <div formArrayName="proficiencies">
-                @for (proficiency of getProficiencyByType(ProficiencyType.MUSICAL_INSTRUMENTS); track proficiency.index) {
+                @for (proficiency of musicalInstrumentsProficiencies(); track proficiency.index) {
                   <div>
                     <p>
                       <mat-checkbox [formControlName]="proficiency.index">{{ proficiency.name }}</mat-checkbox>
@@ -408,7 +408,7 @@
             </mat-expansion-panel-header>
             <section [formGroup]="backgroundSkillsForm">
               <div formArrayName="proficiencies">
-                @for (proficiency of getProficiencyByType(ProficiencyType.OTHER); track proficiency.index) {
+                @for (proficiency of otherProficiencies(); track proficiency.index) {
                   <div>
                     <p>
                       <mat-checkbox [formControlName]="proficiency.index">{{ proficiency.name }}</mat-checkbox>

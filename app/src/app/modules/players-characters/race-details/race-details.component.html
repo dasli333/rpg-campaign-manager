@@ -35,6 +35,18 @@
         }
       </mat-list>
 
+      @if (selectedRaceDetail.starting_proficiencies.length > 0) {
+        <h3>Proficiencies</h3>
+        <mat-list>
+          @for (proficiency of selectedRaceDetail.starting_proficiencies; track proficiency.name) {
+            <mat-list-item>
+              {{ proficiency.name }}
+            </mat-list-item>
+          }
+        </mat-list>
+      }
+
+
       @if (selectedSubrace) {
         <mat-divider></mat-divider>
         <mat-list>
@@ -59,6 +71,17 @@
             </mat-list-item>
           }
         </mat-list>
+
+        @if (selectedSubrace.starting_proficiencies.length > 0) {
+          <h3>Subrace Proficiencies</h3>
+          <mat-list>
+            @for (proficiency of selectedSubrace.starting_proficiencies; track proficiency.name) {
+              <mat-list-item>
+                {{ proficiency.name }}
+              </mat-list-item>
+            }
+          </mat-list>
+        }
       }
 
     </mat-card-content>
