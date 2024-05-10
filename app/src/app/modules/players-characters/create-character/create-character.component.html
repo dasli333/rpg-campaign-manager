@@ -59,7 +59,7 @@
         @for (proficiency of proficiencyChoices; track proficiency.desc) {
           <div [formGroupName]="$index">
             <h3>{{ proficiency.desc }}</h3>
-            @for (option of proficiency.from.options; track option.item?.index) {
+            @for (option of proficiency.from.filteredOptions; track option.item?.index) {
               @if (option.item) {
                 <p>
                   <mat-checkbox [formControlName]="option.item.index">{{ option.item.name }}</mat-checkbox>

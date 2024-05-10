@@ -24,6 +24,7 @@ export interface ProficiencyOption {
   choose: number;
   type: string;
   from: {
+    filteredOptions?: ProficiencyItemOption[];
     option_set_type: string;
     options: ProficiencyItemOption[];
   };

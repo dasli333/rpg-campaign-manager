@@ -215,6 +215,10 @@ export class CreateCharacterComponent implements OnInit {
   }
 
   onStepChange(event: StepperSelectionEvent) {
+    if (event.selectedIndex === 2) {
+      this.proficiencyCharacterForm.setControl('proficiencies', this.buildProficienciesChoices());
+    }
+
     if (event.selectedIndex === 6) {
       this.selectedProficiencies.set([]);
       this.proficiencyCharacterForm.value.proficiencies.forEach((proficiency: any[]) => {
@@ -420,11 +424,14 @@ export class CreateCharacterComponent implements OnInit {
   }
 
   buildProficienciesChoices() {
-    // TODO: if race proficiency then not display in the list
+    // TODO: update second case
     this.proficiencyChoices = [];
     const groups = new FormArray<any>([]);
     this.selectedClassDetail?.proficiency_choices.forEach(proficiency => {
       let group: FormGroup | null = new FormGroup({}, exactSelectedCheckboxes(proficiency.choose));
+      proficiency.from.filteredOptions = proficiency.from.options.filter(option => {
+        return !this.selectedProficiencies().includes(option.item?.index || '');
+      });
       const proficiencyChoice = proficiency;
       proficiency.from.options.forEach(option => {
         if (option.item) {
@@ -456,6 +463,7 @@ export class CreateCharacterComponent implements OnInit {
     if (!raceIndex) return;
     this.#dnd5eApiService.getRaceDetails(raceIndex).subscribe(raceDetail => {
       this.selectedRaceDetail = raceDetail.data.race;
+      this.selectedProficiencies.set(this.selectedRaceDetail.starting_proficiencies.map(proficiency => proficiency.index));
       this.selectedSubrace = null;
       this.raceCharacterForm.get('subrace')?.reset();
       this.#detectChanges.markForCheck();
@@ -470,6 +478,7 @@ export class CreateCharacterComponent implements OnInit {
     }
     this.#dnd5eApiService.getSubraceDetails(subraceIndex).subscribe(subrace => {
       this.selectedSubrace = subrace.data.subrace;
+      this.selectedProficiencies.update((proficiencies) => [...proficiencies, ...this.selectedSubrace?.starting_proficiencies.map(proficiency => proficiency.index) || []]);
       this.#detectChanges.markForCheck();
     })
   }
@@ -481,7 +490,6 @@ export class CreateCharacterComponent implements OnInit {
     }
     this.#dnd5eApiService.getClassDetails(classIndex).subscribe(classDetail => {
       this.selectedClassDetail = classDetail;
-      this.proficiencyCharacterForm.setControl('proficiencies', this.buildProficienciesChoices());
       this.#detectChanges.markForCheck();
     })
   }
