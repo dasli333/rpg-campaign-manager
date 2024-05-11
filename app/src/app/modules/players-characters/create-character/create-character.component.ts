@@ -424,7 +424,6 @@ export class CreateCharacterComponent implements OnInit {
   }
 
   buildProficienciesChoices() {
-    // TODO: update second case
     this.proficiencyChoices = [];
     const groups = new FormArray<any>([]);
     this.selectedClassDetail?.proficiency_choices.forEach(proficiency => {
@@ -441,6 +440,9 @@ export class CreateCharacterComponent implements OnInit {
           group = null;
           const optionChoiceClone = structuredClone(option.choice);
           optionChoiceClone.desc = "Choose " + option.choice.choose + " from the following " + option.choice.desc;
+          optionChoiceClone.from.filteredOptions = option.choice.from.options.filter(option => {
+            return !this.selectedProficiencies().includes(option.item?.index || '');
+          })
           this.proficiencyChoices.push(optionChoiceClone);
           const groupForChoice = new FormGroup({}, exactSelectedCheckboxes(option.choice.choose));
           option.choice.from.options.forEach(choice => {
@@ -472,8 +474,9 @@ export class CreateCharacterComponent implements OnInit {
 
   onSubraceChange(event: MatSelectChange) {
     const subraceIndex = event.value;
-    if (!subraceIndex) {
+    if (!subraceIndex && this.selectedRaceDetail) {
       this.selectedSubrace = null;
+      this.selectedProficiencies.set(this.selectedRaceDetail.starting_proficiencies.map(proficiency => proficiency.index));
       return;
     }
     this.#dnd5eApiService.getSubraceDetails(subraceIndex).subscribe(subrace => {
