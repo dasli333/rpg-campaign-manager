@@ -3,6 +3,7 @@ import {IProficiencies} from "../../interfaces/player-character";
 
 export interface CharacterSummaryData {
   image: string | ArrayBuffer | null | undefined
+  imageFile: File | null
   characterDetails: {
     name: string
     gender: string

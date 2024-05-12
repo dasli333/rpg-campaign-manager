@@ -38,7 +38,7 @@ export class PlayerCharacterDataService {
 
   saveCharacter(playerCharacter: PlayerCharacter) {
     console.log(playerCharacter);
-    // this.#httpService.post<PlayerCharacter>('player-characters', playerCharacter).subscribe();
+    return this.#httpService.post<PlayerCharacter>('player-characters', playerCharacter);
   }
 
   setProficiencies(proficiencies: ProficiencyDetail[]) {

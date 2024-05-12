@@ -328,6 +328,7 @@ export class CreateCharacterComponent implements OnInit {
 
       this.characterSummary = {
         image: this.imagePreview || '',
+        imageFile: this.characterImage,
         characterDetails: {
           name: this.characterDetailsForm.value.name || '',
           gender: this.characterDetailsForm.value.gender || '',
@@ -381,7 +382,10 @@ export class CreateCharacterComponent implements OnInit {
     }
     const playerCharacter = new PlayerCharacter(this.characterSummary)
     console.log(playerCharacter);
-    // this.#playerCharacterDataService.saveCharacter(playerCharacter).subscribe(() => { });
+    this.#playerCharacterDataService.saveCharacter(playerCharacter).subscribe((value) => {
+      console.log(value);
+      this.#detectChanges.markForCheck();
+    });
   }
 
   setControlForSkills() {
