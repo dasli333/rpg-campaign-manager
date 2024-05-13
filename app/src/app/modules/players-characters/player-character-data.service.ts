@@ -34,12 +34,8 @@ export class PlayerCharacterDataService {
   languages = this.#languages.asReadonly();
 
 
-  constructor() { }
 
-  saveCharacter(playerCharacter: PlayerCharacter) {
-    console.log(playerCharacter);
-    return this.#httpService.post<PlayerCharacter>('player-characters', playerCharacter);
-  }
+  constructor() { }
 
   setProficiencies(proficiencies: ProficiencyDetail[]) {
     this.#proficiencies.update((p) => [...p, ...proficiencies]);

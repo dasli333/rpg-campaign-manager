@@ -1,5 +1,5 @@
 export interface PlayerCharacter {
     name: string;
-    player: string;
+    // player: string;
     className: string
 }

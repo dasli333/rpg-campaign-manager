@@ -6,6 +6,7 @@ import * as fs from "fs";
 import * as path from "path";
 import {v4 as uuidv4} from 'uuid';
 import {CreateStoryLogDto} from "./dto/create-story-log.dto";
+import {CreatePlayerCharacterDto} from "./dto/create-player-character.dto";
 
 @Injectable()
 export class CampaignsService {
@@ -56,5 +57,10 @@ export class CampaignsService {
 
   deleteStoryLog(id: string, storyLogId: string) {
     return this.campaignsRepository.deleteStoryLog(id, storyLogId);
+  }
+
+  //PLAYER CHARACTERS
+  addPlayerCharacter(id: string, playerCharacter: CreatePlayerCharacterDto) {
+    return this.campaignsRepository.addPlayerCharacter(id, playerCharacter);
   }
 }

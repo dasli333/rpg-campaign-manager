@@ -36,6 +36,7 @@ import {MatExpansionModule} from "@angular/material/expansion";
 import {CharacterSummaryComponent, CharacterSummaryData} from "./character-summary/character-summary.component";
 import {StepperSelectionEvent} from "@angular/cdk/stepper";
 import {IProficiencies, PlayerCharacter} from "../interfaces/player-character";
+import {CampaignsService} from "../../campaigns/campaigns.service";
 
 enum AbilityScoreMode {
   DEFAULT,
@@ -71,6 +72,7 @@ export class CreateCharacterComponent implements OnInit {
   #formBuilder = inject(FormBuilder);
   #dnd5eApiService = inject(Dnd5eApiService);
   #playerCharacterDataService = inject(PlayerCharacterDataService);
+  #campaignService = inject(CampaignsService);
   #detectChanges = inject(ChangeDetectorRef);
   #defaultScores = [15, 14, 13, 12, 10, 8];
 
@@ -382,7 +384,7 @@ export class CreateCharacterComponent implements OnInit {
     }
     const playerCharacter = new PlayerCharacter(this.characterSummary)
     console.log(playerCharacter);
-    this.#playerCharacterDataService.saveCharacter(playerCharacter).subscribe((value) => {
+    this.#campaignService.addPlayerCharacter(playerCharacter).subscribe((value) => {
       console.log(value);
       this.#detectChanges.markForCheck();
     });

@@ -5,7 +5,6 @@ import {CampaignsModule} from './campaigns/campaigns.module';
 import {MongooseModule} from "@nestjs/mongoose";
 import {ServeStaticModule} from "@nestjs/serve-static";
 import {join} from 'path'
-import {PlayerCharactersModule} from './player-characters/player-characters.module';
 
 @Module({
   imports: [
@@ -14,7 +13,6 @@ import {PlayerCharactersModule} from './player-characters/player-characters.modu
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'public'),
     }),
-    PlayerCharactersModule,
   ],
   controllers: [AppController],
   providers: [AppService],

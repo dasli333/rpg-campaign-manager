@@ -4,6 +4,7 @@ import { CreateCampaignDto } from './dto/create-campaign.dto';
 import { UpdateCampaignDto } from './dto/update-campaign.dto';
 import {FileInterceptor} from "@nestjs/platform-express";
 import {CreateStoryLogDto} from "./dto/create-story-log.dto";
+import {CreatePlayerCharacterDto} from "./dto/create-player-character.dto";
 
 
 
@@ -51,5 +52,11 @@ export class CampaignsController {
   @Delete(':id/story-log/:storyLogId')
   deleteStoryLog(@Param('id') id: string, @Param('storyLogId') storyLogId: string) {
     return this.campaignsService.deleteStoryLog(id, storyLogId);
+  }
+
+  //PLAYER CHARACTERS
+  @Post(':id/player-character')
+  addPlayerCharacter(@Param('id') id: string, @Body() playerCharacter: CreatePlayerCharacterDto) {
+    return this.campaignsService.addPlayerCharacter(id, playerCharacter);
   }
 }

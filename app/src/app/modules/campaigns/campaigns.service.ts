@@ -17,7 +17,7 @@ export class CampaignsService {
   #activeCampaign: WritableSignal<ICampaign | undefined> = signal(undefined);
   activeCampaign = this.#activeCampaign.asReadonly();
 
-  #campaigns: WritableSignal<ICampaign[]> = signal([]) ;
+  #campaigns: WritableSignal<ICampaign[]> = signal([]);
 
   campaigns = this.#campaigns.asReadonly();
   storyLogs = computed(() => this.activeCampaign()?.storyLogs || []);
@@ -80,24 +80,24 @@ export class CampaignsService {
 
   addStoryLog(storyLog: StoryLog): Observable<ICampaign | undefined> {
     return this.#httpService.post<ICampaign>(`${this.#apiUrl}/${this.activeCampaign()?.id}/story-log`, storyLog).pipe(
-      switchMap(campaign => {
-        return this.setActiveCampaign(campaign.id);
+      tap(campaign => {
+        this.#activeCampaign.set(campaign);
       })
     );
   }
 
   updateStoryLog(storyLog: StoryLog): Observable<ICampaign | undefined> {
     return this.#httpService.patch<ICampaign>(`${this.#apiUrl}/${this.activeCampaign()?.id}/story-log/${storyLog._id}`, storyLog).pipe(
-      switchMap(campaign => {
-        return this.setActiveCampaign(campaign.id);
+      tap(campaign => {
+        this.#activeCampaign.set(campaign);
       })
     );
   }
 
   deleteStoryLog(storyLogId: string): Observable<ICampaign | undefined> {
     return this.#httpService.delete<ICampaign>(`${this.#apiUrl}/${this.activeCampaign()?.id}/story-log/${storyLogId}`).pipe(
-      switchMap(campaign => {
-        return this.setActiveCampaign(campaign.id);
+      tap(campaign => {
+        this.#activeCampaign.set(campaign);
       })
     );
   }
@@ -108,5 +108,13 @@ export class CampaignsService {
       campaign.playersCharacters = campaign.playersCharacters.filter(playerCharacter => playerCharacter._id !== id);
       return campaign;
     });
+  }
+
+  addPlayerCharacter(playerCharacter: any): Observable<ICampaign | undefined> {
+    return this.#httpService.post<ICampaign>(`${this.#apiUrl}/${this.activeCampaign()?.id}/player-character`, playerCharacter).pipe(
+      // switchMap(campaign => {
+      //   return this.setActiveCampaign(campaign.id);
+      // })
+    );
   }
 }

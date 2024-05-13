@@ -12,7 +12,7 @@ export interface IPlayerCharacter {
   weight: string
   race: string;
   subrace: string;
-  class: string;
+  className: string;
   level: number;
   image: string;
   experiencePoints: number;
@@ -64,7 +64,7 @@ export class PlayerCharacter implements IPlayerCharacter {
   weight: string;
   race: string;
   subrace: string;
-  class: string;
+  className: string;
   level: number = 1;
   image: string = '';
   experiencePoints: number = 0;
@@ -112,7 +112,7 @@ export class PlayerCharacter implements IPlayerCharacter {
     this.weight = data.characterDetails.weight;
     this.race = data.raceDetails.race;
     this.subrace = data.raceDetails.subrace;
-    this.class = data.className;
+    this.className = data.className;
     this.alignment = data.characterDetails.alignment;
     this.background = data.personalCharacteristics.background;
     this.personalityTraits = data.personalCharacteristics.personalityTraits;

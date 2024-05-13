@@ -6,6 +6,7 @@ import {Model, Types} from "mongoose";
 import {NotFoundException} from "@nestjs/common";
 import * as fs from 'fs';
 import {CreateStoryLogDto} from "./dto/create-story-log.dto";
+import {CreatePlayerCharacterDto} from "./dto/create-player-character.dto";
 
 export class CampaignsRepository {
 
@@ -69,6 +70,13 @@ export class CampaignsRepository {
     const campaign = await this.campaignModel.findById(id).exec()
     const storyLogIndex = campaign.storyLogs.findIndex(log => log._id.toString() === storyLogId);
     campaign.storyLogs.splice(storyLogIndex, 1);
+    return campaign.save();
+  }
+
+  // PLAYER CHARACTERS
+  async addPlayerCharacter(id: string, playerCharacter: CreatePlayerCharacterDto) {
+    const campaign = await this.campaignModel.findById(id).exec();
+    campaign.playersCharacters.push(playerCharacter);
     return campaign.save();
   }
 }
