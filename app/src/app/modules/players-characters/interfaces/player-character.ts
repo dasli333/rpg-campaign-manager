@@ -56,7 +56,7 @@ export interface IProficiencies {
 }
 
 export class PlayerCharacter implements IPlayerCharacter {
-  _id: string = '';
+  _id!: string;
   name: string;
   gender: string;
   age: number;
