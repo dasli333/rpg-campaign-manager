@@ -35,7 +35,7 @@ import {
 import {MatExpansionModule} from "@angular/material/expansion";
 import {CharacterSummaryComponent, CharacterSummaryData} from "./character-summary/character-summary.component";
 import {StepperSelectionEvent} from "@angular/cdk/stepper";
-import {IProficiencies, PlayerCharacter} from "../interfaces/player-character";
+import {IPlayerCharacter, IProficiencies, PlayerCharacter} from "../interfaces/player-character";
 import {CampaignsService} from "../../campaigns/campaigns.service";
 
 enum AbilityScoreMode {
@@ -382,12 +382,56 @@ export class CreateCharacterComponent implements OnInit {
     if (!this.characterSummary) {
       return;
     }
-    const playerCharacter = new PlayerCharacter(this.characterSummary)
+    const playerData: IPlayerCharacter = this.prepareDataForSave();
+    const playerCharacter = new PlayerCharacter(playerData)
     console.log(playerCharacter);
     this.#campaignService.addPlayerCharacter(playerCharacter).subscribe((value) => {
       console.log(value);
       this.#detectChanges.markForCheck();
     });
+  }
+
+  private prepareDataForSave(): IPlayerCharacter {
+    return {
+      name: this.characterDetailsForm.value.name || '',
+      gender: this.characterDetailsForm.value.gender || '',
+      age: Number(this.characterDetailsForm.value.age) || 0,
+      height: this.characterDetailsForm.value.height || '',
+      weight: this.characterDetailsForm.value.weight || '',
+      race: this.raceCharacterForm.value.race || '',
+      subrace: this.raceCharacterForm.value.subrace || '',
+      className: this.classCharacterForm.value.class || '',
+      level: 1, // default level
+      image: this.characterDetailsForm.value.image || '',
+      experiencePoints: 0, // default experience points
+      attributes: {
+        strength: this.abilityScoreCharacterForm.value.str || 0,
+        dexterity: this.abilityScoreCharacterForm.value.dex || 0,
+        constitution: this.abilityScoreCharacterForm.value.con || 0,
+        intelligence: this.abilityScoreCharacterForm.value.int || 0,
+        wisdom: this.abilityScoreCharacterForm.value.wis || 0,
+        charisma: this.abilityScoreCharacterForm.value.cha || 0,
+      },
+      alignment: this.characterDetailsForm.value.alignment || '',
+      background: this.personalCharacteristicsForm.value.background || '',
+      personalityTraits: this.personalCharacteristicsForm.value.personalityTraits || '',
+      ideals: this.personalCharacteristicsForm.value.ideals || '',
+      bonds: this.personalCharacteristicsForm.value.bonds || '',
+      flaws: this.personalCharacteristicsForm.value.flaws || '',
+      traits: [],
+      weapons_proficiencies: this.characterSummary?.proficiencies.WEAPONS || [],
+      artisan_tools_proficiencies: this.characterSummary?.proficiencies.ARTISANS_TOOLS || [],
+      skills_proficiencies: this.characterSummary?.proficiencies.SKILLS || [],
+      armor_proficiencies: this.characterSummary?.proficiencies.ARMOR || [],
+      musical_instruments_proficiencies: this.characterSummary?.proficiencies.MUSICAL_INSTRUMENTS || [],
+      saving_throws_proficiencies: this.characterSummary?.proficiencies.SAVING_THROWS || [],
+      other_proficiencies: this.characterSummary?.proficiencies.OTHER || [],
+      gaming_sets_proficiencies: this.characterSummary?.proficiencies.GAMING_SETS || [],
+      vehicles_proficiencies: this.characterSummary?.proficiencies.VEHICLES || [],
+      languages: this.characterSummary?.proficiencies.LANGUAGES || [],
+      equipment: [],
+      spells: [],
+    };
   }
 
   setControlForSkills() {

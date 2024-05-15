@@ -1,10 +1,6 @@
 import {Attributes} from "./attributes";
-import {CharacterSummaryData} from "../create-character/character-summary/character-summary.component";
-import {ProficiencyDetail} from "../../../data-services/models/proficiency";
 
-// TODO: update the interface to include the new fields
 export interface IPlayerCharacter {
-  _id: string;
   name: string;
   gender: string;
   age: number;
@@ -25,8 +21,6 @@ export interface IPlayerCharacter {
   flaws: string;
   languages: string[];
   traits: string[];
-  // proficiencies: IProficiencies;
-
   weapons_proficiencies: string[];
   artisan_tools_proficiencies: string[];
   skills_proficiencies: string[];
@@ -36,10 +30,8 @@ export interface IPlayerCharacter {
   other_proficiencies: string[];
   gaming_sets_proficiencies: string[];
   vehicles_proficiencies: string[];
-  languages_proficiencies: string[];
   equipment: string[];
   spells: string[];
-  features: string[];
 }
 
 export interface IProficiencies {
@@ -77,19 +69,6 @@ export class PlayerCharacter implements IPlayerCharacter {
   flaws: string;
   languages: string[] = [];
   traits: string[];
-  // TODO: maybe use similar structure as in the ProficiencyDetail
-  // proficiencies: IProficiencies = {
-  //   WEAPONS: [],
-  //   ARTISANS_TOOLS: [],
-  //   SKILLS: [],
-  //   ARMOR: [],
-  //   MUSICAL_INSTRUMENTS: [],
-  //   SAVING_THROWS: [],
-  //   OTHER: [],
-  //   GAMING_SETS: [],
-  //   VEHICLES: [],
-  //   LANGUAGES: []
-  // };
   weapons_proficiencies: string[] = [];
   artisan_tools_proficiencies: string[] = [];
   skills_proficiencies: string[] = [];
@@ -99,38 +78,41 @@ export class PlayerCharacter implements IPlayerCharacter {
   other_proficiencies: string[] = [];
   gaming_sets_proficiencies: string[] = [];
   vehicles_proficiencies: string[] = [];
-  languages_proficiencies: string[] = [];
   equipment: string[] = [];
   spells: string[] = [];
-  features: string[] = [];
 
-  constructor(data: CharacterSummaryData) {
-    this.name = data.characterDetails.name;
-    this.gender = data.characterDetails.gender;
-    this.age = data.characterDetails.age;
-    this.height = data.characterDetails.height;
-    this.weight = data.characterDetails.weight;
-    this.race = data.raceDetails.race;
-    this.subrace = data.raceDetails.subrace;
+  constructor(data: IPlayerCharacter) {
+    this.name = data.name;
+    this.gender = data.gender;
+    this.age = data.age;
+    this.height = data.height;
+    this.weight = data.weight;
+    this.race = data.race;
+    this.subrace = data.subrace;
     this.className = data.className;
-    this.alignment = data.characterDetails.alignment;
-    this.background = data.personalCharacteristics.background;
-    this.personalityTraits = data.personalCharacteristics.personalityTraits;
-    this.ideals = data.personalCharacteristics.ideals;
-    this.bonds = data.personalCharacteristics.bonds;
-    this.flaws = data.personalCharacteristics.flaws;
-    this.attributes = data.abilityScores;
-    this.traits = data.raceDetails.traits;
-    this.weapons_proficiencies = data.proficiencies.WEAPONS;
-    this.artisan_tools_proficiencies = data.proficiencies.ARTISANS_TOOLS;
-    this.skills_proficiencies = data.proficiencies.SKILLS;
-    this.armor_proficiencies = data.proficiencies.ARMOR;
-    this.musical_instruments_proficiencies = data.proficiencies.MUSICAL_INSTRUMENTS;
-    this.saving_throws_proficiencies = data.proficiencies.SAVING_THROWS;
-    this.other_proficiencies = data.proficiencies.OTHER;
-    this.gaming_sets_proficiencies = data.proficiencies.GAMING_SETS;
-    this.vehicles_proficiencies = data.proficiencies.VEHICLES;
-    this.languages_proficiencies = data.proficiencies.LANGUAGES;
+    this.level = data.level;
+    this.image = data.image;
+    this.experiencePoints = data.experiencePoints;
+    this.attributes = data.attributes;
+    this.alignment = data.alignment;
+    this.background = data.background;
+    this.personalityTraits = data.personalityTraits;
+    this.ideals = data.ideals;
+    this.bonds = data.bonds;
+    this.flaws = data.flaws;
+    this.languages = data.languages;
+    this.traits = data.traits;
+    this.weapons_proficiencies = data.weapons_proficiencies;
+    this.artisan_tools_proficiencies = data.artisan_tools_proficiencies;
+    this.skills_proficiencies = data.skills_proficiencies;
+    this.armor_proficiencies = data.armor_proficiencies;
+    this.musical_instruments_proficiencies = data.musical_instruments_proficiencies;
+    this.saving_throws_proficiencies = data.saving_throws_proficiencies;
+    this.other_proficiencies = data.other_proficiencies;
+    this.gaming_sets_proficiencies = data.gaming_sets_proficiencies;
+    this.vehicles_proficiencies = data.vehicles_proficiencies;
+    this.equipment = data.equipment;
+    this.spells = data.spells;
   }
 
   addTraits(traits: string[]) {

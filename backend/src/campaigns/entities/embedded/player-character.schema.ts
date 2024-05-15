@@ -104,16 +104,10 @@ export class PlayerCharacter {
   vehicles_proficiencies: string[];
 
   @Prop({ type: [String] })
-  languages_proficiencies: string[];
-
-  @Prop({ type: [String] })
   equipment: string[];
 
   @Prop({ type: [String] })
   spells: string[];
-
-  @Prop({ type: [String] })
-  features: string[];
 }
 
 export const PlayerCharacterSchema = SchemaFactory.createForClass(PlayerCharacter);
