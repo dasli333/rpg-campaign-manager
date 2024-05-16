@@ -22,7 +22,8 @@ export class PlayersCharactersComponent {
 
   playersCharacters = this.#campaignService.playersCharacters;
 
-  deletePlayerCharacter(id: string) {
+  deletePlayerCharacter(id: string | undefined) {
+    if (!id) return;
     this.#campaignService.deletePlayerCharacter(id);
   }
 

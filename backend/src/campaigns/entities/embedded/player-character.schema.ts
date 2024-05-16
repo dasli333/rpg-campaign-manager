@@ -1,6 +1,4 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
-
 
 export interface Attributes {
   strength: number;
@@ -10,9 +8,6 @@ export interface Attributes {
   wisdom: number;
   charisma: number;
 }
-
-export type PlayerCharacterDocument = PlayerCharacter & Document;
-
 
 @Schema()
 export class PlayerCharacter {

@@ -6,7 +6,6 @@ import {Skill} from "../../data-services/models/skill";
 import {Alignment} from "../../data-services/models/alignment";
 import {Language} from "../../data-services/models/language";
 import {HttpService} from "../../http/http.service";
-import {PlayerCharacter} from "./interfaces/player-character";
 
 @Injectable({
   providedIn: 'root'

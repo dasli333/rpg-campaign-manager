@@ -4,6 +4,7 @@ import {HttpService} from "../../http/http.service";
 import {catchError, map, Observable, of, switchMap, tap} from "rxjs";
 import {ICampaign} from "./interfaces/campaign";
 import {StoryLog} from "../story-log/interface/story-log";
+import {IPlayerCharacter} from "../players-characters/interfaces/player-character";
 
 @Injectable({
   providedIn: 'root'
@@ -110,11 +111,11 @@ export class CampaignsService {
     });
   }
 
-  addPlayerCharacter(playerCharacter: any): Observable<ICampaign | undefined> {
+  addPlayerCharacter(playerCharacter: IPlayerCharacter): Observable<ICampaign | undefined> {
     return this.#httpService.post<ICampaign>(`${this.#apiUrl}/${this.activeCampaign()?.id}/player-character`, playerCharacter).pipe(
-      // switchMap(campaign => {
-      //   return this.setActiveCampaign(campaign.id);
-      // })
+      tap(campaign => {
+        this.#activeCampaign.set(campaign);
+      })
     );
   }
 }

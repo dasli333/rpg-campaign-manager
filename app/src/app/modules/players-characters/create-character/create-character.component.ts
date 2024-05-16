@@ -35,7 +35,7 @@ import {
 import {MatExpansionModule} from "@angular/material/expansion";
 import {CharacterSummaryComponent, CharacterSummaryData} from "./character-summary/character-summary.component";
 import {StepperSelectionEvent} from "@angular/cdk/stepper";
-import {IPlayerCharacter, IProficiencies, PlayerCharacter} from "../interfaces/player-character";
+import {IPlayerCharacter, IProficiencies} from "../interfaces/player-character";
 import {CampaignsService} from "../../campaigns/campaigns.service";
 
 enum AbilityScoreMode {
@@ -378,14 +378,12 @@ export class CreateCharacterComponent implements OnInit {
   }
 
   saveCharacter() {
-    // TODO: save character
+    // TODO: save image
     if (!this.characterSummary) {
       return;
     }
     const playerData: IPlayerCharacter = this.prepareDataForSave();
-    const playerCharacter = new PlayerCharacter(playerData)
-    console.log(playerCharacter);
-    this.#campaignService.addPlayerCharacter(playerCharacter).subscribe((value) => {
+    this.#campaignService.addPlayerCharacter(playerData).subscribe((value) => {
       console.log(value);
       this.#detectChanges.markForCheck();
     });
