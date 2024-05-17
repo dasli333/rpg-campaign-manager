@@ -1,18 +1,16 @@
-import {inject, Injectable, signal, WritableSignal} from '@angular/core';
-import {Proficiencies, ProficiencyDetail, ProficiencyReference} from "../../data-services/models/proficiency";
+import {Injectable, signal, WritableSignal} from '@angular/core';
+import {ProficiencyDetail} from "../../data-services/models/proficiency";
 import {Trait} from "../../data-services/models/trait";
 import {AbilityScore} from "../../data-services/models/ability-score";
 import {Skill} from "../../data-services/models/skill";
 import {Alignment} from "../../data-services/models/alignment";
 import {Language} from "../../data-services/models/language";
-import {HttpService} from "../../http/http.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class PlayerCharacterDataService {
 
-  #httpService = inject(HttpService);
 
   #proficiencies: WritableSignal<ProficiencyDetail[]> = signal([])
   proficiencies = this.#proficiencies.asReadonly();
@@ -39,14 +37,6 @@ export class PlayerCharacterDataService {
   setProficiencies(proficiencies: ProficiencyDetail[]) {
     this.#proficiencies.update((p) => [...p, ...proficiencies]);
   }
-
-  // updateProficiencyType(type: keyof Proficiencies, proficiencies: ProficiencyDetail[]) {
-  //   this.#proficiencies.update((proficienciesMap) => {
-  //     proficienciesMap[type] = proficiencies;
-  //     return proficienciesMap;
-  //   });
-  //
-  // }
 
   setTraits(traits: Trait[]) {
     this.#traits.set(traits)
