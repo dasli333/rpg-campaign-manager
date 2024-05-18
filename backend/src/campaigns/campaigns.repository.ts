@@ -7,6 +7,7 @@ import {NotFoundException} from "@nestjs/common";
 import * as fs from 'fs';
 import {CreateStoryLogDto} from "./dto/create-story-log.dto";
 import {CreatePlayerCharacterDto} from "./dto/create-player-character.dto";
+import {PlayerCharacter} from "./entities/embedded/player-character.interface";
 
 export class CampaignsRepository {
 
@@ -74,7 +75,7 @@ export class CampaignsRepository {
   }
 
   // PLAYER CHARACTERS
-  async addPlayerCharacter(id: string, playerCharacter: CreatePlayerCharacterDto) {
+  async addPlayerCharacter(id: string, playerCharacter: PlayerCharacter) {
     const campaign = await this.campaignModel.findById(id).exec();
     campaign.playersCharacters.push(playerCharacter);
     return campaign.save();

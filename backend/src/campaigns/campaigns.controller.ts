@@ -56,7 +56,8 @@ export class CampaignsController {
 
   //PLAYER CHARACTERS
   @Post(':id/player-character')
-  addPlayerCharacter(@Param('id') id: string, @Body() playerCharacter: CreatePlayerCharacterDto) {
-    return this.campaignsService.addPlayerCharacter(id, playerCharacter);
+  @UseInterceptors(FileInterceptor('image'))
+  addPlayerCharacter(@UploadedFile() file: Express.Multer.File, @Param('id') id: string, @Body() playerCharacter: CreatePlayerCharacterDto) {
+    return this.campaignsService.addPlayerCharacter(id, playerCharacter, file);
   }
 }

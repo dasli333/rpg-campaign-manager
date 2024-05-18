@@ -7,6 +7,7 @@ import * as path from "path";
 import {v4 as uuidv4} from 'uuid';
 import {CreateStoryLogDto} from "./dto/create-story-log.dto";
 import {CreatePlayerCharacterDto} from "./dto/create-player-character.dto";
+import {PlayerCharacter} from "./entities/embedded/player-character.interface";
 
 @Injectable()
 export class CampaignsService {
@@ -60,7 +61,19 @@ export class CampaignsService {
   }
 
   //PLAYER CHARACTERS
-  addPlayerCharacter(id: string, playerCharacter: CreatePlayerCharacterDto) {
+  addPlayerCharacter(id: string, data: CreatePlayerCharacterDto, file: Express.Multer.File) {
+    const playerCharacter: PlayerCharacter = JSON.parse(data.playerCharacter);
+    if (file) {
+      const uploadPath = 'public/images';
+      const fileExtension = path.extname(file.originalname);
+      const uniqueFilename = uuidv4() + fileExtension;
+      const filePath = path.join(uploadPath, uniqueFilename);
+
+      fs.mkdirSync(uploadPath, {recursive: true});
+      fs.writeFileSync(filePath, file.buffer);
+
+      playerCharacter.image = uniqueFilename;
+    }
     return this.campaignsRepository.addPlayerCharacter(id, playerCharacter);
   }
 }
