@@ -390,7 +390,6 @@ export class CreateCharacterComponent implements OnInit {
       formData.append('image', this.characterImage);
     }
     this.#campaignService.addPlayerCharacter(formData).subscribe((value) => {
-      console.log(value);
       this.#detectChanges.markForCheck();
     });
   }
