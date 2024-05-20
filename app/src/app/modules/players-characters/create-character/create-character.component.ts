@@ -106,7 +106,6 @@ export class CreateCharacterComponent implements OnInit {
   selectedProficiencies = signal<string[]>([]);
   proficiencyChoices: any[] = [];
   imagePreview: string | ArrayBuffer | null | undefined = null;
-  allAvailableProficiencies: { index: string, name: string, type: string }[] = []
   proficiencies = this.#playerCharacterDataService.proficiencies;
 
   artisansToolsProficiencies = computed(() => {
@@ -201,7 +200,6 @@ export class CreateCharacterComponent implements OnInit {
     this.#dnd5eApiService.getBackgroundChoiceProficiencies().subscribe(setOfSkills => {
       this.#playerCharacterDataService.setLanguages(setOfSkills.data.languages);
       this.#playerCharacterDataService.setProficiencies(setOfSkills.data.proficiencies);
-      // this.updateProficiencies(setOfSkills.data.proficiencies);
       this.backgroundSkillsForm.setControl('skills', this.setControlForSkills());
       this.backgroundSkillsForm.setControl('proficiencies', this.setControlForProficiencies());
       // TODO: add equipment?
@@ -244,8 +242,6 @@ export class CreateCharacterComponent implements OnInit {
         }
       });
 
-      console.log(this.backgroundSkillsForm.value);
-
       for (const key in this.backgroundSkillsForm.value.skills) {
         if ((this.backgroundSkillsForm.value.skills as SkillsFormValues)[key]) {
           selectedSkills.push(key);
@@ -263,9 +259,9 @@ export class CreateCharacterComponent implements OnInit {
       const classProficiencies = this.selectedClassDetail?.proficiencies?.map(proficiency => proficiency.index) || [];
 
       selectedSkills = selectedSkills.concat(raceStartingProficiencies, subraceStartingProficiencies, classProficiencies);
-      // TODO: fix (now it only display allAvailableProficiencies) - remember about languages
-      this.selectedSkillsNames = this.allAvailableProficiencies.filter(proficiency => selectedSkills.includes(proficiency.index)).map(proficiency => proficiency.name + ' (' + proficiency.type + ')');
-
+      this.selectedSkillsNames = this.proficiencies().filter(proficiency => selectedSkills.includes(proficiency.index)).map(proficiency => proficiency.name + ' (' + proficiency.type + ')');
+      const selectedLanguages = this.languageChoices().filter(language => selectedSkills.includes(language.index)).map(language => language.name + ' (LANGUAGES)');
+      this.selectedSkillsNames = this.selectedSkillsNames.concat(selectedLanguages);
 
       const proficiencies: IProficiencies = {
         WEAPONS: [],
@@ -279,7 +275,6 @@ export class CreateCharacterComponent implements OnInit {
         VEHICLES: [],
         LANGUAGES: []
       }
-
 
       selectedSkills.forEach(skill => {
         const proficiency = this.proficiencies().find(proficiency => proficiency.index === skill);
@@ -364,8 +359,6 @@ export class CreateCharacterComponent implements OnInit {
         selectedSkills: this.selectedSkillsNames,
         proficiencies: proficiencies,
       }
-
-      console.log(this.characterSummary)
     }
   }
 
@@ -441,7 +434,6 @@ export class CreateCharacterComponent implements OnInit {
     let skills = this.skillsProficiencies();
     const formGroup = new FormGroup({}, exactSelectedCheckboxes(2));
     skills.forEach(skill => {
-      this.allAvailableProficiencies.push({index: skill.index, name: skill.name, type: skill.type});
       formGroup.addControl(skill.index, this.#formBuilder.control(false));
     });
     return formGroup;
@@ -463,14 +455,12 @@ export class CreateCharacterComponent implements OnInit {
       if (this.selectedProficiencies().includes(proficiency.index)) {
         return;
       }
-      this.allAvailableProficiencies.push({index: proficiency.index, name: proficiency.name, type: proficiency.type});
       formGroup.addControl(proficiency.index, this.#formBuilder.control(false));
     });
     languages.forEach(language => {
       if (this.selectedProficiencies().includes(language.index)) {
         return;
       }
-      this.allAvailableProficiencies.push({index: language.index, name: language.name, type: "LANGUAGES"});
       formGroup.addControl(language.index, this.#formBuilder.control(false));
     });
     return formGroup;
