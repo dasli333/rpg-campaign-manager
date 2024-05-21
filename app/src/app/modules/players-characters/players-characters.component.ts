@@ -3,6 +3,9 @@ import {MatButton} from "@angular/material/button";
 import {RouterLink} from "@angular/router";
 import {CampaignsService} from "../campaigns/campaigns.service";
 import {MatCardModule} from "@angular/material/card";
+import {IMAGE_URL} from "../../../config";
+import {NgOptimizedImage} from "@angular/common";
+import {MatDivider} from "@angular/material/divider";
 
 @Component({
   selector: 'app-players-characters',
@@ -10,7 +13,9 @@ import {MatCardModule} from "@angular/material/card";
   imports: [
     MatButton,
     RouterLink,
-    MatCardModule
+    MatCardModule,
+    NgOptimizedImage,
+    MatDivider
   ],
   templateUrl: './players-characters.component.html',
   styleUrl: './players-characters.component.scss',
@@ -27,4 +32,5 @@ export class PlayersCharactersComponent {
     this.#campaignService.deletePlayerCharacter(id);
   }
 
+    protected readonly IMAGE_URL = IMAGE_URL;
 }

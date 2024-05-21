@@ -394,9 +394,9 @@ export class CreateCharacterComponent implements OnInit {
       age: Number(this.characterDetailsForm.value.age) || 0,
       height: this.characterDetailsForm.value.height || '',
       weight: this.characterDetailsForm.value.weight || '',
-      race: this.raceCharacterForm.value.race || '',
-      subrace: this.raceCharacterForm.value.subrace || '',
-      className: this.classCharacterForm.value.class || '',
+      race: this.selectedRaceDetail?.name || '',
+      subrace: this.selectedSubrace?.name || '',
+      className: this.selectedClassDetail?.name || '',
       level: 1, // default level
       image: this.characterDetailsForm.value.image || '',
       experiencePoints: 0, // default experience points

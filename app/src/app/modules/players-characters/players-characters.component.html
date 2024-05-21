@@ -5,16 +5,19 @@
     <mat-card class="player-character-card">
       <mat-card-header>
         <mat-card-title>{{ playerCharacter.name }}</mat-card-title>
+        <mat-card-subtitle>{{ playerCharacter.race }} {{ playerCharacter.subrace }}</mat-card-subtitle>
       </mat-card-header>
+      <img mat-card-image [ngSrc]="IMAGE_URL + playerCharacter.image" alt="player picture" width="300" height="300">
       <mat-card-content>
-        <p>{{ playerCharacter._id }}</p>
-        <p>{{ playerCharacter.race }} {{ playerCharacter.className }}</p>
-        <p>{{ playerCharacter.level }}</p>
+        <span>{{ playerCharacter.className }}</span>
+        <span>Level: {{ playerCharacter.level }}</span>
       </mat-card-content>
 
+      <mat-divider></mat-divider>
+
       <mat-card-actions>
-        <button mat-raised-button routerLink="/edit-character/{{ playerCharacter._id }}" color="primary">Edit</button>
-        <button mat-raised-button (click)="deletePlayerCharacter(playerCharacter._id)" color="warn">Delete</button>
+        <button mat-button routerLink="/edit-character/{{ playerCharacter._id }}">Edit</button>
+        <button mat-button (click)="deletePlayerCharacter(playerCharacter._id)">Delete</button>
       </mat-card-actions>
     </mat-card>
   }
