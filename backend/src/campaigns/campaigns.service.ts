@@ -76,4 +76,8 @@ export class CampaignsService {
     }
     return this.campaignsRepository.addPlayerCharacter(id, playerCharacter);
   }
+
+  deletePlayerCharacter(id: string, playerCharacterId: string) {
+    return this.campaignsRepository.deletePlayerCharacter(id, playerCharacterId);
+  }
 }

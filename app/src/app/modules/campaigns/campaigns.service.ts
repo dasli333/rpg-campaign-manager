@@ -103,12 +103,12 @@ export class CampaignsService {
     );
   }
 
-  deletePlayerCharacter(id: string): void {
-    this.#activeCampaign.update(campaign => {
-      if (!campaign) return;
-      campaign.playersCharacters = campaign.playersCharacters.filter(playerCharacter => playerCharacter._id !== id);
-      return campaign;
-    });
+  deletePlayerCharacter(id: string): Observable<ICampaign> {
+    return this.#httpService.delete<ICampaign>(`${this.#apiUrl}/${this.activeCampaign()?.id}/player-character/${id}`).pipe(
+      tap(campaign => {
+        this.#activeCampaign.set(campaign);
+      })
+    );
   }
 
   addPlayerCharacter(playerCharacter: FormData): Observable<ICampaign | undefined> {

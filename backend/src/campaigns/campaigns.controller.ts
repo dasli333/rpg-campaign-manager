@@ -60,4 +60,9 @@ export class CampaignsController {
   addPlayerCharacter(@UploadedFile() file: Express.Multer.File, @Param('id') id: string, @Body() playerCharacter: CreatePlayerCharacterDto) {
     return this.campaignsService.addPlayerCharacter(id, playerCharacter, file);
   }
+
+  @Delete(':id/player-character/:playerCharacterId')
+  deletePlayerCharacter(@Param('id') id: string, @Param('playerCharacterId') playerCharacterId: string) {
+    return this.campaignsService.deletePlayerCharacter(id, playerCharacterId);
+  }
 }

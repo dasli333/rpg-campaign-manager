@@ -80,4 +80,11 @@ export class CampaignsRepository {
     campaign.playersCharacters.push(playerCharacter);
     return campaign.save();
   }
+
+  async deletePlayerCharacter(id: string, playerCharacterId: string) {
+    const campaign = await this.campaignModel.findById(id).exec();
+    const playerCharacterIndex = campaign.playersCharacters.findIndex(playerCharacter => playerCharacter._id.toString() === playerCharacterId);
+    campaign.playersCharacters.splice(playerCharacterIndex, 1);
+    return campaign.save();
+  }
 }

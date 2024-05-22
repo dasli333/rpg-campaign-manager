@@ -29,7 +29,7 @@ export class PlayersCharactersComponent {
 
   deletePlayerCharacter(id: string | undefined) {
     if (!id) return;
-    this.#campaignService.deletePlayerCharacter(id);
+    this.#campaignService.deletePlayerCharacter(id).subscribe();
   }
 
     protected readonly IMAGE_URL = IMAGE_URL;
