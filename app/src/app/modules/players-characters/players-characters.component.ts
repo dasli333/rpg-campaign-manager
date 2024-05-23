@@ -6,6 +6,8 @@ import {MatCardModule} from "@angular/material/card";
 import {IMAGE_URL} from "../../../config";
 import {NgOptimizedImage} from "@angular/common";
 import {MatDivider} from "@angular/material/divider";
+import {MatDialog} from "@angular/material/dialog";
+import {ConfirmDeleteDialogComponent} from "../helpers/confirm-delete-dialog.component";
 
 @Component({
   selector: 'app-players-characters',
@@ -24,12 +26,25 @@ import {MatDivider} from "@angular/material/divider";
 export class PlayersCharactersComponent {
 
   #campaignService = inject(CampaignsService);
+  #dialog = inject(MatDialog);
 
   playersCharacters = this.#campaignService.playersCharacters;
 
   deletePlayerCharacter(id: string | undefined) {
     if (!id) return;
-    this.#campaignService.deletePlayerCharacter(id).subscribe();
+
+    const dialogRef = this.#dialog.open(ConfirmDeleteDialogComponent, {
+      width: '250px',
+      data: {
+        message: 'Are you sure you want to delete this player character?'
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.#campaignService.deletePlayerCharacter(id).subscribe();
+      }
+    });
   }
 
     protected readonly IMAGE_URL = IMAGE_URL;

@@ -5,13 +5,13 @@ import {MatButton} from "@angular/material/button";
 import {Router, RouterLink} from "@angular/router";
 import {NgOptimizedImage} from "@angular/common";
 import {CampaignsService} from "./campaigns.service";
-import {DeleteCampaignDialogComponent} from "./delete-campaign-dialog/delete-campaign-dialog.component";
 import {MatDialog} from "@angular/material/dialog";
 import {MatDivider} from "@angular/material/divider";
 import {EllipsisDirective} from "../helpers/ellipsis.directive";
 import {takeUntilDestroyed} from "@angular/core/rxjs-interop";
 import {map} from "rxjs";
 import {IMAGE_URL} from "../../../config";
+import {ConfirmDeleteDialogComponent} from "../helpers/confirm-delete-dialog.component";
 
 export const DEFAULT_CAMPAIGN_IMAGE: string = '/assets/images/default_campaign.webp';
 
@@ -56,8 +56,11 @@ export class CampaignsComponent {
   }
 
   deleteCampaign(id: string) {
-    const dialogRef = this.#dialog.open(DeleteCampaignDialogComponent, {
-      width: '250px'
+    const dialogRef = this.#dialog.open(ConfirmDeleteDialogComponent, {
+      width: '250px',
+      data: {
+        message: 'Are you sure you want to delete this campaign?'
+      }
     });
 
     dialogRef.afterClosed().subscribe((result: boolean) => {
