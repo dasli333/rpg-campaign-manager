@@ -371,11 +371,10 @@ export class CreateCharacterComponent implements OnInit {
   }
 
   saveCharacter() {
-    // TODO: race and other properties, use name instead of index
-    // TODO: use saved image in playerCharacter component
     if (!this.characterSummary) {
       return;
     }
+
     const formData = new FormData();
     const playerData: IPlayerCharacter = this.prepareDataForSave();
     formData.append('playerCharacter', JSON.stringify(playerData));
