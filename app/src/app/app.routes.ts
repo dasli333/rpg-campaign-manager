@@ -9,6 +9,7 @@ import {StoryLogComponent} from "./modules/story-log/story-log.component";
 import {PlayersCharactersComponent} from "./modules/players-characters/players-characters.component";
 import {activeCampaignGuard} from "./modules/campaigns/guards/active-campaign.guard";
 import {CreateCharacterComponent} from "./modules/players-characters/create-character/create-character.component";
+import {EditCharacterComponent} from "./modules/players-characters/edit-character/edit-character.component";
 
 export const routes: Routes = [
   {path: '', redirectTo: '/campaigns', pathMatch: 'full'},
@@ -20,7 +21,7 @@ export const routes: Routes = [
       {path: 'story-log', component: StoryLogComponent, canActivate: [activeCampaignGuard]},
       {path: 'players', component: PlayersCharactersComponent, canActivate: [activeCampaignGuard]},
       {path: 'create-character', component: CreateCharacterComponent, canActivate: [activeCampaignGuard]},
-      {path: 'edit-character/:id', component: CreateCharacterComponent, canActivate: [activeCampaignGuard]}
+      {path: 'edit-character/:id', component: EditCharacterComponent, canActivate: [activeCampaignGuard]}
     ]
   },
   {path: 'login', component: LoginComponent, canActivate: [loginGuard]},

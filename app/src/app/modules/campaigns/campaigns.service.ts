@@ -1,7 +1,7 @@
-import {computed, inject, Injectable, signal, WritableSignal} from '@angular/core';
+import {computed, inject, Injectable, Signal, signal, WritableSignal} from '@angular/core';
 import {Router} from "@angular/router";
 import {HttpService} from "../../http/http.service";
-import {catchError, map, Observable, of, switchMap, tap} from "rxjs";
+import {catchError, Observable, of, tap} from "rxjs";
 import {ICampaign} from "./interfaces/campaign";
 import {StoryLog} from "../story-log/interface/story-log";
 import {IPlayerCharacter} from "../players-characters/interfaces/player-character";
@@ -37,12 +37,6 @@ export class CampaignsService {
       })
     )
   }
-
-  // createCampaign(campaign: Campaign): void {
-  //   this.#campaigns.update(campaigns => [...campaigns, campaign]);
-  //   this.setActiveCampaign(campaign.id);
-  //   this.#router.navigate(['/dashboard']);
-  // }
 
   setCampaigns(campaigns: ICampaign[]): void {
     this.#campaigns.set(campaigns);
@@ -117,5 +111,9 @@ export class CampaignsService {
         this.#activeCampaign.set(campaign);
       })
     );
+  }
+
+  getPlayerCharacterById(id: string): Signal<IPlayerCharacter | undefined> {
+    return computed(() => this.playersCharacters().find(playerCharacter => playerCharacter._id === id));
   }
 }
