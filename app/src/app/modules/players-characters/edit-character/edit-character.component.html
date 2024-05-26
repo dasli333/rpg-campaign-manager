@@ -1,3 +1,209 @@
 <button mat-raised-button routerLink="/players">Back</button>
-<p>edit-character works!</p>
-{{ playerCharacter()?.className}}
+<!-- character-sheet.component.html -->
+<div class="character-sheet">
+  <mat-card>
+    <mat-card-content>
+      <mat-form-field class="full-width">
+        <mat-label>Character Name</mat-label>
+        <input matInput>
+      </mat-form-field>
+
+      <div class="info-grid">
+        <mat-form-field>
+          <mat-label>Class & Level</mat-label>
+          <input matInput>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Background</mat-label>
+          <input matInput>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Player Name</mat-label>
+          <input matInput>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Race</mat-label>
+          <input matInput>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Alignment</mat-label>
+          <input matInput>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Experience Points</mat-label>
+          <input matInput>
+        </mat-form-field>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <div class="main-content">
+    <mat-card>
+      <mat-card-content>
+        <div class="attributes">
+          <mat-form-field class="attribute">
+            <mat-label>Strength</mat-label>
+            <input matInput type="number">
+          </mat-form-field>
+          <mat-form-field class="attribute">
+            <mat-label>Dexterity</mat-label>
+            <input matInput type="number">
+          </mat-form-field>
+          <mat-form-field class="attribute">
+            <mat-label>Constitution</mat-label>
+            <input matInput type="number">
+          </mat-form-field>
+          <mat-form-field class="attribute">
+            <mat-label>Intelligence</mat-label>
+            <input matInput type="number">
+          </mat-form-field>
+          <mat-form-field class="attribute">
+            <mat-label>Wisdom</mat-label>
+            <input matInput type="number">
+          </mat-form-field>
+          <mat-form-field class="attribute">
+            <mat-label>Charisma</mat-label>
+            <input matInput type="number">
+          </mat-form-field>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card>
+      <mat-card-content>
+        <div class="stats">
+          <mat-form-field class="stat">
+            <mat-label>Armor Class</mat-label>
+            <input matInput type="number">
+          </mat-form-field>
+          <mat-form-field class="stat">
+            <mat-label>Initiative</mat-label>
+            <input matInput type="number">
+          </mat-form-field>
+          <mat-form-field class="stat">
+            <mat-label>Speed</mat-label>
+            <input matInput type="number">
+          </mat-form-field>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card>
+      <mat-card-content>
+        <div class="hit-points">
+          <mat-form-field>
+            <mat-label>Hit Point Maximum</mat-label>
+            <input matInput type="number">
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Current Hit Points</mat-label>
+            <input matInput type="number">
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Temporary Hit Points</mat-label>
+            <input matInput type="number">
+          </mat-form-field>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card>
+      <mat-card-content>
+        <div class="death-saves">
+          <mat-label>Death Saves</mat-label>
+          <div>
+            <mat-checkbox>Successes</mat-checkbox>
+            <mat-checkbox>Failures</mat-checkbox>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card>
+      <mat-card-content>
+        <div class="skills">
+          <mat-label>Skills</mat-label>
+          <div>
+            <mat-checkbox>Acrobatics (Dex)</mat-checkbox>
+            <!-- Repeat for all skills -->
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card>
+      <mat-card-content>
+        <mat-form-field class="full-width">
+          <mat-label>Personality Traits</mat-label>
+          <textarea matInput></textarea>
+        </mat-form-field>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card>
+      <mat-card-content>
+        <mat-form-field class="full-width">
+          <mat-label>Ideals</mat-label>
+          <textarea matInput></textarea>
+        </mat-form-field>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card>
+      <mat-card-content>
+        <mat-form-field class="full-width">
+          <mat-label>Bonds</mat-label>
+          <textarea matInput></textarea>
+        </mat-form-field>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card>
+      <mat-card-content>
+        <mat-form-field class="full-width">
+          <mat-label>Flaws</mat-label>
+          <textarea matInput></textarea>
+        </mat-form-field>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card>
+      <mat-card-content>
+        <mat-label>Attacks & Spellcasting</mat-label>
+        <div class="attack-spellcasting">
+          <mat-form-field>
+            <mat-label>Name</mat-label>
+            <input matInput>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Atk Bonus</mat-label>
+            <input matInput>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Damage/Type</mat-label>
+            <input matInput>
+          </mat-form-field>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card>
+      <mat-card-content>
+        <mat-form-field class="full-width">
+          <mat-label>Equipment</mat-label>
+          <textarea matInput></textarea>
+        </mat-form-field>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card>
+      <mat-card-content>
+        <mat-form-field class="full-width">
+          <mat-label>Features & Traits</mat-label>
+          <textarea matInput></textarea>
+        </mat-form-field>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
+

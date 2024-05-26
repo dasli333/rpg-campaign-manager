@@ -1,0 +1,49 @@
+/* character-sheet.component.scss */
+.character-sheet {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 20px;
+
+  .full-width {
+    width: 100%;
+  }
+
+  .info-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    width: 100%;
+  }
+
+  .main-content {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+    width: 100%;
+
+    @media (min-width: 768px) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    mat-card {
+      width: 100%;
+    }
+  }
+
+  .attributes, .stats, .hit-points, .death-saves, .skills, .attack-spellcasting {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    mat-form-field {
+      width: 100%;
+    }
+  }
+
+  .attack-spellcasting {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+}
