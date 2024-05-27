@@ -6,6 +6,7 @@ import {MatCardModule} from "@angular/material/card";
 import {MatFormField, MatLabel} from "@angular/material/form-field";
 import {MatInput} from "@angular/material/input";
 import {MatCheckbox} from "@angular/material/checkbox";
+import {MatGridListModule} from "@angular/material/grid-list";
 
 @Component({
   selector: 'app-edit-character',
@@ -17,7 +18,8 @@ import {MatCheckbox} from "@angular/material/checkbox";
     MatFormField,
     MatInput,
     MatLabel,
-    MatCheckbox
+    MatCheckbox,
+    MatGridListModule
   ],
   templateUrl: './edit-character.component.html',
   styleUrl: './edit-character.component.scss',
@@ -30,5 +32,4 @@ export class EditCharacterComponent {
 
   characterId = this.#route.snapshot.paramMap.get('id') || '';
   playerCharacter = this.#campaignsService.getPlayerCharacterById(this.characterId);
-
 }

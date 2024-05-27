@@ -1,4 +1,7 @@
-/* character-sheet.component.scss */
+mat-grid-tile {
+  border: 1px solid #ccc;
+}
+
 .character-sheet {
   display: flex;
   flex-direction: column;
