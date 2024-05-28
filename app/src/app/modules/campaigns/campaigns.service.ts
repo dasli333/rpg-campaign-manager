@@ -108,6 +108,7 @@ export class CampaignsService {
   addPlayerCharacter(playerCharacter: FormData): Observable<ICampaign | undefined> {
     return this.#httpService.post<ICampaign>(`${this.#apiUrl}/${this.activeCampaign()?.id}/player-character`, playerCharacter).pipe(
       tap(campaign => {
+        this.#router.navigate(['/players']);
         this.#activeCampaign.set(campaign);
       })
     );

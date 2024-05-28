@@ -1,5 +1,22 @@
 <button mat-raised-button routerLink="/players">Back</button>
 
+<mat-grid-list cols="3" rowHeight="150px">
+  <mat-grid-tile [colspan]="1" [rowspan]="1">
+    <div class="character-name-tile-content">
+      <div class="d-d-title">
+        Dungeons & Dragons
+      </div>
+      <div class="attribute-collection character-name">
+        <input matInput>
+      </div>
+      <label>CHARACTER NAME</label>
+    </div>
+  </mat-grid-tile>
+  <mat-grid-tile [colspan]="2" [rowspan]="1">
+    <div class="tile-content">2</div>
+  </mat-grid-tile>
+</mat-grid-list>
+
 <mat-grid-list cols="3" rowHeight="500px" gutterSize="8px">
   <mat-grid-tile [colspan]="1" [rowspan]="2">
     <div class="tile-content">1</div>
