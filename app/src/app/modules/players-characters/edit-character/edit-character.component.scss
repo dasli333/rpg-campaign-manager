@@ -11,17 +11,32 @@
   }
 }
 
-.attribute-collection {
-  border: 2px solid #000;
-  border-top-left-radius: 15px 50%;
-  border-bottom-left-radius: 15px 50%;
-  border-top-right-radius: 15px 50%;
-  border-bottom-right-radius: 15px 50%;
-  padding-bottom: 5px;
-  background-color: #fff;
-}
+
 
 .character-name-tile-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+
+  .d-d-title {
+    height: 100%;
+    margin-top: 35px;
+    font-size: 30px;
+    text-align: center;
+    font-weight: 700;
+  }
+
+  .attribute-collection {
+    border: 2px solid #000;
+    border-top-left-radius: 15px 50%;
+    border-bottom-left-radius: 15px 50%;
+    border-top-right-radius: 15px 50%;
+    border-bottom-right-radius: 15px 50%;
+    padding-bottom: 5px;
+    background-color: #fff;
+  }
+
   label {
     width: 100%;
     text-align: right;
