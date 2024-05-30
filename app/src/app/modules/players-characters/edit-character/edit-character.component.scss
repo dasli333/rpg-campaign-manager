@@ -9,6 +9,13 @@
     display: inline-block;
     margin-bottom: .5rem;
   }
+
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: -15px;
+    margin-left: -15px;
+  }
 }
 
 
@@ -25,16 +32,6 @@
     font-size: 30px;
     text-align: center;
     font-weight: 700;
-  }
-
-  .attribute-collection {
-    border: 2px solid #000;
-    border-top-left-radius: 15px 50%;
-    border-bottom-left-radius: 15px 50%;
-    border-top-right-radius: 15px 50%;
-    border-bottom-right-radius: 15px 50%;
-    padding-bottom: 5px;
-    background-color: #fff;
   }
 
   label {
@@ -60,4 +57,23 @@
 
 mat-grid-tile {
   border: 1px solid #ccc;
+
+  .attribute-collection {
+    border: 2px solid #000;
+    border-top-left-radius: 15px 50%;
+    border-bottom-left-radius: 15px 50%;
+    border-top-right-radius: 15px 50%;
+    border-bottom-right-radius: 15px 50%;
+    padding-bottom: 5px;
+    background-color: #fff;
+  }
+
+  .character-details {
+    input {
+      border-bottom: 1px solid #000;
+      width: 100%;
+      margin-top: 15px;
+      font-size: 16px;
+    }
+  }
 }
