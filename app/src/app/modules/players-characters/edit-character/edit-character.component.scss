@@ -1,4 +1,7 @@
 :host {
+
+  color: #000;
+
   input {
     background: none;
     border: none;
@@ -8,6 +11,7 @@
   label {
     display: inline-block;
     margin-bottom: .5rem;
+    text-transform: uppercase;
   }
 
   .row {
@@ -16,35 +20,35 @@
     margin-right: -15px;
     margin-left: -15px;
   }
+
+  .padding-left-right {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
 }
 
+.character-sheet-container {
+  max-width: 1140px;
+}
 
-
-.character-name-tile-content {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  height: 100%;
-
-  .d-d-title {
-    height: 100%;
-    margin-top: 35px;
-    font-size: 30px;
-    text-align: center;
-    font-weight: 700;
-  }
+.attribute-collection {
+  border: 2px solid #000;
+  border-top-left-radius: 15px 50%;
+  border-bottom-left-radius: 15px 50%;
+  border-top-right-radius: 15px 50%;
+  border-bottom-right-radius: 15px 50%;
+  padding-bottom: 5px;
+  background-color: #fff;
+  padding-left: 1rem;
+  padding-right: 1rem;
 
   label {
-    width: 100%;
-    text-align: right;
-    text-transform: uppercase;
-    font-size: 11px;
+    font-size: 10px;
   }
 }
 
-.character-name{
+.character-name {
   width: calc(100% + 50px);
-  padding-left: 1rem;
 
   input {
     padding-left: 10px;
@@ -55,25 +59,41 @@
   }
 }
 
-mat-grid-tile {
-  border: 1px solid #ccc;
+.d-and-d-page-title {
+  padding-top: 14px;
+  font: 700 42px 'Roboto', sans-serif;
+  font-size: 42px;
+  text-align: center;
+}
 
-  .attribute-collection {
-    border: 2px solid #000;
-    border-top-left-radius: 15px 50%;
-    border-bottom-left-radius: 15px 50%;
-    border-top-right-radius: 15px 50%;
-    border-bottom-right-radius: 15px 50%;
-    padding-bottom: 5px;
-    background-color: #fff;
+.character-details-header {
+
+  .character-name-column {
+    width: 25%;
   }
 
-  .character-details {
+  .character-details-column {
+    width: 75%;
+
     input {
       border-bottom: 1px solid #000;
       width: 100%;
       margin-top: 15px;
       font-size: 16px;
     }
+
+    .attribute-collection {
+      .row {
+        justify-content: space-around;
+        div {
+          width: 30%;
+        }
+      }
+    }
   }
+}
+
+
+mat-grid-tile {
+  border: 1px solid #ccc;
 }
