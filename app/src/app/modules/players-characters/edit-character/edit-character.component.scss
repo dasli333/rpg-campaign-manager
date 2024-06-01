@@ -25,6 +25,7 @@
     padding-left: 1rem;
     padding-right: 1rem;
   }
+
 }
 
 .character-sheet-container {
@@ -89,6 +90,33 @@
           width: 30%;
         }
       }
+    }
+  }
+}
+
+.character-statistics-container {
+
+  .character-statistics-column {
+    width: 33%;
+    padding-left: 15px;
+    padding-right: 15px;
+
+    .d-and-d-box {
+      border: 2px solid #000;
+      border-radius: 8px;
+      padding: 10px;
+      margin-bottom: 15px;
+
+      &.gray {
+        background-color: #cfcfcf;
+        border-radius: 8px;
+        padding: 10px;
+      }
+    }
+
+    .ability-scores-column {
+      padding-right: 0.25rem;
+      width: 33%;
     }
   }
 }
