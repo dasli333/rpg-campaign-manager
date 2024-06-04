@@ -48,12 +48,33 @@
     max-width: 33.333333%;
   }
 
+  .width-1-2 {
+    flex: 0 0 50%;
+    max-width: 50%;
+  }
+
+  .pr-1 {
+    padding-right: .25rem !important
+  }
+
+  .pl-1 {
+    padding-left: .25rem !important
+  }
+
   .pr-2 {
     padding-right: .5rem !important
   }
 
   .pl-2 {
     padding-left: .5rem !important
+  }
+
+  .pl-15 {
+    padding-left: 15px;
+  }
+
+  .pr-15 {
+    padding-right: 15px;
   }
 
   .label-container {
@@ -148,10 +169,30 @@
       padding: 10px;
       margin-bottom: 15px;
 
+      .d-and-d-skill-circle {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        border: 1px solid #000;
+        vertical-align: middle;
+        display: inline-block;
+        cursor: pointer;
+      }
+
       &.gray {
         background-color: #cfcfcf;
         border-radius: 8px;
         padding: 10px;
+      }
+
+      &.white {
+        background-color: #fff;
+        border-radius: 8px;
+        padding: 10px;
+      }
+
+      .d-and-d-gray-text {
+        height: 24px;
       }
 
       .d-and-d-statbox {
@@ -240,16 +281,6 @@
       }
 
       .d-and-d-skill {
-        .d-and-d-skill-circle {
-          width: 10px;
-          height: 10px;
-          border-radius: 50%;
-          border: 1px solid #000;
-          vertical-align: middle;
-          display: inline-block;
-          cursor: pointer;
-        }
-
         input {
           border-bottom: 1px solid #000;
           width: 25px;
@@ -261,6 +292,58 @@
           margin-bottom: 4px;
           text-transform: none;
           line-height: 15px;
+        }
+      }
+
+      .d-and-d-gray-text {
+        color: #646464;
+
+        .d-and-d-linput {
+          border-bottom: 1px solid #cfcfcf;
+        }
+      }
+
+      .d-and-d-linput {
+        border: none;
+        border-bottom: 1px solid #646464;
+        color: #000;
+        width: 100%;
+        text-align: center;
+      }
+
+      .d-and-d-cinput {
+        text-align: center;
+        font-size: 24px;
+        margin: 0;
+        height: 38px;
+      }
+
+      .d-and-d-deathsave {
+        margin: 5px 0;
+        height: 23px;
+
+        label {
+          text-transform: uppercase;
+          width: 55px;
+          text-align: right;
+          margin-right: 10px;
+        }
+
+        .d-and-d-skill-circle {
+          height: 12px;
+          width: 12px;
+        }
+
+        &.d-and-d-save-success {
+          .d-and-d-skill-circle {
+            background-color: #0f0;
+          }
+        }
+
+        &.d-and-d-save-failure {
+          .d-and-d-skill-circle {
+            background-color: #f00;
+          }
         }
       }
     }
