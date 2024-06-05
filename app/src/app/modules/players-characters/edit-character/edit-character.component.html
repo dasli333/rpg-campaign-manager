@@ -68,11 +68,11 @@
         </div>
         <div class="skills-column">
           <div class="d-and-d-statrow">
-            <div class="d-and-d-statrow-value"><input type="text" value="2"></div>
+            <div class="d-and-d-statrow-value"><input type="text" value=""></div>
             <div class="d-and-d-statrow-label"><label>Inspiration</label></div>
           </div>
           <div class="d-and-d-statrow rounded">
-            <div class="d-and-d-statrow-value"><input type="text" value="2"></div>
+            <div class="d-and-d-statrow-value"><input type="text" value=""></div>
             <div class="d-and-d-statrow-label"><label>Proficiency Bonus</label></div>
           </div>
           <div class="d-and-d-box">
@@ -85,7 +85,7 @@
                 <input type="text" value=""><label>Dexterity</label></div>
               <div class="d-and-d-skill">
                 <div class="d-and-d-skill-circle active"></div>
-                <input type="text" value="2"><label>Constitution</label></div>
+                <input type="text" value=""><label>Constitution</label></div>
               <div class="d-and-d-skill">
                 <div class="d-and-d-skill-circle active"></div>
                 <input type="text" value=""><label>Intelligence</label></div>
@@ -123,7 +123,7 @@
                 <input type="text" value=""><label>History</label><span class="d-and-d-skill-hint">(Int)</span></div>
               <div class="d-and-d-skill">
                 <div class="d-and-d-skill-circle"></div>
-                <input type="text" value="12"><label>Insight</label><span class="d-and-d-skill-hint">(Wis)</span>
+                <input type="text" value=""><label>Insight</label><span class="d-and-d-skill-hint">(Wis)</span>
               </div>
               <div class="d-and-d-skill">
                 <div class="d-and-d-skill-circle"></div>
@@ -209,7 +209,7 @@
           </div>
         </div>
         <div class="d-and-d-box white"
-             style="border-radius: 8px 8px 0px 0px; margin-bottom: 5px; padding-bottom: 5px;">
+             style="border-radius: 8px 8px 0 0; margin-bottom: 5px; padding-bottom: 5px;">
           <div class="d-and-d-gray-text"><label style="width: 95px;">Hit Point Maximum</label><input type="text"
                                                                                                      class="d-and-d-linput"
                                                                                                      value=""
@@ -217,7 +217,8 @@
           </div>
           <input type="text" class="d-and-d-cinput" value=""><label class="d-and-d-title" style="margin-top: 5px;">Current
           Hit Points</label></div>
-        <div class="d-and-d-box white mb-2" style="border-radius: 0px 0px 8px 8px; padding-bottom: 5px; margin-bottom: 5px"><input
+        <div class="d-and-d-box white mb-2"
+             style="border-radius: 0 0 8px 8px; padding-bottom: 5px; margin-bottom: 5px"><input
           type="text" class="d-and-d-cinput" value=""><label class="d-and-d-title" style="margin-top: 5px;">Temporary
           Hit Points</label></div>
         <div class="row mt-1">
@@ -283,38 +284,57 @@
           </tr>
           </tbody>
         </table>
-        <textarea rows="6"></textarea><label class="d-and-d-title" style="margin-top: 10px;">Attacks &amp;
+        <textarea rows="5"></textarea><label class="d-and-d-title" style="margin-top: 10px;">Attacks &amp;
         Spellcasting</label></div>
       <div class="d-and-d-box mt-4">
-        <div class="row">
-          <div class="" style="width: 100px;">
-            <div class="d-and-d-currency">
-              <div class="d-and-d-currency-label"><label>CP</label></div>
-              <div class="d-and-d-currency-value"><input type="text" value=""></div>
+        <div class="row currency-container">
+          <div class="currency-first-row">
+            <div style="width: 100px;">
+              <div class="d-and-d-currency">
+                <div class="d-and-d-currency-label"><label>CP</label></div>
+                <div class="d-and-d-currency-value"><input type="text" value=""></div>
+              </div>
+              <div class="d-and-d-currency">
+                <div class="d-and-d-currency-label"><label>SP</label></div>
+                <div class="d-and-d-currency-value"><input type="text" value=""></div>
+              </div>
+              <div class="d-and-d-currency">
+                <div class="d-and-d-currency-label"><label>EP</label></div>
+                <div class="d-and-d-currency-value"><input type="text" value=""></div>
+              </div>
+              <div class="d-and-d-currency">
+                <div class="d-and-d-currency-label"><label>GP</label></div>
+                <div class="d-and-d-currency-value"><input type="text" value=""></div>
+              </div>
+              <div class="d-and-d-currency">
+                <div class="d-and-d-currency-label"><label>PP</label></div>
+                <div class="d-and-d-currency-value"><input type="text" value=""></div>
+              </div>
             </div>
-            <div class="d-and-d-currency">
-              <div class="d-and-d-currency-label"><label>SP</label></div>
-              <div class="d-and-d-currency-value"><input type="text" value=""></div>
-            </div>
-            <div class="d-and-d-currency">
-              <div class="d-and-d-currency-label"><label>EP</label></div>
-              <div class="d-and-d-currency-value"><input type="text" value=""></div>
-            </div>
-            <div class="d-and-d-currency">
-              <div class="d-and-d-currency-label"><label>GP</label></div>
-              <div class="d-and-d-currency-value"><input type="text" value=""></div>
-            </div>
-            <div class="d-and-d-currency">
-              <div class="d-and-d-currency-label"><label>PP</label></div>
-              <div class="d-and-d-currency-value"><input type="text" value=""></div>
-            </div>
+            <div class="col pr-15 pl-15"><textarea class="d-and-d-equipment-indent" rows="10"></textarea></div>
           </div>
-          <div class="col"><textarea class="d-and-d-equipment-indent" rows="10"></textarea></div>
-          <div class="col-md-12"><textarea rows="4"></textarea></div>
+          <div class="pr-15 pl-15"><textarea rows="4"></textarea></div>
         </div>
         <label class="d-and-d-title" style="margin-top: 10px;">Equipment</label></div>
     </div>
-    <div class="character-statistics-column"></div>
+    <div class="character-statistics-column">
+      <div class="d-and-d-box gray" style="margin-bottom: 15px; line-height: 16px">
+        <div class="d-and-d-box white"
+             style="border-radius: 8px 8px 0 0; margin-bottom: 5px; padding-top: 1px; padding-bottom: 5px;">
+          <textarea rows="3"></textarea><label class="d-and-d-title">Personality Traits</label></div>
+        <div class="d-and-d-box white"
+             style="border-radius: 0; margin-bottom: 5px; padding-top: 1px; padding-bottom: 5px;"><textarea
+          rows="3"></textarea><label class="d-and-d-title">Ideals</label></div>
+        <div class="d-and-d-box white"
+             style="border-radius: 0; margin-bottom: 5px; padding-top: 1px; padding-bottom: 5px;"><textarea
+          rows="2"></textarea><label class="d-and-d-title">Bonds</label></div>
+        <div class="d-and-d-box white"
+             style="border-radius: 0 0 8px 8px; margin-bottom: 0; padding-top: 1px; padding-bottom: 4px;">
+          <textarea rows="2"></textarea><label class="d-and-d-title">Flaws</label></div>
+      </div>
+      <div class="d-and-d-box mt-3"><textarea rows="27" style="padding-bottom: 5px;"></textarea><label
+        class="d-and-d-title" style="margin-top: 10px;">Features &amp; Traits</label></div>
+    </div>
   </div>
 </div>
 
