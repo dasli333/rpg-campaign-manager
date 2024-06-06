@@ -4,20 +4,20 @@
   <div class="row character-details-header">
     <div class="character-name-column">
       <div class="d-and-d-page-title">D&amp;D</div>
-      <div class="attribute-collection character-name pr-3 pl-3"><input type="text" value=""></div>
+      <div class="attribute-collection character-name pr-3 pl-3"><input type="text" [value]="initialValues?.name"></div>
       <label style="width: 100%; text-align: right; text-transform: uppercase; font-size: 11px;">Character Name</label>
     </div>
     <div class="character-details-column">
       <div class="attribute-collection pr-3 pl-3">
         <div class="row padding-left-right">
-          <div class="col-md-3 pl-0 pr-0"><input type="text" value=""><label>Class &amp; Level</label></div>
-          <div class="col-md-3 pl-0 pr-0"><input type="text" value=""><label>Background</label></div>
+          <div class="class-and-level-inputs"><input type="text" [value]="initialValues?.className"> <input type="text" [value]="initialValues?.level"><label>Class &amp; Level</label></div>
+          <div class="col-md-3 pl-0 pr-0"><input type="text" [value]="initialValues?.background"><label>Background</label></div>
           <div class="col-md-3 pl-0 pr-0"><input type="text" value=""><label>Player Name</label></div>
         </div>
         <div class="row padding-left-right">
-          <div class="col-md-3 pl-0 pr-0"><input type="text" value=""><label>Race</label></div>
-          <div class="col-md-3 pl-0 pr-0"><input type="text" value=""><label>Alignment</label></div>
-          <div class="col-md-3 pl-0 pr-0"><input type="text" value=""><label>Experience Points</label></div>
+          <div class="col-md-3 pl-0 pr-0"><input type="text" [value]="getRaceName()"><label>Race</label></div>
+          <div class="col-md-3 pl-0 pr-0"><input type="text" [value]="initialValues?.alignment"><label>Alignment</label></div>
+          <div class="col-md-3 pl-0 pr-0"><input type="text" [value]="initialValues?.experiencePoints"><label>Experience Points</label></div>
         </div>
       </div>
     </div>
@@ -32,37 +32,37 @@
               <div class="d-and-d-statbox"><label>Strength</label>
                 <div class="d-and-d-statbox-modifier"></div>
               </div>
-              <div class="d-and-d-statbox-value"><input type="text" value=""></div>
+              <div class="d-and-d-statbox-value"><input type="text" [value]="initialValues?.attributes?.strength"></div>
             </div>
             <div>
               <div class="d-and-d-statbox"><label>Dexterity</label>
                 <div class="d-and-d-statbox-modifier"></div>
               </div>
-              <div class="d-and-d-statbox-value"><input type="text" value=""></div>
+              <div class="d-and-d-statbox-value"><input type="text" [value]="initialValues?.attributes?.dexterity"></div>
             </div>
             <div>
               <div class="d-and-d-statbox"><label>Constitution</label>
                 <div class="d-and-d-statbox-modifier"></div>
               </div>
-              <div class="d-and-d-statbox-value"><input type="text" value=""></div>
+              <div class="d-and-d-statbox-value"><input type="text" [value]="initialValues?.attributes?.constitution"></div>
             </div>
             <div>
               <div class="d-and-d-statbox"><label>Intelligence</label>
                 <div class="d-and-d-statbox-modifier"></div>
               </div>
-              <div class="d-and-d-statbox-value"><input type="text" value=""></div>
+              <div class="d-and-d-statbox-value"><input type="text" [value]="initialValues?.attributes?.intelligence"></div>
             </div>
             <div>
               <div class="d-and-d-statbox"><label>Wisdom</label>
                 <div class="d-and-d-statbox-modifier"></div>
               </div>
-              <div class="d-and-d-statbox-value"><input type="text" value=""></div>
+              <div class="d-and-d-statbox-value"><input type="text" [value]="initialValues?.attributes?.wisdom"></div>
             </div>
             <div>
               <div class="d-and-d-statbox"><label>Charisma</label>
                 <div class="d-and-d-statbox-modifier"></div>
               </div>
-              <div class="d-and-d-statbox-value"><input type="text" value=""></div>
+              <div class="d-and-d-statbox-value"><input type="text" [value]="initialValues?.attributes?.charisma"></div>
             </div>
           </div>
         </div>
@@ -78,7 +78,7 @@
           <div class="d-and-d-box">
             <div style="text-align: left;">
               <div class="d-and-d-skill">
-                <div class="d-and-d-skill-circle active"></div>
+                <div class="d-and-d-skill-circle"></div>
                 <input type="text" value=""><label>Strength</label></div>
               <div class="d-and-d-skill">
                 <div class="d-and-d-skill-circle active"></div>
@@ -174,7 +174,7 @@
           <div class="d-and-d-statrow-label"><label>Passive Wisdom (Perception)</label></div>
         </div>
       </div>
-      <div class="d-and-d-box mt-4"><textarea rows="12"></textarea>
+      <div class="d-and-d-box mt-4"><textarea rows="12" [value]="initialValues?.other_proficiencies"></textarea>
         <label class="d-and-d-title" style="margin-top: 10px;">Other Proficiencies &amp; Languages</label></div>
     </div>
     <div class="character-statistics-column">
@@ -321,18 +321,18 @@
       <div class="d-and-d-box gray" style="margin-bottom: 15px; line-height: 16px">
         <div class="d-and-d-box white"
              style="border-radius: 8px 8px 0 0; margin-bottom: 5px; padding-top: 1px; padding-bottom: 5px;">
-          <textarea rows="3"></textarea><label class="d-and-d-title">Personality Traits</label></div>
+          <textarea [value]="initialValues?.personalityTraits" rows="3"></textarea><label class="d-and-d-title">Personality Traits</label></div>
         <div class="d-and-d-box white"
-             style="border-radius: 0; margin-bottom: 5px; padding-top: 1px; padding-bottom: 5px;"><textarea
+             style="border-radius: 0; margin-bottom: 5px; padding-top: 1px; padding-bottom: 5px;"><textarea [value]="initialValues?.ideals"
           rows="3"></textarea><label class="d-and-d-title">Ideals</label></div>
         <div class="d-and-d-box white"
-             style="border-radius: 0; margin-bottom: 5px; padding-top: 1px; padding-bottom: 5px;"><textarea
+             style="border-radius: 0; margin-bottom: 5px; padding-top: 1px; padding-bottom: 5px;"><textarea [value]="initialValues?.bonds"
           rows="2"></textarea><label class="d-and-d-title">Bonds</label></div>
         <div class="d-and-d-box white"
              style="border-radius: 0 0 8px 8px; margin-bottom: 0; padding-top: 1px; padding-bottom: 4px;">
-          <textarea rows="2"></textarea><label class="d-and-d-title">Flaws</label></div>
+          <textarea [value]="initialValues?.flaws" rows="2"></textarea><label class="d-and-d-title">Flaws</label></div>
       </div>
-      <div class="d-and-d-box mt-3"><textarea rows="27" style="padding-bottom: 5px;"></textarea><label
+      <div class="d-and-d-box mt-3"><textarea [value]="initialValues?.traits" rows="27" style="padding-bottom: 5px;"></textarea><label
         class="d-and-d-title" style="margin-top: 10px;">Features &amp; Traits</label></div>
     </div>
   </div>

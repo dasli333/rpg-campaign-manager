@@ -7,6 +7,7 @@ import {MatFormField, MatLabel} from "@angular/material/form-field";
 import {MatInput} from "@angular/material/input";
 import {MatCheckbox} from "@angular/material/checkbox";
 import {MatGridListModule} from "@angular/material/grid-list";
+import {NgClass} from "@angular/common";
 
 @Component({
   selector: 'app-edit-character',
@@ -19,7 +20,8 @@ import {MatGridListModule} from "@angular/material/grid-list";
     MatInput,
     MatLabel,
     MatCheckbox,
-    MatGridListModule
+    MatGridListModule,
+    NgClass
   ],
   templateUrl: './edit-character.component.html',
   styleUrl: './edit-character.component.scss',
@@ -32,4 +34,17 @@ export class EditCharacterComponent {
 
   characterId = this.#route.snapshot.paramMap.get('id') || '';
   playerCharacter = this.#campaignsService.getPlayerCharacterById(this.characterId);
+
+
+  initialValues = this.playerCharacter();
+
+  getRaceName(): string {
+    const subrace = this.initialValues?.subrace;
+
+    if (subrace) {
+      return `${this.initialValues?.race} (${subrace})`;
+    } else {
+      return this.initialValues?.race || '';
+    }
+  }
 }

@@ -144,6 +144,12 @@
       font-size: 16px;
     }
 
+    .class-and-level-inputs {
+      input {
+        width: 50%;
+      }
+    }
+
     .attribute-collection {
       .row {
         justify-content: space-around;
@@ -332,6 +338,10 @@
         .d-and-d-skill-circle {
           height: 12px;
           width: 12px;
+
+          &.active {
+            background-color: #000;
+          }
         }
 
         &.d-and-d-save-success {
