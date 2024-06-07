@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, inject} from '@angular/core';
+import {ChangeDetectionStrategy, Component, inject, signal} from '@angular/core';
 import {ActivatedRoute, RouterLink} from "@angular/router";
 import {CampaignsService} from "../../campaigns/campaigns.service";
 import {MatButton} from "@angular/material/button";
@@ -37,6 +37,13 @@ export class EditCharacterComponent {
 
 
   initialValues = this.playerCharacter();
+  strengthModifier = signal(this.getAbilityModifier(this.initialValues?.attributes?.strength || 0));
+  dexterityModifier = signal(this.getAbilityModifier(this.initialValues?.attributes?.dexterity || 0));
+  constitutionModifier = signal(this.getAbilityModifier(this.initialValues?.attributes?.constitution || 0));
+  intelligenceModifier = signal(this.getAbilityModifier(this.initialValues?.attributes?.intelligence || 0));
+  wisdomModifier = signal(this.getAbilityModifier(this.initialValues?.attributes?.wisdom || 0));
+  charismaModifier = signal(this.getAbilityModifier(this.initialValues?.attributes?.charisma || 0));
+  proficiencyBonus = signal(this.getProficiencyBonus());
 
   getRaceName(): string {
     const subrace = this.initialValues?.subrace;
@@ -46,5 +53,22 @@ export class EditCharacterComponent {
     } else {
       return this.initialValues?.race || '';
     }
+  }
+
+  getAbilityModifier(abilityValue: number): number {
+    return Math.floor((abilityValue - 10) / 2);
+  }
+
+  displayModifier(modifier: number): string {
+    if (modifier >= 0) {
+      return `+${modifier}`;
+    } else {
+      return `${modifier}`;
+    }
+  }
+
+  getProficiencyBonus(): number {
+    if (!this.initialValues) return 0;
+    return Math.ceil(this.initialValues.level / 4) + 1;
   }
 }

@@ -30,37 +30,37 @@
           <div class="d-and-d-box gray">
             <div>
               <div class="d-and-d-statbox"><label>Strength</label>
-                <div class="d-and-d-statbox-modifier"></div>
+                <div class="d-and-d-statbox-modifier">{{displayModifier(strengthModifier())}}</div>
               </div>
               <div class="d-and-d-statbox-value"><input type="text" [value]="initialValues?.attributes?.strength"></div>
             </div>
             <div>
               <div class="d-and-d-statbox"><label>Dexterity</label>
-                <div class="d-and-d-statbox-modifier"></div>
+                <div class="d-and-d-statbox-modifier">{{displayModifier(dexterityModifier())}}</div>
               </div>
               <div class="d-and-d-statbox-value"><input type="text" [value]="initialValues?.attributes?.dexterity"></div>
             </div>
             <div>
               <div class="d-and-d-statbox"><label>Constitution</label>
-                <div class="d-and-d-statbox-modifier"></div>
+                <div class="d-and-d-statbox-modifier">{{displayModifier(constitutionModifier())}}</div>
               </div>
               <div class="d-and-d-statbox-value"><input type="text" [value]="initialValues?.attributes?.constitution"></div>
             </div>
             <div>
               <div class="d-and-d-statbox"><label>Intelligence</label>
-                <div class="d-and-d-statbox-modifier"></div>
+                <div class="d-and-d-statbox-modifier">{{displayModifier(intelligenceModifier())}}</div>
               </div>
               <div class="d-and-d-statbox-value"><input type="text" [value]="initialValues?.attributes?.intelligence"></div>
             </div>
             <div>
               <div class="d-and-d-statbox"><label>Wisdom</label>
-                <div class="d-and-d-statbox-modifier"></div>
+                <div class="d-and-d-statbox-modifier">{{displayModifier(wisdomModifier())}}</div>
               </div>
               <div class="d-and-d-statbox-value"><input type="text" [value]="initialValues?.attributes?.wisdom"></div>
             </div>
             <div>
               <div class="d-and-d-statbox"><label>Charisma</label>
-                <div class="d-and-d-statbox-modifier"></div>
+                <div class="d-and-d-statbox-modifier">{{displayModifier(charismaModifier())}}</div>
               </div>
               <div class="d-and-d-statbox-value"><input type="text" [value]="initialValues?.attributes?.charisma"></div>
             </div>
@@ -72,7 +72,7 @@
             <div class="d-and-d-statrow-label"><label>Inspiration</label></div>
           </div>
           <div class="d-and-d-statrow rounded">
-            <div class="d-and-d-statrow-value"><input type="text" value=""></div>
+            <div class="d-and-d-statrow-value"><span>{{'+' + proficiencyBonus()}}</span></div>
             <div class="d-and-d-statrow-label"><label>Proficiency Bonus</label></div>
           </div>
           <div class="d-and-d-box">
