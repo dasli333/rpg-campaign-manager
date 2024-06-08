@@ -8,6 +8,28 @@ import {MatInput} from "@angular/material/input";
 import {MatCheckbox} from "@angular/material/checkbox";
 import {MatGridListModule} from "@angular/material/grid-list";
 import {NgClass} from "@angular/common";
+import {PlayerCharacterDataService} from "../player-character-data.service";
+
+interface ISkillsProficiencies {
+  acrobatics: boolean;
+  animal_handling: boolean;
+  arcana: boolean;
+  athletics: boolean;
+  deception: boolean;
+  history: boolean;
+  insight: boolean;
+  intimidation: boolean;
+  investigation: boolean;
+  medicine: boolean;
+  nature: boolean;
+  perception: boolean;
+  performance: boolean;
+  persuasion: boolean;
+  religion: boolean;
+  sleight_of_hand: boolean;
+  stealth: boolean;
+  survival: boolean;
+}
 
 @Component({
   selector: 'app-edit-character',
@@ -30,10 +52,12 @@ import {NgClass} from "@angular/common";
 export class EditCharacterComponent {
 
   #campaignsService = inject(CampaignsService);
+  #playerCharacterDataService = inject(PlayerCharacterDataService);
   #route = inject(ActivatedRoute);
 
   characterId = this.#route.snapshot.paramMap.get('id') || '';
   playerCharacter = this.#campaignsService.getPlayerCharacterById(this.characterId);
+  skills = this.#playerCharacterDataService.skills();
 
 
   initialValues = this.playerCharacter();
@@ -45,6 +69,31 @@ export class EditCharacterComponent {
   charismaModifier = signal(this.getAbilityModifier(this.initialValues?.attributes?.charisma || 0));
   proficiencyBonus = signal(this.getProficiencyBonus());
 
+  skillsProficiencies = signal({
+    acrobatics: this.initialValues?.skills_proficiencies?.includes('Skill: Acrobatics'),
+    animal_handling: this.initialValues?.skills_proficiencies?.includes('Skill: Animal Handling'),
+    arcana: this.initialValues?.skills_proficiencies?.includes('Skill: Arcana'),
+    athletics: this.initialValues?.skills_proficiencies?.includes('Skill: Athletics'),
+    deception: this.initialValues?.skills_proficiencies?.includes('Skill: Deception'),
+    history: this.initialValues?.skills_proficiencies?.includes('Skill: History'),
+    insight: this.initialValues?.skills_proficiencies?.includes('Skill: Insight'),
+    intimidation: this.initialValues?.skills_proficiencies?.includes('Skill: Intimidation'),
+    investigation: this.initialValues?.skills_proficiencies?.includes('Skill: Investigation'),
+    medicine: this.initialValues?.skills_proficiencies?.includes('Skill: Medicine'),
+    nature: this.initialValues?.skills_proficiencies?.includes('Skill: Nature'),
+    perception: this.initialValues?.skills_proficiencies?.includes('Skill: Perception'),
+    performance: this.initialValues?.skills_proficiencies?.includes('Skill: Performance'),
+    persuasion: this.initialValues?.skills_proficiencies?.includes('Skill: Persuasion'),
+    religion: this.initialValues?.skills_proficiencies?.includes('Skill: Religion'),
+    sleight_of_hand: this.initialValues?.skills_proficiencies?.includes('Skill: Sleight of Hand'),
+    stealth: this.initialValues?.skills_proficiencies?.includes('Skill: Stealth'),
+    survival: this.initialValues?.skills_proficiencies?.includes('Skill: Survival')
+  });
+
+  constructor() {
+
+  }
+
   getRaceName(): string {
     const subrace = this.initialValues?.subrace;
 
@@ -53,6 +102,15 @@ export class EditCharacterComponent {
     } else {
       return this.initialValues?.race || '';
     }
+  }
+
+  updateSkillsProficiencies(skill: keyof ISkillsProficiencies) {
+    this.skillsProficiencies.update((skillsProficiencies) => {
+      return {
+        ...skillsProficiencies,
+        [skill]: !skillsProficiencies[skill]
+      };
+    });
   }
 
   getAbilityModifier(abilityValue: number): number {
