@@ -9,6 +9,7 @@ import {MatCheckbox} from "@angular/material/checkbox";
 import {MatGridListModule} from "@angular/material/grid-list";
 import {NgClass} from "@angular/common";
 import {PlayerCharacterDataService} from "../player-character-data.service";
+import {Attributes} from "../interfaces/attributes";
 
 interface ISkillsProficiencies {
   acrobatics: boolean;
@@ -113,6 +114,31 @@ export class EditCharacterComponent {
     });
   }
 
+  updateAbilityScore(element: EventTarget | null, ability: keyof Attributes) {
+    // TODO: form control
+    const value = parseInt((element as HTMLInputElement)?.value, 10);
+    switch (ability) {
+      case 'strength':
+        this.strengthModifier.set(this.getAbilityModifier(value));
+        break;
+      case 'dexterity':
+        this.dexterityModifier.set(this.getAbilityModifier(value));
+        break;
+      case 'constitution':
+        this.constitutionModifier.set(this.getAbilityModifier(value));
+        break;
+      case 'intelligence':
+        this.intelligenceModifier.set(this.getAbilityModifier(value));
+        break;
+      case 'wisdom':
+        this.wisdomModifier.set(this.getAbilityModifier(value));
+        break;
+      case 'charisma':
+        this.charismaModifier.set(this.getAbilityModifier(value));
+        break;
+    }
+  }
+
   getAbilityModifier(abilityValue: number): number {
     return Math.floor((abilityValue - 10) / 2);
   }
@@ -128,5 +154,13 @@ export class EditCharacterComponent {
   getProficiencyBonus(): number {
     if (!this.initialValues) return 0;
     return Math.ceil(this.initialValues.level / 4) + 1;
+  }
+
+  getSkillModifier(skill: keyof ISkillsProficiencies, ability: keyof Attributes): string {
+    const abilityScore = this.initialValues?.attributes[ability] || 0;
+    const abilityModifier = this.getAbilityModifier(abilityScore);
+    const proficiency = this.skillsProficiencies()[skill] ? this.proficiencyBonus() : 0;
+
+    return this.displayModifier(abilityModifier + proficiency);
   }
 }
