@@ -10,6 +10,7 @@ import {MatGridListModule} from "@angular/material/grid-list";
 import {NgClass} from "@angular/common";
 import {PlayerCharacterDataService} from "../player-character-data.service";
 import {Attributes} from "../interfaces/attributes";
+import {FormBuilder, ReactiveFormsModule, Validators} from "@angular/forms";
 
 interface ISkillsProficiencies {
   acrobatics: boolean;
@@ -44,7 +45,8 @@ interface ISkillsProficiencies {
     MatLabel,
     MatCheckbox,
     MatGridListModule,
-    NgClass
+    NgClass,
+    ReactiveFormsModule
   ],
   templateUrl: './edit-character.component.html',
   styleUrl: './edit-character.component.scss',
@@ -55,6 +57,7 @@ export class EditCharacterComponent {
   #campaignsService = inject(CampaignsService);
   #playerCharacterDataService = inject(PlayerCharacterDataService);
   #route = inject(ActivatedRoute);
+  #formBuilder = inject(FormBuilder);
 
   characterId = this.#route.snapshot.paramMap.get('id') || '';
   playerCharacter = this.#campaignsService.getPlayerCharacterById(this.characterId);
@@ -69,6 +72,15 @@ export class EditCharacterComponent {
   wisdomModifier = signal(this.getAbilityModifier(this.initialValues?.attributes?.wisdom || 0));
   charismaModifier = signal(this.getAbilityModifier(this.initialValues?.attributes?.charisma || 0));
   proficiencyBonus = signal(this.getProficiencyBonus());
+
+  abilityScoresForm = this.#formBuilder.group({
+    strength: [this.initialValues?.attributes?.strength, [Validators.required, Validators.min(1), Validators.max(30), Validators.pattern('[0-9]{1,2}')]],
+    dexterity: [this.initialValues?.attributes?.dexterity, [Validators.required, Validators.min(1), Validators.max(30), Validators.pattern('[0-9]{1,2}')]],
+    constitution: [this.initialValues?.attributes?.constitution, [Validators.required, Validators.min(1), Validators.max(30), Validators.pattern('[0-9]{1,2}')]],
+    intelligence: [this.initialValues?.attributes?.intelligence, [Validators.required, Validators.min(1), Validators.max(30), Validators.pattern('[0-9]{1,2}')]],
+    wisdom: [this.initialValues?.attributes?.wisdom, [Validators.required, Validators.min(1), Validators.max(30), Validators.pattern('[0-9]{1,2}')]],
+    charisma: [this.initialValues?.attributes?.charisma, [Validators.required, Validators.min(1), Validators.max(30), Validators.pattern('[0-9]{1,2}')]]
+  })
 
   skillsProficiencies = signal({
     acrobatics: this.initialValues?.skills_proficiencies?.includes('Skill: Acrobatics'),
@@ -92,7 +104,10 @@ export class EditCharacterComponent {
   });
 
   constructor() {
-
+    this.abilityScoresForm.valueChanges.subscribe((value) => {
+      if (this.abilityScoresForm.invalid) return;
+      this.updateAbilityScores();
+    });
   }
 
   getRaceName(): string {
@@ -114,36 +129,23 @@ export class EditCharacterComponent {
     });
   }
 
-  updateAbilityScore(element: EventTarget | null, ability: keyof Attributes) {
-    // TODO: form control
-    const value = parseInt((element as HTMLInputElement)?.value, 10);
-    switch (ability) {
-      case 'strength':
-        this.strengthModifier.set(this.getAbilityModifier(value));
-        break;
-      case 'dexterity':
-        this.dexterityModifier.set(this.getAbilityModifier(value));
-        break;
-      case 'constitution':
-        this.constitutionModifier.set(this.getAbilityModifier(value));
-        break;
-      case 'intelligence':
-        this.intelligenceModifier.set(this.getAbilityModifier(value));
-        break;
-      case 'wisdom':
-        this.wisdomModifier.set(this.getAbilityModifier(value));
-        break;
-      case 'charisma':
-        this.charismaModifier.set(this.getAbilityModifier(value));
-        break;
-    }
+  updateAbilityScores() {
+    const formValue = this.abilityScoresForm.value;
+    this.strengthModifier.set(this.getAbilityModifier(parseInt(String(formValue.strength) , 10)));
+    this.dexterityModifier.set(this.getAbilityModifier(parseInt(String(formValue.dexterity) , 10)));
+    this.constitutionModifier.set(this.getAbilityModifier(parseInt(String(formValue.constitution) , 10)));
+    this.intelligenceModifier.set(this.getAbilityModifier(parseInt(String(formValue.intelligence) , 10)));
+    this.wisdomModifier.set(this.getAbilityModifier(parseInt(String(formValue.wisdom) , 10)));
+    this.charismaModifier.set(this.getAbilityModifier(parseInt(String(formValue.charisma) , 10)));
   }
 
   getAbilityModifier(abilityValue: number): number {
+    if (isNaN(abilityValue)) return 0;
     return Math.floor((abilityValue - 10) / 2);
   }
 
-  displayModifier(modifier: number): string {
+  displayModifier(modifier: number | undefined | null): string {
+    if (modifier === undefined || modifier === null) return '';
     if (modifier >= 0) {
       return `+${modifier}`;
     } else {
@@ -157,8 +159,29 @@ export class EditCharacterComponent {
   }
 
   getSkillModifier(skill: keyof ISkillsProficiencies, ability: keyof Attributes): string {
-    const abilityScore = this.initialValues?.attributes[ability] || 0;
-    const abilityModifier = this.getAbilityModifier(abilityScore);
+    let abilityModifier: number;
+    switch (ability) {
+      case 'strength':
+        abilityModifier = this.strengthModifier();
+        break;
+      case 'dexterity':
+        abilityModifier = this.dexterityModifier();
+        break;
+      case 'constitution':
+        abilityModifier = this.constitutionModifier();
+        break;
+      case 'intelligence':
+        abilityModifier = this.intelligenceModifier();
+        break;
+      case 'wisdom':
+        abilityModifier = this.wisdomModifier();
+        break;
+      case 'charisma':
+        abilityModifier = this.charismaModifier();
+        break;
+      default:
+        abilityModifier = 0;
+    }
     const proficiency = this.skillsProficiencies()[skill] ? this.proficiencyBonus() : 0;
 
     return this.displayModifier(abilityModifier + proficiency);
