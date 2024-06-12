@@ -103,6 +103,15 @@ export class EditCharacterComponent {
     survival: this.initialValues?.skills_proficiencies?.includes('Skill: Survival')
   });
 
+  savingThrowProficiencies = signal({
+    strength: this.initialValues?.saving_throws_proficiencies?.includes('Saving Throw: STR'),
+    dexterity: this.initialValues?.saving_throws_proficiencies?.includes('Saving Throw: DEX'),
+    constitution: this.initialValues?.saving_throws_proficiencies?.includes('Saving Throw: CON'),
+    intelligence: this.initialValues?.saving_throws_proficiencies?.includes('Saving Throw: INT'),
+    wisdom: this.initialValues?.saving_throws_proficiencies?.includes('Saving Throw: WIS'),
+    charisma: this.initialValues?.saving_throws_proficiencies?.includes('Saving Throw: CHA')
+  })
+
   constructor() {
     this.abilityScoresForm.valueChanges.subscribe((value) => {
       if (this.abilityScoresForm.invalid) return;
@@ -125,6 +134,15 @@ export class EditCharacterComponent {
       return {
         ...skillsProficiencies,
         [skill]: !skillsProficiencies[skill]
+      };
+    });
+  }
+
+  updateSavingThrowProficiencies(ability: keyof Attributes) {
+    this.savingThrowProficiencies.update((savingThrowProficiencies) => {
+      return {
+        ...savingThrowProficiencies,
+        [ability]: !savingThrowProficiencies[ability]
       };
     });
   }
@@ -158,8 +176,9 @@ export class EditCharacterComponent {
     return Math.ceil(this.initialValues.level / 4) + 1;
   }
 
-  getSkillModifier(skill: keyof ISkillsProficiencies, ability: keyof Attributes): string {
+  getSkillModifier(skill: keyof ISkillsProficiencies | 'saving_throw', ability: keyof Attributes): string {
     let abilityModifier: number;
+    let proficiency: number;
     switch (ability) {
       case 'strength':
         abilityModifier = this.strengthModifier();
@@ -182,7 +201,11 @@ export class EditCharacterComponent {
       default:
         abilityModifier = 0;
     }
-    const proficiency = this.skillsProficiencies()[skill] ? this.proficiencyBonus() : 0;
+    if (skill === 'saving_throw') {
+      proficiency = this.savingThrowProficiencies()[ability] ? this.proficiencyBonus() : 0;
+    } else {
+      proficiency = this.skillsProficiencies()[skill] ? this.proficiencyBonus() : 0;
+    }
 
     return this.displayModifier(abilityModifier + proficiency);
   }

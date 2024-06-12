@@ -79,24 +79,25 @@
           </div>
           <div class="d-and-d-box">
             <div style="text-align: left;">
+<!--              TODO: use for and form control?-->
               <div class="d-and-d-skill">
-                <div class="d-and-d-skill-circle"></div>
-                <input type="text" value=""><label>Strength</label></div>
+                <div (click)="updateSavingThrowProficiencies('strength')" [ngClass]="{'active': savingThrowProficiencies().strength}" class="d-and-d-skill-circle"></div>
+                <span class="d-and-d-skill-modifier">{{getSkillModifier('saving_throw', 'strength')}}</span><label>Strength</label></div>
               <div class="d-and-d-skill">
-                <div class="d-and-d-skill-circle active"></div>
-                <input type="text" value=""><label>Dexterity</label></div>
+                <div (click)="updateSavingThrowProficiencies('dexterity')" [ngClass]="{'active': savingThrowProficiencies().dexterity}" class="d-and-d-skill-circle"></div>
+                <span class="d-and-d-skill-modifier">{{getSkillModifier('saving_throw', 'dexterity')}}</span><label>Dexterity</label></div>
               <div class="d-and-d-skill">
-                <div class="d-and-d-skill-circle active"></div>
-                <input type="text" value=""><label>Constitution</label></div>
+                <div (click)="updateSavingThrowProficiencies('constitution')" [ngClass]="{'active': savingThrowProficiencies().constitution}" class="d-and-d-skill-circle"></div>
+                <span class="d-and-d-skill-modifier">{{getSkillModifier('saving_throw', 'constitution')}}</span><label>Constitution</label></div>
               <div class="d-and-d-skill">
-                <div class="d-and-d-skill-circle active"></div>
-                <input type="text" value=""><label>Intelligence</label></div>
+                <div (click)="updateSavingThrowProficiencies('intelligence')" [ngClass]="{'active': savingThrowProficiencies().intelligence}" class="d-and-d-skill-circle"></div>
+                <span class="d-and-d-skill-modifier">{{getSkillModifier('saving_throw', 'intelligence')}}</span><label>Intelligence</label></div>
               <div class="d-and-d-skill">
-                <div class="d-and-d-skill-circle active"></div>
-                <input type="text" value=""><label>Wisdom</label></div>
+                <div (click)="updateSavingThrowProficiencies('wisdom')" [ngClass]="{'active': savingThrowProficiencies().wisdom}" class="d-and-d-skill-circle"></div>
+                <span class="d-and-d-skill-modifier">{{getSkillModifier('saving_throw', 'wisdom')}}</span><label>Wisdom</label></div>
               <div class="d-and-d-skill">
-                <div class="d-and-d-skill-circle active"></div>
-                <input type="text" value=""><label>Charisma</label></div>
+                <div (click)="updateSavingThrowProficiencies('charisma')" [ngClass]="{'active': savingThrowProficiencies().charisma}" class="d-and-d-skill-circle"></div>
+                <span class="d-and-d-skill-modifier">{{getSkillModifier('saving_throw', 'charisma')}}</span><label>Charisma</label></div>
             </div>
             <label class="d-and-d-title" style="margin-top: 10px;">Saving Throws</label></div>
           <div class="d-and-d-box">
