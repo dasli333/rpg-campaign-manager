@@ -22,6 +22,7 @@ export interface IPlayerCharacter {
   flaws: string;
   languages: string[];
   traits: string[];
+  speed: number;
   weapons_proficiencies: string[];
   artisan_tools_proficiencies: string[];
   skills_proficiencies: string[];

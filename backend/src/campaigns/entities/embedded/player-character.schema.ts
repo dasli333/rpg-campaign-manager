@@ -71,6 +71,9 @@ export class PlayerCharacter {
   @Prop({ type: [String] })
   traits: string[];
 
+  @Prop()
+  speed: number;
+
   @Prop({ type: [String] })
   weapons_proficiencies: string[];
 

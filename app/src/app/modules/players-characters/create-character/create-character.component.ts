@@ -322,6 +322,7 @@ export class CreateCharacterComponent implements OnInit {
       const raceTraitsNames = this.selectedRaceDetail?.traits.map(trait => trait.name) || [];
       const subraceTraitsNames = this.selectedSubrace?.racial_traits.map(trait => trait.name) || [];
       const traitsNames = raceTraitsNames.concat(subraceTraitsNames);
+      const alignment = this.selectedAlignment?.name || '';
 
       this.characterSummary = {
         image: this.imagePreview || '',
@@ -332,7 +333,7 @@ export class CreateCharacterComponent implements OnInit {
           age: Number(this.characterDetailsForm.value.age) || 0,
           height: this.characterDetailsForm.value.height || '',
           weight: this.characterDetailsForm.value.weight || '',
-          alignment: this.characterDetailsForm.value.alignment || '',
+          alignment: alignment,
           image: this.characterDetailsForm.value.image || '',
         },
         raceDetails: {
@@ -407,13 +408,14 @@ export class CreateCharacterComponent implements OnInit {
         wisdom: this.abilityScoreCharacterForm.value.wis || 0,
         charisma: this.abilityScoreCharacterForm.value.cha || 0,
       },
-      alignment: this.characterDetailsForm.value.alignment || '',
+      alignment: this.characterSummary?.characterDetails.alignment || '',
       background: this.personalCharacteristicsForm.value.background || '',
       personalityTraits: this.personalCharacteristicsForm.value.personalityTraits || '',
       ideals: this.personalCharacteristicsForm.value.ideals || '',
       bonds: this.personalCharacteristicsForm.value.bonds || '',
       flaws: this.personalCharacteristicsForm.value.flaws || '',
       traits: [],
+      speed: this.selectedRaceDetail?.speed || 0,
       weapons_proficiencies: this.characterSummary?.proficiencies.WEAPONS || [],
       artisan_tools_proficiencies: this.characterSummary?.proficiencies.ARTISANS_TOOLS || [],
       skills_proficiencies: this.characterSummary?.proficiencies.SKILLS || [],

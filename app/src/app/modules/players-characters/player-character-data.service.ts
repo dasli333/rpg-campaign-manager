@@ -35,7 +35,11 @@ export class PlayerCharacterDataService {
   constructor() { }
 
   setProficiencies(proficiencies: ProficiencyDetail[]) {
-    this.#proficiencies.update((p) => [...p, ...proficiencies]);
+    const newProficiencies = proficiencies.filter((proficiency) => {
+      return !this.#proficiencies().some((p) => p.index === proficiency.index)
+    })
+    if (newProficiencies.length === 0) return;
+    this.#proficiencies.update((p) => [...p, ...newProficiencies]);
   }
 
   setTraits(traits: Trait[]) {

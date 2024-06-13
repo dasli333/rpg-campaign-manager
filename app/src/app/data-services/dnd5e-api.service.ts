@@ -48,6 +48,7 @@ export class Dnd5eApiService {
             name
             alignment
             age
+            speed
             size_description
             starting_proficiencies {
               index
