@@ -38,6 +38,9 @@ export class PlayerCharacter {
   @Prop({ default: 1 })
   level: number;
 
+  @Prop({ default: 0 })
+  hit_die: number;
+
   @Prop()
   image: string;
 

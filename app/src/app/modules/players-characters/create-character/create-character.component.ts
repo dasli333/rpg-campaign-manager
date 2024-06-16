@@ -398,6 +398,7 @@ export class CreateCharacterComponent implements OnInit {
       subrace: this.selectedSubrace?.name || '',
       className: this.selectedClassDetail?.name || '',
       level: 1, // default level
+      hit_die: this.selectedClassDetail?.hit_die || 0,
       image: this.characterDetailsForm.value.image || '',
       experiencePoints: 0, // default experience points
       attributes: {

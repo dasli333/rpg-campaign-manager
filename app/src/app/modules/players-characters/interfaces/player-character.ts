@@ -11,6 +11,7 @@ export interface IPlayerCharacter {
   subrace: string;
   className: string;
   level: number;
+  hit_die: number;
   image: string;
   experiencePoints: number;
   attributes: Attributes;

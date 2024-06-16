@@ -65,6 +65,10 @@ export class EditCharacterComponent {
 
 
   initialValues = this.playerCharacter();
+
+  // TODO: add gain of level
+  level = signal(this.initialValues?.level || 1);
+
   strengthModifier = signal(this.getAbilityModifier(this.initialValues?.attributes?.strength || 0));
   dexterityModifier = signal(this.getAbilityModifier(this.initialValues?.attributes?.dexterity || 0));
   constitutionModifier = signal(this.getAbilityModifier(this.initialValues?.attributes?.constitution || 0));
@@ -208,5 +212,12 @@ export class EditCharacterComponent {
     }
 
     return this.displayModifier(abilityModifier + proficiency);
+  }
+
+  getMaximumHitPoints(): number {
+    if (!this.initialValues) return 0;
+    const averageRoll = this.initialValues.hit_die / 2 + 1;
+    const firstLevelHitPoints = this.initialValues.hit_die + this.constitutionModifier();
+    return firstLevelHitPoints + (averageRoll + this.constitutionModifier()) * (this.initialValues.level - 1);
   }
 }
