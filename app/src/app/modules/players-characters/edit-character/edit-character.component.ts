@@ -220,4 +220,28 @@ export class EditCharacterComponent {
     const firstLevelHitPoints = this.initialValues.hit_die + this.constitutionModifier();
     return firstLevelHitPoints + (averageRoll + this.constitutionModifier()) * (this.initialValues.level - 1);
   }
+
+  getArmorClass(): number {
+    if (this.initialValues?.armorClass) {
+      return this.initialValues.armorClass;
+    }
+    return 10 + this.dexterityModifier();
+  }
+
+  getCurrentHitPoints(): number {
+    return this.initialValues?.currentHitPoints || this.getMaximumHitPoints();
+  }
+
+  getTemporaryHitPoints(): number {
+    return this.initialValues?.temporaryHitPoints || 0;
+  }
+
+  getPassiveWisdomPerception(): number {
+    const perceptionModifier = this.getSkillModifier('perception', 'wisdom');
+    return 10 + parseInt(perceptionModifier, 10);
+  }
+
+  getInspiration(): number {
+    return this.initialValues?.inspiration || 0;
+  }
 }

@@ -399,6 +399,8 @@ export class CreateCharacterComponent implements OnInit {
       className: this.selectedClassDetail?.name || '',
       level: 1, // default level
       hit_die: this.selectedClassDetail?.hit_die || 0,
+      currentHitPoints: 0, // default hit points
+      temporaryHitPoints: 0, // default temporary hit points
       image: this.characterDetailsForm.value.image || '',
       experiencePoints: 0, // default experience points
       attributes: {
@@ -412,6 +414,8 @@ export class CreateCharacterComponent implements OnInit {
       alignment: this.characterSummary?.characterDetails.alignment || '',
       background: this.personalCharacteristicsForm.value.background || '',
       personalityTraits: this.personalCharacteristicsForm.value.personalityTraits || '',
+      armorClass: 0,
+      inspiration: 1,
       ideals: this.personalCharacteristicsForm.value.ideals || '',
       bonds: this.personalCharacteristicsForm.value.bonds || '',
       flaws: this.personalCharacteristicsForm.value.flaws || '',

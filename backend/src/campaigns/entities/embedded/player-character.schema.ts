@@ -41,6 +41,12 @@ export class PlayerCharacter {
   @Prop({ default: 0 })
   hit_die: number;
 
+  @Prop({ default: 0 })
+  currentHitPoints: number;
+
+  @Prop({ default: 0 })
+  temporaryHitPoints: number;
+
   @Prop()
   image: string;
 
@@ -58,6 +64,12 @@ export class PlayerCharacter {
 
   @Prop()
   personalityTraits: string;
+
+  @Prop()
+  armorClass: number;
+
+  @Prop({ default: 1 })
+  inspiration: number;
 
   @Prop()
   ideals: string;

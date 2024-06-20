@@ -12,12 +12,16 @@ export interface IPlayerCharacter {
   className: string;
   level: number;
   hit_die: number;
+  currentHitPoints: number;
+  temporaryHitPoints: number;
   image: string;
   experiencePoints: number;
   attributes: Attributes;
   alignment: string;
   background: string;
   personalityTraits: string;
+  armorClass: number;
+  inspiration: number;
   ideals: string;
   bonds: string;
   flaws: string;
