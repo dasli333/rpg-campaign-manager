@@ -421,15 +421,9 @@ export class CreateCharacterComponent implements OnInit {
       flaws: this.personalCharacteristicsForm.value.flaws || '',
       traits: [],
       speed: this.selectedRaceDetail?.speed || 0,
-      weapons_proficiencies: this.characterSummary?.proficiencies.WEAPONS || [],
-      artisan_tools_proficiencies: this.characterSummary?.proficiencies.ARTISANS_TOOLS || [],
       skills_proficiencies: this.characterSummary?.proficiencies.SKILLS || [],
-      armor_proficiencies: this.characterSummary?.proficiencies.ARMOR || [],
-      musical_instruments_proficiencies: this.characterSummary?.proficiencies.MUSICAL_INSTRUMENTS || [],
       saving_throws_proficiencies: this.characterSummary?.proficiencies.SAVING_THROWS || [],
-      other_proficiencies: this.characterSummary?.proficiencies.OTHER || [],
-      gaming_sets_proficiencies: this.characterSummary?.proficiencies.GAMING_SETS || [],
-      vehicles_proficiencies: this.characterSummary?.proficiencies.VEHICLES || [],
+      otherProficienciesAndLanguages: this.getOtherProficienciesAndLanguages(),
       languages: this.characterSummary?.proficiencies.LANGUAGES || [],
       equipment: [],
       spells: [],
@@ -443,6 +437,26 @@ export class CreateCharacterComponent implements OnInit {
       formGroup.addControl(skill.index, this.#formBuilder.control(false));
     });
     return formGroup;
+  }
+
+  private getOtherProficienciesAndLanguages(): string {
+
+    const otherProficiencies = [
+      ...this.characterSummary?.proficiencies.WEAPONS || [],
+      ...this.characterSummary?.proficiencies.ARMOR || [],
+      ...this.characterSummary?.proficiencies.ARTISANS_TOOLS || [],
+      ...this.characterSummary?.proficiencies.GAMING_SETS || [],
+      ...this.characterSummary?.proficiencies.MUSICAL_INSTRUMENTS || [],
+      ...this.characterSummary?.proficiencies.VEHICLES || [],
+      ...this.characterSummary?.proficiencies.OTHER || [],
+    ];
+
+    const languages = this.characterSummary?.proficiencies.LANGUAGES || [];
+
+    const otherProficienciesString = 'Proficiencies: ' + otherProficiencies.join(', ');
+    const languagesString = 'Languages: ' + languages.join(', ');
+
+    return `${otherProficienciesString}\n${languagesString}`;
   }
 
   private getBackgroundProficiencies() {

@@ -174,6 +174,7 @@
       border-radius: 8px;
       padding: 10px;
       margin-bottom: 15px;
+      background-color: #fff;
 
       .d-and-d-skill-circle {
         width: 10px;
@@ -291,6 +292,8 @@
       }
 
       .d-and-d-skill {
+        height: 21px;
+
         input {
           border-bottom: 1px solid #000;
           width: 25px;
@@ -360,13 +363,17 @@
 
         &.d-and-d-save-success {
           .d-and-d-skill-circle {
-            background-color: #0f0;
+            &.active {
+              background-color: #0f0;
+            }
           }
         }
 
         &.d-and-d-save-failure {
           .d-and-d-skill-circle {
-            background-color: #f00;
+            &.active {
+              background-color: #f00;
+            }
           }
         }
       }
@@ -475,6 +482,7 @@
       text-transform: uppercase;
       position: relative;
       margin-bottom: 23px;
+      background-color: #fff;
 
       .d-and-d-statrow-value {
         border: 3px solid #000;

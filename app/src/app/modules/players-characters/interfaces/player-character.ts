@@ -28,15 +28,9 @@ export interface IPlayerCharacter {
   languages: string[];
   traits: string[];
   speed: number;
-  weapons_proficiencies: string[];
-  artisan_tools_proficiencies: string[];
   skills_proficiencies: string[];
-  armor_proficiencies: string[];
-  musical_instruments_proficiencies: string[];
   saving_throws_proficiencies: string[];
-  other_proficiencies: string[];
-  gaming_sets_proficiencies: string[];
-  vehicles_proficiencies: string[];
+  otherProficienciesAndLanguages: string;
   equipment: string[];
   spells: string[];
 }

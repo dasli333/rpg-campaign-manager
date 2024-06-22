@@ -90,31 +90,13 @@ export class PlayerCharacter {
   speed: number;
 
   @Prop({ type: [String] })
-  weapons_proficiencies: string[];
-
-  @Prop({ type: [String] })
-  artisan_tools_proficiencies: string[];
-
-  @Prop({ type: [String] })
   skills_proficiencies: string[];
-
-  @Prop({ type: [String] })
-  armor_proficiencies: string[];
-
-  @Prop({ type: [String] })
-  musical_instruments_proficiencies: string[];
 
   @Prop({ type: [String] })
   saving_throws_proficiencies: string[];
 
-  @Prop({ type: [String] })
-  other_proficiencies: string[];
-
-  @Prop({ type: [String] })
-  gaming_sets_proficiencies: string[];
-
-  @Prop({ type: [String] })
-  vehicles_proficiencies: string[];
+  @Prop()
+  otherProficienciesAndLanguages: string;
 
   @Prop({ type: [String] })
   equipment: string[];
