@@ -11,6 +11,7 @@ import {NgClass} from "@angular/common";
 import {PlayerCharacterDataService} from "../player-character-data.service";
 import {Attributes} from "../interfaces/attributes";
 import {FormBuilder, ReactiveFormsModule, Validators} from "@angular/forms";
+import {MatTabsModule} from "@angular/material/tabs";
 
 interface ISkillsProficiencies {
   acrobatics: boolean;
@@ -44,6 +45,7 @@ interface ISkillsProficiencies {
     MatInput,
     MatLabel,
     MatCheckbox,
+    MatTabsModule,
     MatGridListModule,
     NgClass,
     ReactiveFormsModule
