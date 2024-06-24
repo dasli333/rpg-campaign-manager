@@ -7,6 +7,12 @@ mat-toolbar {
     align-items: center;
   }
 
+  .header-left-side {
+    span {
+      cursor: pointer;
+    }
+  }
+
   .header-tab {
     height: 48px;
     display: flex;

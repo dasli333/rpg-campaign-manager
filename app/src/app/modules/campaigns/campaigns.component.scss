@@ -4,10 +4,14 @@
   justify-content: start;
 
   .campaign-card {
-    width: 400px;
+    max-width: 400px;
     height: 500px;
     margin-right: 20px;
     margin-top: 20px;
+
+    .campaign-card-image {
+      max-width: 100%;
+    }
 
     .content-section {
       display: flex;

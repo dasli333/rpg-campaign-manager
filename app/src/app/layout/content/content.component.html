@@ -1,11 +1,16 @@
 <mat-sidenav-container class="content-container">
-  <mat-sidenav mode="side" opened>
+  <mat-sidenav #sidenav [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="!(isHandset$ | async)">
     @if (isUserLoggedIn()) {
       <app-sidenav-content></app-sidenav-content>
     }
   </mat-sidenav>
   <mat-sidenav-content class="custom-scroll">
     <div class="sidenav-content">
+      @if (isHandset$ | async) {
+        <button mat-icon-button (click)="toggleSidenav()">
+          <mat-icon>menu</mat-icon>
+        </button>
+      }
       <router-outlet></router-outlet>
     </div>
   </mat-sidenav-content>
