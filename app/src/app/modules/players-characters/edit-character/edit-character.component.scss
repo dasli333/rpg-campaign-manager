@@ -30,8 +30,18 @@
   .row {
     display: flex;
     flex-wrap: wrap;
-    margin-right: -15px;
-    margin-left: -15px;
+  }
+
+  @media screen and (min-width: 768px) {
+    .character-sheet-container {
+      padding-right: 15px;
+      padding-left: 15px;
+    }
+
+    .row {
+      margin-right: -15px;
+      margin-left: -15px;
+    }
   }
 
   .padding-left-right {
@@ -41,6 +51,10 @@
 
   .rounded {
     border-radius: .25rem;
+  }
+
+  .character-name-column, .character-details-column, .character-statistics-column {
+    width: 100%;
   }
 
   .width-1-3 {
@@ -85,8 +99,6 @@
 .character-sheet-container {
   max-width: 1140px;
   font-size: 10px;
-  padding-right: 15px;
-  padding-left: 15px;
   margin-right: auto;
   margin-left: auto;
   margin-top: 20px;
@@ -168,16 +180,29 @@
 
 .character-statistics-container {
 
-  .character-statistics-column {
-    flex: 0 0 33.333333%;
-    max-width: 33.333333%;
-    padding-left: 15px;
-    padding-right: 15px;
+  @media screen and (min-width: 768px) {
+    .character-statistics-column {
+      flex: 0 0 33.333333%;
+      max-width: 33.333333%;
+      padding-left: 15px;
+      padding-right: 15px;
 
-    &.wide-column {
-      flex: 0 0 66.666667%;
-      max-width: 66.666667%;
+      &.wide-column {
+        flex: 0 0 66.666667%;
+        max-width: 66.666667%;
+      }
+
+      .ability-scores-column {
+        padding-left: 15px;
+      }
+
+      .skills-column {
+        padding-right: 15px;
+      }
     }
+  }
+
+  .character-statistics-column {
 
     .d-and-d-box {
       border: 2px solid #000;
@@ -477,13 +502,11 @@
 
     .ability-scores-column {
       padding-right: 0.25rem;
-      padding-left: 15px;
       flex: 0 0 33.333333%;
       max-width: 33.333333%;
     }
 
     .skills-column {
-      padding-right: 15px;
       padding-left: 15px;
       flex: 0 0 66.666667%;
       max-width: 66.666667%;

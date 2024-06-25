@@ -3,7 +3,7 @@ h1 {
 }
 
 .create-campaign-form {
-  width: 400px;
+  max-width: 400px;
   form {
     display: flex;
     flex-direction: column;
@@ -27,7 +27,7 @@ h1 {
     }
 
     .file-preview {
-      width: 400px;
+      max-width: 400px;
       height: 300px;
       cursor: pointer;
       margin-top: 5px;
@@ -35,7 +35,7 @@ h1 {
 
     .dashed-border {
       border: 2px dashed #7e7e7e;
-      width: 396px;
+      max-width: 396px;
       height: 296px;
       display: flex;
       justify-content: center;
@@ -43,5 +43,3 @@ h1 {
     }
   }
 }
-
-
