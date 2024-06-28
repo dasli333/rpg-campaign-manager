@@ -3,6 +3,12 @@
 }
 
 .file-upload {
+
+  &.display-center {
+    display: flex;
+    justify-content: center;
+  }
+
   margin-bottom: 22px;
 
   .file-upload-actions {

@@ -12,6 +12,8 @@ import {PlayerCharacterDataService} from "../player-character-data.service";
 import {Attributes} from "../interfaces/attributes";
 import {FormBuilder, ReactiveFormsModule, Validators} from "@angular/forms";
 import {MatTabsModule} from "@angular/material/tabs";
+import {ImageUploadComponent} from "../../helpers/image-upload/image-upload.component";
+import {IMAGE_URL} from "../../../../config";
 
 interface ISkillsProficiencies {
   acrobatics: boolean;
@@ -48,7 +50,8 @@ interface ISkillsProficiencies {
     MatTabsModule,
     MatGridListModule,
     NgClass,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ImageUploadComponent
   ],
   templateUrl: './edit-character.component.html',
   styleUrl: './edit-character.component.scss',
@@ -246,4 +249,6 @@ export class EditCharacterComponent {
   getInspiration(): number {
     return this.initialValues?.inspiration || 0;
   }
+
+  protected readonly IMAGE_URL = IMAGE_URL;
 }

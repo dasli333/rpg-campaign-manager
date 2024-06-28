@@ -125,8 +125,13 @@
   }
 }
 
+@media screen and (min-width: 768px) {
+  .character-name {
+    width: calc(100% + 50px);
+  }
+}
+
 .character-name {
-  width: calc(100% + 50px);
 
   input {
     padding-left: 10px;
@@ -147,12 +152,19 @@
 .character-details-header {
   margin-bottom: 1.5rem;
 
-  .character-name-column {
-    width: 25%;
+  @media screen and (min-width: 768px) {
+    .character-name-column {
+      width: 25%;
+    }
+
+    .character-details-column {
+      width: 75%;
+    }
   }
 
+
+
   .character-details-column {
-    width: 75%;
 
     input {
       border-bottom: 1px solid #000;
@@ -170,9 +182,18 @@
     .attribute-collection {
       .row {
         justify-content: space-around;
+
         div {
-          width: 30%;
+          width: 100%;
         }
+
+        @media screen and (min-width: 768px) {
+          div {
+            flex: 0 0 30%;
+            max-width: 30%;
+          }
+        }
+
       }
     }
   }
@@ -212,8 +233,14 @@
       background-color: #fff;
 
       .col-md-6 {
-        flex: 0 0 50%;
-        max-width: 50%;
+        width: 100%;
+      }
+
+      @media screen and (min-width: 768px) {
+        .col-md-6 {
+          flex: 0 0 50%;
+          max-width: 50%;
+        }
       }
 
       .d-and-d-skill-circle {
@@ -497,6 +524,12 @@
             max-width: 100%;
           }
         }
+      }
+    }
+
+    .d-and-d-faction-input {
+      input {
+        font-size: 14px;
       }
     }
 

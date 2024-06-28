@@ -3,7 +3,7 @@ import {
   ChangeDetectorRef,
   Component,
   EventEmitter,
-  inject,
+  inject, input,
   Input,
   Output
 } from '@angular/core';
@@ -27,9 +27,12 @@ export class ImageUploadComponent {
 
   @Input() imagePreview: string | ArrayBuffer | null | undefined = null;
   @Input() imageControl = new FormControl();
+  @Input() withButtons = false;
   @Output() fileSelected = new EventEmitter<File>();
   @Output() removeImage = new EventEmitter<void>();
   @Output() imagePreviewChanged = new EventEmitter<ArrayBuffer | string | null>();
+
+  displayCenter = input<boolean>(false)
 
   #changeDetectorRef = inject(ChangeDetectorRef);
 

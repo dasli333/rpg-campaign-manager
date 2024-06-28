@@ -426,15 +426,15 @@
         <div class="row character-details-header">
           <div class="character-name-column">
             <div class="d-and-d-page-title">D&amp;D</div>
-            <div class="attribute-collection character-name"><input type="text" value=""></div>
+            <div class="attribute-collection character-name"><input type="text" [value]="initialValues?.name"></div>
             <label style="width: 100%; text-align: right; text-transform: uppercase; font-size: 11px;">Character
               Name</label></div>
           <div class="character-details-column">
             <div class="attribute-collection">
               <div class="row padding-left-right">
-                <div class="col-md-4 col-6 pl-0 pr-0"><input type="text" value=""><label>Age</label></div>
-                <div class="col-md-4 col-6 pl-0 pr-0"><input type="text" value=""><label>Height</label></div>
-                <div class="col-md-4 col-6 pl-0 pr-0"><input type="text" value=""><label>Weight</label></div>
+                <div class="col-md-4 col-6 pl-0 pr-0"><input type="text" [value]="initialValues?.age"><label>Age</label></div>
+                <div class="col-md-4 col-6 pl-0 pr-0"><input type="text" [value]="initialValues?.height"><label>Height</label></div>
+                <div class="col-md-4 col-6 pl-0 pr-0"><input type="text" [value]="initialValues?.weight"><label>Weight</label></div>
               </div>
               <div class="row padding-left-right">
                 <div class="col-md-4 col-6 pl-0 pr-0"><input type="text" value=""><label>Eyes</label></div>
@@ -447,8 +447,7 @@
         <div class="row character-statistics-container">
           <div class="character-statistics-column">
             <div class="d-and-d-box square">
-              <div class="d-and-d-image"><input type="file" id="d-and-d-image-appearance" accept="image/*"
-                                                style="display: none;"></div>
+              <app-image-upload [imagePreview]="IMAGE_URL + initialValues?.image" [withButtons]="false" [displayCenter]="true" ></app-image-upload>
               <label class="d-and-d-title" style="margin-top: 10px;">Character Appearance</label></div>
             <div class="d-and-d-box mt-3"><textarea rows="26" style="padding-bottom: 5px;"></textarea><label
               class="d-and-d-title" style="margin-top: 10px;">Character Backstory</label></div>
@@ -457,17 +456,15 @@
             <div class="d-and-d-box">
               <div class="row">
                 <div class="col-md-6 border-right padding-left-right">
-                  <div class="d-and-d-gray-text" style="padding-bottom: 1px;"><label style="width: 70px;">Faction
-                    Rank</label><input type="text" class="d-and-d-linput" value="" style="width: calc(100% - 70px);">
-                  </div>
                   <textarea rows="16" style="padding-bottom: 5px;"></textarea></div>
                 <div class="col-md-6 padding-left-right">
-                  <div class="d-and-d-box gray noborder" style="margin-bottom: 13px;">
-                    <div class="d-and-d-faction-input"><label>Faction</label><input type="text" value=""></div>
-                    <div class="d-and-d-image faction"><input type="file" id="d-and-d-image-factionImg" accept="image/*"
-                                                              style="display: none;"></div>
+                  <div class="d-and-d-box gray noborder" style="margin-bottom: 13px; padding: 2px">
+                    <div class="d-and-d-faction-input"><label>Faction Name</label><input type="text" value=""></div>
+                    <div class="d-and-d-image faction">
+                      <app-image-upload [withButtons]="false" [displayCenter]="true"></app-image-upload>
+                    </div>
                   </div>
-                  <textarea rows="3" style="padding-bottom: 5px;"></textarea></div>
+                </div>
               </div>
               <label class="d-and-d-title" style="margin-top: 10px;">Allies &amp; Organisations</label></div>
             <div class="d-and-d-box mt-3">

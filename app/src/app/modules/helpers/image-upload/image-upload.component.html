@@ -1,12 +1,14 @@
 <input type="file" (change)="onFileSelected($event)" class="file-input" [formControl]="imageControl" #fileUpload>
-<div class="file-upload">
-  <div class="file-upload-actions">
-    <button mat-raised-button color="primary" (click)="fileUpload.click(); $event.preventDefault()">
-      Upload Image
-    </button>
+<div class="file-upload" [ngClass]="{'display-center': displayCenter()}">
+  @if (withButtons) {
+    <div class="file-upload-actions">
+      <button mat-raised-button color="primary" (click)="fileUpload.click(); $event.preventDefault()">
+        Upload Image
+      </button>
 
-    <button mat-raised-button (click)="onRemoveImage(); $event.preventDefault()">Remove Image</button>
-  </div>
+      <button mat-raised-button (click)="onRemoveImage(); $event.preventDefault()">Remove Image</button>
+    </div>
+  }
 
   <div class="file-preview" [ngClass]="{'dashed-border': !imagePreview}" (click)="fileUpload.click(); $event.preventDefault()">
     @if (imagePreview) {
