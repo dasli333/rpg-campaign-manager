@@ -12,6 +12,7 @@ export interface IPlayerCharacter {
   className: string;
   level: number;
   hit_die: number;
+  numberOfHitDie: number;
   currentHitPoints: number;
   temporaryHitPoints: number;
   image: string;

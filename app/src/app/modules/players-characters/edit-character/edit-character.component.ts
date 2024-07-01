@@ -14,6 +14,7 @@ import {FormBuilder, ReactiveFormsModule, Validators} from "@angular/forms";
 import {MatTabsModule} from "@angular/material/tabs";
 import {ImageUploadComponent} from "../../helpers/image-upload/image-upload.component";
 import {IMAGE_URL} from "../../../../config";
+import {IPlayerCharacter} from "../interfaces/player-character";
 
 interface ISkillsProficiencies {
   acrobatics: boolean;
@@ -82,6 +83,27 @@ export class EditCharacterComponent {
   charismaModifier = signal(this.getAbilityModifier(this.initialValues?.attributes?.charisma || 0));
   proficiencyBonus = signal(this.getProficiencyBonus());
 
+  characterSheetForm = this.#formBuilder.group({
+    name: [this.initialValues?.name, Validators.required],
+    className: [this.initialValues?.className, Validators.required],
+    background: [this.initialValues?.background, Validators.required],
+    alignment: [this.initialValues?.alignment, Validators.required],
+    experiencePoints: [this.initialValues?.experiencePoints, [Validators.required, Validators.min(0), Validators.pattern('[0-9]+')]],
+    inspiration: [this.initialValues?.inspiration, [Validators.required, Validators.min(0), Validators.pattern('[0-9]+')]],
+    armorClass: [this.initialValues?.armorClass, [Validators.required, Validators.min(0), Validators.pattern('[0-9]+')]],
+    speed: [this.initialValues?.speed, [Validators.required, Validators.min(0), Validators.pattern('[0-9]+')]],
+    numberOfHitDie: [this.initialValues?.numberOfHitDie, [Validators.required, Validators.min(0), Validators.pattern('[0-9]+')]],
+    currentHitPoints: [this.getCurrentHitPoints(), [Validators.required, Validators.min(0), Validators.pattern('[0-9]+')]],
+    temporaryHitPoints: [this.initialValues?.temporaryHitPoints, [Validators.required, Validators.min(0), Validators.pattern('[0-9]+')]],
+    age: [this.initialValues?.age, [Validators.required, Validators.min(0), Validators.pattern('[0-9]+')]],
+    height: [this.initialValues?.height, Validators.required],
+    weight: [this.initialValues?.weight, Validators.required],
+    personalityTraits: [this.initialValues?.personalityTraits, Validators.required],
+    ideals: [this.initialValues?.ideals, Validators.required],
+    bonds: [this.initialValues?.bonds, Validators.required],
+    flaws: [this.initialValues?.flaws, Validators.required],
+  });
+
   abilityScoresForm = this.#formBuilder.group({
     strength: [this.initialValues?.attributes?.strength, [Validators.required, Validators.min(1), Validators.max(30), Validators.pattern('[0-9]{1,2}')]],
     dexterity: [this.initialValues?.attributes?.dexterity, [Validators.required, Validators.min(1), Validators.max(30), Validators.pattern('[0-9]{1,2}')]],
@@ -126,6 +148,60 @@ export class EditCharacterComponent {
       if (this.abilityScoresForm.invalid) return;
       this.updateAbilityScores();
     });
+  }
+
+  saveCharacter() {
+    if (this.characterSheetForm.invalid || this.abilityScoresForm.invalid || !this.initialValues) return;
+    const character: IPlayerCharacter = {
+      ...this.initialValues,
+      _id: this.characterId,
+      name: this.characterSheetForm.value.name || '',
+      className: this.characterSheetForm.value.className || '',
+      background: this.characterSheetForm.value.background || '',
+      alignment: this.characterSheetForm.value.alignment || '',
+      experiencePoints: this.characterSheetForm.value.experiencePoints || 0,
+      inspiration: this.characterSheetForm.value.inspiration || 0,
+      armorClass: this.characterSheetForm.value.armorClass || 0,
+      speed: this.characterSheetForm.value.speed || 0,
+      numberOfHitDie: this.characterSheetForm.value.numberOfHitDie || 0,
+      currentHitPoints: this.characterSheetForm.value.currentHitPoints || 0,
+      temporaryHitPoints: this.characterSheetForm.value.temporaryHitPoints || 0,
+      age: this.characterSheetForm.value.age || 0,
+      height: this.characterSheetForm.value.height || '',
+      weight: this.characterSheetForm.value.weight || '',
+      personalityTraits: this.characterSheetForm.value.personalityTraits || '',
+      ideals: this.characterSheetForm.value.ideals || '',
+      bonds: this.characterSheetForm.value.bonds || '',
+      flaws: this.characterSheetForm.value.flaws || '',
+      attributes: {
+        strength: this.abilityScoresForm.value.strength || 3,
+        dexterity: this.abilityScoresForm.value.dexterity || 3,
+        constitution: this.abilityScoresForm.value.constitution || 3,
+        intelligence: this.abilityScoresForm.value.intelligence || 3,
+        wisdom: this.abilityScoresForm.value.wisdom || 3,
+        charisma: this.abilityScoresForm.value.charisma || 3
+      },
+      skills_proficiencies: Object.entries(this.skillsProficiencies()).filter(([_, value]) => value).map(([key]) => {
+        switch (key) {
+          case 'animal_handling':
+            return 'Skill: Animal Handling';
+          case 'sleight_of_hand':
+            return 'Skill: Sleight of Hand';
+          default:
+            const index = key.charAt(0).toUpperCase() + key.slice(1);
+            return `Skill: ${index}`;
+        }
+      }),
+      saving_throws_proficiencies: Object.entries(this.savingThrowProficiencies()).filter(([_, value]) => value).map(([key]) => {
+        const index = key.substring(0, 3).toUpperCase();
+        return `Saving Throw: ${index}`;
+      }),
+      image: this.initialValues?.image || '',
+    }
+
+    console.log(character)
+
+    // this.#campaignsService.updatePlayerCharacter(character);
   }
 
   getRaceName(): string {

@@ -42,6 +42,9 @@ export class PlayerCharacter {
   hit_die: number;
 
   @Prop({ default: 0 })
+  numberOfHitDie: number;
+
+  @Prop({ default: 0 })
   currentHitPoints: number;
 
   @Prop({ default: 0 })

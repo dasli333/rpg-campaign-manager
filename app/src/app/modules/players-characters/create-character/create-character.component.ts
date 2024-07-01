@@ -399,6 +399,7 @@ export class CreateCharacterComponent implements OnInit {
       className: this.selectedClassDetail?.name || '',
       level: 1, // default level
       hit_die: this.selectedClassDetail?.hit_die || 0,
+      numberOfHitDie: 1, // default number of hit die
       currentHitPoints: 0, // default hit points
       temporaryHitPoints: 0, // default temporary hit points
       image: this.characterDetailsForm.value.image || '',

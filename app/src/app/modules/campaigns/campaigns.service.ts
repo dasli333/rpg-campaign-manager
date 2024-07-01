@@ -114,6 +114,15 @@ export class CampaignsService {
     );
   }
 
+  updatePlayerCharacter(playerCharacter: IPlayerCharacter): Observable<ICampaign | undefined> {
+    return this.#httpService.patch<ICampaign>(`${this.#apiUrl}/${this.activeCampaign()?.id}/player-character/${playerCharacter._id}`, playerCharacter).pipe(
+      tap(campaign => {
+        this.#activeCampaign.set(campaign);
+      })
+    );
+
+  }
+
   getPlayerCharacterById(id: string): Signal<IPlayerCharacter | undefined> {
     return computed(() => this.playersCharacters().find(playerCharacter => playerCharacter._id === id));
   }
