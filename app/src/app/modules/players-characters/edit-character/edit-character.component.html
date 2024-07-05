@@ -1,5 +1,5 @@
 <button mat-raised-button routerLink="/players">Back</button>
-<button mat-raised-button color="accent" (click)="saveCharacter()">Save</button>
+<button mat-raised-button color="accent" [disabled]="characterSheetForm.invalid || abilityScoresForm.invalid" (click)="saveCharacter()">Save</button>
 
 @if (initialValues) {
   <form [formGroup]="characterSheetForm">
@@ -17,8 +17,7 @@
             <div class="character-details-column">
               <div class="attribute-collection">
                 <div class="row padding-left-right">
-                  <div class="class-and-level-inputs"><input type="text" formControlName="className" [value]="initialValues.className"> <input
-                    type="text" [value]="initialValues.level"><label>Class &amp; Level</label></div>
+                  <div class="class-and-level-inputs"><span>{{initialValues.className}} {{level()}}</span><label>Class &amp; Level</label></div>
                   <div class="col-md-3 pl-0 pr-0"><input type="text" formControlName="background"
                                                          [value]="initialValues.background"><label>Background</label></div>
                   <div class="col-md-3 pl-0 pr-0"><input type="text" value=""><label>Player Name</label></div>
@@ -337,7 +336,7 @@
                   </div>
                 </div>
               </div>
-              <div class="d-and-d-box mt-3">
+              <div class="d-and-d-box">
                 <table class="d-and-d-table">
                   <thead>
                   <tr>
@@ -365,7 +364,83 @@
                   </tbody>
                 </table>
                 <textarea rows="5"></textarea><label class="d-and-d-title" style="margin-top: 10px;">Attacks &amp;
-                Spellcasting</label></div>
+                Spellcasting</label>
+              </div>
+              <div class="d-and-d-box">
+                <table class="d-and-d-table equipped-armor">
+                  <thead>
+                  <tr>
+                    <th>Armor </th>
+                    <th style="width: 30px;">AC</th>
+                    <th style="width: 60px;">Dex Bonus</th>
+                    <th>Notes</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr>
+                    <td><input type="text" value=""></td>
+                    <td><input type="text" value=""></td>
+                    <td class="dexterity-bonus">
+                      <input type="checkbox">
+                      <input type="text" value="">
+                    </td>
+                    <td><input type="text" value=""></td>
+                  </tr>
+                  </tbody>
+                </table>
+                <table class="d-and-d-table">
+                  <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th style="width: 60px;">AC Bonus</th>
+                    <th>Notes</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr>
+                    <td><input type="text" value=""></td>
+                    <td><input type="text" value=""></td>
+                    <td><input type="text" value="" placeholder="Shield"></td>
+                  </tr>
+                  <tr>
+                    <td><input type="text" value=""></td>
+                    <td><input type="text" value=""></td>
+                    <td><input type="text" value="" placeholder="Headgear"></td>
+                  </tr>
+                  <tr>
+                    <td><input type="text" value=""></td>
+                    <td><input type="text" value=""></td>
+                    <td><input type="text" value="" placeholder="Boots"></td>
+                  </tr>
+                  <tr>
+                    <td><input type="text" value=""></td>
+                    <td><input type="text" value=""></td>
+                    <td><input type="text" value="" placeholder="Gloves"></td>
+                  </tr>
+                  <tr>
+                    <td><input type="text" value=""></td>
+                    <td><input type="text" value=""></td>
+                    <td><input type="text" value="" placeholder="Cloak"></td>
+                  </tr>
+                  <tr>
+                    <td><input type="text" value=""></td>
+                    <td><input type="text" value=""></td>
+                    <td><input type="text" value="" placeholder="Necklace"></td>
+                  </tr>
+                  <tr>
+                    <td><input type="text" value=""></td>
+                    <td><input type="text" value=""></td>
+                    <td><input type="text" value="" placeholder="Ring 1"></td>
+                  </tr>
+                  <tr>
+                    <td><input type="text" value=""></td>
+                    <td><input type="text" value=""></td>
+                    <td><input type="text" value="" placeholder="Ring 2"></td>
+                  </tr>
+                  </tbody>
+                </table>
+                <label class="d-and-d-title" style="margin-top: 10px;">Active Inventory</label>
+              </div>
               <div class="d-and-d-box mt-4">
                 <div class="row currency-container">
                   <div class="currency-first-row">
@@ -393,7 +468,6 @@
                     </div>
                     <div class="col pr-15 pl-15"><textarea class="d-and-d-equipment-indent" rows="10"></textarea></div>
                   </div>
-                  <div class="pr-15 pl-15"><textarea rows="4"></textarea></div>
                 </div>
                 <label class="d-and-d-title" style="margin-top: 10px;">Equipment</label></div>
             </div>

@@ -427,6 +427,18 @@ export class CreateCharacterComponent implements OnInit {
       otherProficienciesAndLanguages: this.getOtherProficienciesAndLanguages(),
       languages: this.characterSummary?.proficiencies.LANGUAGES || [],
       equipment: [],
+      equippedInventory: {
+        armor: null,
+        shield: null,
+        helmet: null,
+        ring1: null,
+        ring2: null,
+        cloak: null,
+        boots: null,
+        gloves: null,
+        weapons: [],
+        necklace: null,
+      },
       spells: [],
     };
   }
@@ -441,23 +453,19 @@ export class CreateCharacterComponent implements OnInit {
   }
 
   private getOtherProficienciesAndLanguages(): string {
-
-    const otherProficiencies = [
-      ...this.characterSummary?.proficiencies.WEAPONS || [],
-      ...this.characterSummary?.proficiencies.ARMOR || [],
-      ...this.characterSummary?.proficiencies.ARTISANS_TOOLS || [],
-      ...this.characterSummary?.proficiencies.GAMING_SETS || [],
-      ...this.characterSummary?.proficiencies.MUSICAL_INSTRUMENTS || [],
-      ...this.characterSummary?.proficiencies.VEHICLES || [],
-      ...this.characterSummary?.proficiencies.OTHER || [],
-    ];
-
     const languages = this.characterSummary?.proficiencies.LANGUAGES || [];
 
-    const otherProficienciesString = 'Proficiencies: ' + otherProficiencies.join(', ');
+
+    const armorString = 'Armor: ' + this.characterSummary?.proficiencies.ARMOR.join(', ');
+    const weaponsString = 'Weapons: ' + this.characterSummary?.proficiencies.WEAPONS.join(', ');
+    const toolsString = 'Tools: ' + this.characterSummary?.proficiencies.ARTISANS_TOOLS.join(', ');
+    const gamingSetsString = 'Gaming Sets: ' + this.characterSummary?.proficiencies.GAMING_SETS.join(', ');
+    const musicalInstrumentsString = 'Musical Instruments: ' + this.characterSummary?.proficiencies.MUSICAL_INSTRUMENTS.join(', ');
+    const vehiclesString = 'Vehicles: ' + this.characterSummary?.proficiencies.VEHICLES.join(', ');
+    const otherString = 'Other: ' + this.characterSummary?.proficiencies.OTHER.join(', ');
     const languagesString = 'Languages: ' + languages.join(', ');
 
-    return `${otherProficienciesString}\n${languagesString}`;
+    return `${armorString}\n${weaponsString}\n${toolsString}\n${gamingSetsString}\n${musicalInstrumentsString}\n${vehiclesString}\n${otherString}\n${languagesString}`;
   }
 
   private getBackgroundProficiencies() {

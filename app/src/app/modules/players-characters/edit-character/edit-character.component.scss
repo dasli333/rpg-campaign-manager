@@ -166,11 +166,15 @@
 
   .character-details-column {
 
-    input {
+    input, span {
       border-bottom: 1px solid #000;
       width: 100%;
       margin-top: 15px;
       font-size: 16px;
+    }
+
+    span {
+      display: inline-block;
     }
 
     .class-and-level-inputs {
@@ -462,6 +466,13 @@
           border-radius: 5px;
           padding: 2px 5px;
           margin: 1px 0;
+        }
+
+        &.equipped-armor {
+
+          .dexterity-bonus {
+            display: flex;
+          }
         }
       }
 

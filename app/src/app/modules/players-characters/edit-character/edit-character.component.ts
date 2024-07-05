@@ -85,12 +85,11 @@ export class EditCharacterComponent {
 
   characterSheetForm = this.#formBuilder.group({
     name: [this.initialValues?.name, Validators.required],
-    className: [this.initialValues?.className, Validators.required],
     background: [this.initialValues?.background, Validators.required],
     alignment: [this.initialValues?.alignment, Validators.required],
     experiencePoints: [this.initialValues?.experiencePoints, [Validators.required, Validators.min(0), Validators.pattern('[0-9]+')]],
     inspiration: [this.initialValues?.inspiration, [Validators.required, Validators.min(0), Validators.pattern('[0-9]+')]],
-    armorClass: [this.initialValues?.armorClass, [Validators.required, Validators.min(0), Validators.pattern('[0-9]+')]],
+    armorClass: [this.getArmorClass(), [Validators.required, Validators.min(0), Validators.pattern('[0-9]+')]],
     speed: [this.initialValues?.speed, [Validators.required, Validators.min(0), Validators.pattern('[0-9]+')]],
     numberOfHitDie: [this.initialValues?.numberOfHitDie, [Validators.required, Validators.min(0), Validators.pattern('[0-9]+')]],
     currentHitPoints: [this.getCurrentHitPoints(), [Validators.required, Validators.min(0), Validators.pattern('[0-9]+')]],
@@ -156,7 +155,6 @@ export class EditCharacterComponent {
       ...this.initialValues,
       _id: this.characterId,
       name: this.characterSheetForm.value.name || '',
-      className: this.characterSheetForm.value.className || '',
       background: this.characterSheetForm.value.background || '',
       alignment: this.characterSheetForm.value.alignment || '',
       experiencePoints: this.characterSheetForm.value.experiencePoints || 0,
@@ -199,7 +197,7 @@ export class EditCharacterComponent {
       image: this.initialValues?.image || '',
     }
 
-    console.log(character)
+    console.log(character);
 
     // this.#campaignsService.updatePlayerCharacter(character);
   }
