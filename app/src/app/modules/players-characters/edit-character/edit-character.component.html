@@ -347,25 +347,26 @@
                   </thead>
                   <tbody>
                   <tr>
-                    <td><input type="text" value=""></td>
-                    <td><input type="text" value=""></td>
-                    <td><input type="text" value=""></td>
+                    <td><input type="text" formControlName="equippedWeapon1Name"></td>
+                    <td><input type="text" formControlName="equippedWeapon1AttackBonus"></td>
+                    <td><input type="text" formControlName="equippedWeapon1DamageType"></td>
                   </tr>
                   <tr>
-                    <td><input type="text" value=""></td>
-                    <td><input type="text" value=""></td>
-                    <td><input type="text" value=""></td>
+                    <td><input type="text" formControlName="equippedWeapon2Name"></td>
+                    <td><input type="text" formControlName="equippedWeapon2AttackBonus"></td>
+                    <td><input type="text" formControlName="equippedWeapon2DamageType"></td>
                   </tr>
                   <tr>
-                    <td><input type="text" value=""></td>
-                    <td><input type="text" value=""></td>
-                    <td><input type="text" value=""></td>
+                    <td><input type="text" formControlName="equippedWeapon3Name"></td>
+                    <td><input type="text" formControlName="equippedWeapon3AttackBonus"></td>
+                    <td><input type="text" formControlName="equippedWeapon3DamageType"></td>
                   </tr>
                   </tbody>
                 </table>
                 <textarea rows="5"></textarea><label class="d-and-d-title" style="margin-top: 10px;">Attacks &amp;
                 Spellcasting</label>
               </div>
+
               <div class="d-and-d-box">
                 <table class="d-and-d-table equipped-armor">
                   <thead>
@@ -378,13 +379,13 @@
                   </thead>
                   <tbody>
                   <tr>
-                    <td><input type="text" value=""></td>
-                    <td><input type="text" value=""></td>
+                    <td><input type="text" formControlName="equippedArmorName"></td>
+                    <td><input type="text" formControlName="equippedArmorClass"></td>
                     <td class="dexterity-bonus">
-                      <input type="checkbox">
-                      <input type="text" value="">
+                      <input type="checkbox" formControlName="equippedArmorDexterityBonus">
+                      <input [readOnly]="!characterSheetForm.value.equippedArmorDexterityBonus" type="text" formControlName="equippedArmorMaxBonus">
                     </td>
-                    <td><input type="text" value=""></td>
+                    <td><input type="text" formControlName="equippedArmorNotes"></td>
                   </tr>
                   </tbody>
                 </table>
@@ -398,44 +399,44 @@
                   </thead>
                   <tbody>
                   <tr>
-                    <td><input type="text" value=""></td>
-                    <td><input type="text" value=""></td>
-                    <td><input type="text" value="" placeholder="Shield"></td>
+                    <td><input type="text" formControlName="equippedShieldName"></td>
+                    <td><input type="text" formControlName="equippedShieldArmorClassBonus"></td>
+                    <td><input type="text" formControlName="equippedShieldNotes" placeholder="Shield"></td>
                   </tr>
                   <tr>
-                    <td><input type="text" value=""></td>
-                    <td><input type="text" value=""></td>
-                    <td><input type="text" value="" placeholder="Headgear"></td>
+                    <td><input type="text" formControlName="equippedHelmetName"></td>
+                    <td><input type="text" formControlName="equippedHelmetArmorClassBonus"></td>
+                    <td><input type="text" formControlName="equippedHelmetNotes" placeholder="Headgear"></td>
                   </tr>
                   <tr>
-                    <td><input type="text" value=""></td>
-                    <td><input type="text" value=""></td>
-                    <td><input type="text" value="" placeholder="Boots"></td>
+                    <td><input type="text" formControlName="equippedBootsName"></td>
+                    <td><input type="text" formControlName="equippedBootsArmorClassBonus"></td>
+                    <td><input type="text" formControlName="equippedBootsNotes" placeholder="Boots"></td>
                   </tr>
                   <tr>
-                    <td><input type="text" value=""></td>
-                    <td><input type="text" value=""></td>
-                    <td><input type="text" value="" placeholder="Gloves"></td>
+                    <td><input type="text" formControlName="equippedGlovesName"></td>
+                    <td><input type="text" formControlName="equippedGlovesArmorClassBonus"></td>
+                    <td><input type="text" formControlName="equippedGlovesNotes" placeholder="Gloves"></td>
                   </tr>
                   <tr>
-                    <td><input type="text" value=""></td>
-                    <td><input type="text" value=""></td>
-                    <td><input type="text" value="" placeholder="Cloak"></td>
+                    <td><input type="text" formControlName="equippedShieldName"></td>
+                    <td><input type="text" formControlName="equippedShieldName"></td>
+                    <td><input type="text" formControlName="equippedShieldName" placeholder="Cloak"></td>
                   </tr>
                   <tr>
-                    <td><input type="text" value=""></td>
-                    <td><input type="text" value=""></td>
-                    <td><input type="text" value="" placeholder="Necklace"></td>
+                    <td><input type="text" formControlName="equippedCloakName"></td>
+                    <td><input type="text" formControlName="equippedCloakArmorClassBonus"></td>
+                    <td><input type="text" formControlName="equippedCloakNotes" placeholder="Necklace"></td>
                   </tr>
                   <tr>
-                    <td><input type="text" value=""></td>
-                    <td><input type="text" value=""></td>
-                    <td><input type="text" value="" placeholder="Ring 1"></td>
+                    <td><input type="text" formControlName="equippedRing1Name"></td>
+                    <td><input type="text" formControlName="equippedRing1ArmorClassBonus"></td>
+                    <td><input type="text" formControlName="equippedRing1Notes" placeholder="Ring 1"></td>
                   </tr>
                   <tr>
-                    <td><input type="text" value=""></td>
-                    <td><input type="text" value=""></td>
-                    <td><input type="text" value="" placeholder="Ring 2"></td>
+                    <td><input type="text" formControlName="equippedRing2Name"></td>
+                    <td><input type="text" formControlName="equippedRing2ArmorClassBonus"></td>
+                    <td><input type="text" formControlName="equippedRing2Notes" placeholder="Ring 2"></td>
                   </tr>
                   </tbody>
                 </table>

@@ -11,13 +11,13 @@ export interface IEquippedInventory {
   necklace: IEquipment | null;
 }
 
-interface IWeapon {
+export interface IWeapon {
   name: string;
   attackBonus: string;
   damage_type: string;
 }
 
-interface IArmor {
+export interface IArmor {
   name: string;
   armorClass: number;
   dexterityBonus: boolean;
@@ -25,7 +25,7 @@ interface IArmor {
   notes: string;
 }
 
-interface IEquipment {
+export interface IEquipment {
   name: string;
   armorClassBonus: number;
   notes: string;

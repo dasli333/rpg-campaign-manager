@@ -15,6 +15,7 @@ import {MatTabsModule} from "@angular/material/tabs";
 import {ImageUploadComponent} from "../../helpers/image-upload/image-upload.component";
 import {IMAGE_URL} from "../../../../config";
 import {IPlayerCharacter} from "../interfaces/player-character";
+import {IArmor, IEquipment, IEquippedInventory, IWeapon} from "../interfaces/equipment";
 
 interface ISkillsProficiencies {
   acrobatics: boolean;
@@ -101,6 +102,44 @@ export class EditCharacterComponent {
     ideals: [this.initialValues?.ideals, Validators.required],
     bonds: [this.initialValues?.bonds, Validators.required],
     flaws: [this.initialValues?.flaws, Validators.required],
+    equippedArmorName: [this.initialValues?.equippedInventory.armor?.name],
+    equippedArmorClass: [this.initialValues?.equippedInventory.armor?.armorClass],
+    equippedArmorMaxBonus: [this.initialValues?.equippedInventory.armor?.maxBonus],
+    equippedArmorNotes: [this.initialValues?.equippedInventory.armor?.notes],
+    equippedArmorDexterityBonus: [this.initialValues?.equippedInventory.armor?.dexterityBonus],
+    equippedShieldName: [this.initialValues?.equippedInventory.shield?.name],
+    equippedShieldArmorClassBonus: [this.initialValues?.equippedInventory.shield?.armorClassBonus],
+    equippedShieldNotes: [this.initialValues?.equippedInventory.shield?.notes],
+    equippedHelmetName: [this.initialValues?.equippedInventory.helmet?.name],
+    equippedHelmetArmorClassBonus: [this.initialValues?.equippedInventory.helmet?.armorClassBonus],
+    equippedHelmetNotes: [this.initialValues?.equippedInventory.helmet?.notes],
+    equippedRing1Name: [this.initialValues?.equippedInventory.ring1?.name],
+    equippedRing1ArmorClassBonus: [this.initialValues?.equippedInventory.ring1?.armorClassBonus],
+    equippedRing1Notes: [this.initialValues?.equippedInventory.ring1?.notes],
+    equippedRing2Name: [this.initialValues?.equippedInventory.ring2?.name],
+    equippedRing2ArmorClassBonus: [this.initialValues?.equippedInventory.ring2?.armorClassBonus],
+    equippedRing2Notes: [this.initialValues?.equippedInventory.ring2?.notes],
+    equippedCloakName: [this.initialValues?.equippedInventory.cloak?.name],
+    equippedCloakArmorClassBonus: [this.initialValues?.equippedInventory.cloak?.armorClassBonus],
+    equippedCloakNotes: [this.initialValues?.equippedInventory.cloak?.notes],
+    equippedBootsName: [this.initialValues?.equippedInventory.boots?.name],
+    equippedBootsArmorClassBonus: [this.initialValues?.equippedInventory.boots?.armorClassBonus],
+    equippedBootsNotes: [this.initialValues?.equippedInventory.boots?.notes],
+    equippedGlovesName: [this.initialValues?.equippedInventory.gloves?.name],
+    equippedGlovesArmorClassBonus: [this.initialValues?.equippedInventory.gloves?.armorClassBonus],
+    equippedGlovesNotes: [this.initialValues?.equippedInventory.gloves?.notes],
+    equippedNecklaceName: [this.initialValues?.equippedInventory.necklace?.name],
+    equippedNecklaceArmorClassBonus: [this.initialValues?.equippedInventory.necklace?.armorClassBonus],
+    equippedNecklaceNotes: [this.initialValues?.equippedInventory.necklace?.notes],
+    equippedWeapon1Name: [this.initialValues?.equippedInventory.weapons[0]?.name],
+    equippedWeapon1AttackBonus: [this.initialValues?.equippedInventory.weapons[0]?.attackBonus],
+    equippedWeapon1DamageType: [this.initialValues?.equippedInventory.weapons[0]?.damage_type],
+    equippedWeapon2Name: [this.initialValues?.equippedInventory.weapons[1]?.name],
+    equippedWeapon2AttackBonus: [this.initialValues?.equippedInventory.weapons[1]?.attackBonus],
+    equippedWeapon2DamageType: [this.initialValues?.equippedInventory.weapons[1]?.damage_type],
+    equippedWeapon3Name: [this.initialValues?.equippedInventory.weapons[2]?.name],
+    equippedWeapon3AttackBonus: [this.initialValues?.equippedInventory.weapons[2]?.attackBonus],
+    equippedWeapon3DamageType: [this.initialValues?.equippedInventory.weapons[2]?.damage_type],
   });
 
   abilityScoresForm = this.#formBuilder.group({
@@ -143,7 +182,7 @@ export class EditCharacterComponent {
   })
 
   constructor() {
-    this.abilityScoresForm.valueChanges.subscribe((value) => {
+    this.abilityScoresForm.valueChanges.subscribe(() => {
       if (this.abilityScoresForm.invalid) return;
       this.updateAbilityScores();
     });
@@ -151,6 +190,7 @@ export class EditCharacterComponent {
 
   saveCharacter() {
     if (this.characterSheetForm.invalid || this.abilityScoresForm.invalid || !this.initialValues) return;
+
     const character: IPlayerCharacter = {
       ...this.initialValues,
       _id: this.characterId,
@@ -160,6 +200,7 @@ export class EditCharacterComponent {
       experiencePoints: this.characterSheetForm.value.experiencePoints || 0,
       inspiration: this.characterSheetForm.value.inspiration || 0,
       armorClass: this.characterSheetForm.value.armorClass || 0,
+      equippedInventory: this.getEquippedInventory(),
       speed: this.characterSheetForm.value.speed || 0,
       numberOfHitDie: this.characterSheetForm.value.numberOfHitDie || 0,
       currentHitPoints: this.characterSheetForm.value.currentHitPoints || 0,
@@ -200,6 +241,95 @@ export class EditCharacterComponent {
     console.log(character);
 
     // this.#campaignsService.updatePlayerCharacter(character);
+  }
+
+  private getEquippedInventory(): IEquippedInventory {
+    const equippedArmor: IArmor = {
+      name: this.characterSheetForm.value.equippedArmorName || '',
+      armorClass: this.characterSheetForm.value.equippedArmorClass || 0,
+      maxBonus: this.characterSheetForm.value.equippedArmorMaxBonus || 0,
+      notes: this.characterSheetForm.value.equippedArmorNotes || '',
+      dexterityBonus: this.characterSheetForm.value.equippedArmorDexterityBonus || false
+    }
+
+    const equippedShield: IEquipment = {
+      name: this.characterSheetForm.value.equippedShieldName || '',
+      armorClassBonus: this.characterSheetForm.value.equippedShieldArmorClassBonus || 0,
+      notes: this.characterSheetForm.value.equippedShieldNotes || ''
+    }
+
+    const equippedHelmet: IEquipment = {
+      name: this.characterSheetForm.value.equippedHelmetName || '',
+      armorClassBonus: this.characterSheetForm.value.equippedHelmetArmorClassBonus || 0,
+      notes: this.characterSheetForm.value.equippedHelmetNotes || ''
+    }
+
+    const equippedRing1: IEquipment = {
+      name: this.characterSheetForm.value.equippedRing1Name || '',
+      armorClassBonus: this.characterSheetForm.value.equippedRing1ArmorClassBonus || 0,
+      notes: this.characterSheetForm.value.equippedRing1Notes || ''
+    }
+
+    const equippedRing2: IEquipment = {
+      name: this.characterSheetForm.value.equippedRing2Name || '',
+      armorClassBonus: this.characterSheetForm.value.equippedRing2ArmorClassBonus || 0,
+      notes: this.characterSheetForm.value.equippedRing2Notes || ''
+    }
+
+    const equippedCloak: IEquipment = {
+      name: this.characterSheetForm.value.equippedCloakName || '',
+      armorClassBonus: this.characterSheetForm.value.equippedCloakArmorClassBonus || 0,
+      notes: this.characterSheetForm.value.equippedCloakNotes || ''
+    }
+
+    const equippedBoots: IEquipment = {
+      name: this.characterSheetForm.value.equippedBootsName || '',
+      armorClassBonus: this.characterSheetForm.value.equippedBootsArmorClassBonus || 0,
+      notes: this.characterSheetForm.value.equippedBootsNotes || ''
+    }
+
+    const equippedGloves: IEquipment = {
+      name: this.characterSheetForm.value.equippedGlovesName || '',
+      armorClassBonus: this.characterSheetForm.value.equippedGlovesArmorClassBonus || 0,
+      notes: this.characterSheetForm.value.equippedGlovesNotes || ''
+    }
+
+    const equippedNecklace: IEquipment = {
+      name: this.characterSheetForm.value.equippedNecklaceName || '',
+      armorClassBonus: this.characterSheetForm.value.equippedNecklaceArmorClassBonus || 0,
+      notes: this.characterSheetForm.value.equippedNecklaceNotes || ''
+    }
+
+    const equippedWeapon1: IWeapon = {
+      name: this.characterSheetForm.value.equippedWeapon1Name || '',
+      attackBonus: this.characterSheetForm.value.equippedWeapon1AttackBonus || '',
+      damage_type: this.characterSheetForm.value.equippedWeapon1DamageType || ''
+    }
+
+    const equippedWeapon2: IWeapon = {
+      name: this.characterSheetForm.value.equippedWeapon2Name || '',
+      attackBonus: this.characterSheetForm.value.equippedWeapon2AttackBonus || '',
+      damage_type: this.characterSheetForm.value.equippedWeapon2DamageType || ''
+    }
+
+    const equippedWeapon3: IWeapon = {
+      name: this.characterSheetForm.value.equippedWeapon3Name || '',
+      attackBonus: this.characterSheetForm.value.equippedWeapon3AttackBonus || '',
+      damage_type: this.characterSheetForm.value.equippedWeapon3DamageType || ''
+    }
+
+    return {
+      armor: equippedArmor,
+      shield: equippedShield,
+      helmet: equippedHelmet,
+      ring1: equippedRing1,
+      ring2: equippedRing2,
+      cloak: equippedCloak,
+      boots: equippedBoots,
+      gloves: equippedGloves,
+      necklace: equippedNecklace,
+      weapons: [equippedWeapon1, equippedWeapon2, equippedWeapon3]
+    }
   }
 
   getRaceName(): string {
@@ -301,10 +431,25 @@ export class EditCharacterComponent {
   }
 
   getArmorClass(): number {
-    if (this.initialValues?.armorClass) {
-      return this.initialValues.armorClass;
+    let armorClass = this.characterSheetForm?.value.equippedArmorClass;
+    let equippedArmorDexterityBonus = this.characterSheetForm?.value.equippedArmorDexterityBonus;
+    let maxBonus = this.characterSheetForm?.value.equippedArmorMaxBonus;
+
+    if (!armorClass) {
+      return 10 + this.dexterityModifier();
     }
-    return 10 + this.dexterityModifier();
+
+    if (equippedArmorDexterityBonus) {
+      let dexterityModifier = this.dexterityModifier();
+
+      if (maxBonus && dexterityModifier > maxBonus) {
+        dexterityModifier = maxBonus;
+      }
+
+      return Number(armorClass) + Number(dexterityModifier);
+    }
+
+    return armorClass;
   }
 
   getCurrentHitPoints(): number {
