@@ -436,8 +436,10 @@ export class EditCharacterComponent {
     let maxBonus = this.characterSheetForm?.value.equippedArmorMaxBonus;
 
     if (!armorClass) {
-      return 10 + this.dexterityModifier();
+      return 10 + this.dexterityModifier() + this.otherItemsArmorBonus();
     }
+
+    let modifiedArmorClass = Number(armorClass) + this.otherItemsArmorBonus();
 
     if (equippedArmorDexterityBonus) {
       let dexterityModifier = this.dexterityModifier();
@@ -446,10 +448,24 @@ export class EditCharacterComponent {
         dexterityModifier = maxBonus;
       }
 
-      return Number(armorClass) + Number(dexterityModifier);
+      return modifiedArmorClass + Number(dexterityModifier);
     }
 
-    return armorClass;
+    return modifiedArmorClass;
+  }
+
+  private otherItemsArmorBonus(): number {
+    let armorBonus = 0;
+    armorBonus += Number(this.characterSheetForm?.value.equippedShieldArmorClassBonus) || 0;
+    armorBonus += Number(this.characterSheetForm?.value.equippedHelmetArmorClassBonus) || 0;
+    armorBonus += Number(this.characterSheetForm?.value.equippedRing1ArmorClassBonus) || 0;
+    armorBonus += Number(this.characterSheetForm?.value.equippedRing2ArmorClassBonus) || 0;
+    armorBonus += Number(this.characterSheetForm?.value.equippedCloakArmorClassBonus) || 0;
+    armorBonus += Number(this.characterSheetForm?.value.equippedBootsArmorClassBonus) || 0;
+    armorBonus += Number(this.characterSheetForm?.value.equippedGlovesArmorClassBonus) || 0;
+    armorBonus += Number(this.characterSheetForm?.value.equippedNecklaceArmorClassBonus) || 0;
+
+    return armorBonus;
   }
 
   getCurrentHitPoints(): number {
