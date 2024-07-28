@@ -121,8 +121,8 @@ export class PlayerCharacter {
   @Prop()
   otherProficienciesAndLanguages: string;
 
-  @Prop({ type: [String] })
-  equipment: string[];
+  @Prop()
+  equipment: string;
 
   @Prop({ type: Object })
   equippedInventory: {

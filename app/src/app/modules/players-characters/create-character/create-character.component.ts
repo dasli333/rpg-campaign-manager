@@ -426,7 +426,7 @@ export class CreateCharacterComponent implements OnInit {
       saving_throws_proficiencies: this.characterSummary?.proficiencies.SAVING_THROWS || [],
       otherProficienciesAndLanguages: this.getOtherProficienciesAndLanguages(),
       languages: this.characterSummary?.proficiencies.LANGUAGES || [],
-      equipment: [],
+      equipment: '',
       equippedInventory: {
         armor: null,
         shield: null,

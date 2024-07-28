@@ -250,7 +250,7 @@
                 </div>
               </div>
               <div class="d-and-d-box mt-4"><textarea rows="12"
-                                                      [value]="initialValues.otherProficienciesAndLanguages"></textarea>
+                                                      [value]="initialValues.otherProficienciesAndLanguages" formControlName="otherProficienciesAndLanguages"></textarea>
                 <label class="d-and-d-title" style="margin-top: 10px;">Other Proficiencies &amp; Languages</label></div>
             </div>
             <div class="character-statistics-column">
@@ -467,7 +467,7 @@
                         <div class="d-and-d-currency-value"><input type="text" value=""></div>
                       </div>
                     </div>
-                    <div class="col pr-15 pl-15"><textarea class="d-and-d-equipment-indent" rows="10"></textarea></div>
+                    <div class="col pr-15 pl-15"><textarea class="d-and-d-equipment-indent" rows="10" formControlName="equipment" [value]="initialValues.equipment"></textarea></div>
                   </div>
                 </div>
                 <label class="d-and-d-title" style="margin-top: 10px;">Equipment</label></div>

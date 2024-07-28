@@ -102,6 +102,8 @@ export class EditCharacterComponent {
     ideals: [this.initialValues?.ideals, Validators.required],
     bonds: [this.initialValues?.bonds, Validators.required],
     flaws: [this.initialValues?.flaws, Validators.required],
+    equipment: [this.initialValues?.equipment, Validators.required],
+    otherProficienciesAndLanguages: [this.initialValues?.otherProficienciesAndLanguages, Validators.required],
     equippedArmorName: [this.initialValues?.equippedInventory.armor?.name],
     equippedArmorClass: [this.initialValues?.equippedInventory.armor?.armorClass],
     equippedArmorMaxBonus: [this.initialValues?.equippedInventory.armor?.maxBonus],
@@ -200,6 +202,8 @@ export class EditCharacterComponent {
       experiencePoints: this.characterSheetForm.value.experiencePoints || 0,
       inspiration: this.characterSheetForm.value.inspiration || 0,
       armorClass: this.characterSheetForm.value.armorClass || 0,
+      equipment: this.characterSheetForm.value.equipment || '',
+      otherProficienciesAndLanguages: this.characterSheetForm.value.otherProficienciesAndLanguages || '',
       equippedInventory: this.getEquippedInventory(),
       speed: this.characterSheetForm.value.speed || 0,
       numberOfHitDie: this.characterSheetForm.value.numberOfHitDie || 0,
@@ -483,6 +487,17 @@ export class EditCharacterComponent {
 
   getInspiration(): number {
     return this.initialValues?.inspiration || 0;
+  }
+
+  isMagicUser(): boolean {
+    return this.initialValues?.className === 'Wizard'
+      || this.initialValues?.className === 'Sorcerer'
+      || this.initialValues?.className === 'Warlock'
+      || this.initialValues?.className === 'Cleric'
+      || this.initialValues?.className === 'Druid'
+      || this.initialValues?.className === 'Paladin'
+      || this.initialValues?.className === 'Ranger'
+      || this.initialValues?.className === 'Bard';
   }
 
   protected readonly IMAGE_URL = IMAGE_URL;

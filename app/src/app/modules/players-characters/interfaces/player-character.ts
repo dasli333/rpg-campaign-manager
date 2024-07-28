@@ -33,7 +33,7 @@ export interface IPlayerCharacter {
   skills_proficiencies: string[];
   saving_throws_proficiencies: string[];
   otherProficienciesAndLanguages: string;
-  equipment: string[];
+  equipment: string;
   equippedInventory: IEquippedInventory;
   spells: string[];
 }
