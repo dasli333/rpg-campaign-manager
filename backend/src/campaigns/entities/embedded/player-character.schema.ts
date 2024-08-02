@@ -106,8 +106,8 @@ export class PlayerCharacter {
   @Prop({ type: [String] })
   languages: string[];
 
-  @Prop({ type: [String] })
-  traits: string[];
+  @Prop()
+  traits: string;
 
   @Prop()
   speed: number;

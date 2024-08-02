@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, inject, signal} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, signal} from '@angular/core';
 import {ActivatedRoute, RouterLink} from "@angular/router";
 import {CampaignsService} from "../../campaigns/campaigns.service";
 import {MatButton} from "@angular/material/button";
@@ -65,6 +65,7 @@ export class EditCharacterComponent {
   #playerCharacterDataService = inject(PlayerCharacterDataService);
   #route = inject(ActivatedRoute);
   #formBuilder = inject(FormBuilder);
+  private changeDetectorRef = inject(ChangeDetectorRef);
 
   characterId = this.#route.snapshot.paramMap.get('id') || '';
   playerCharacter = this.#campaignsService.getPlayerCharacterById(this.characterId);
@@ -102,7 +103,8 @@ export class EditCharacterComponent {
     ideals: [this.initialValues?.ideals, Validators.required],
     bonds: [this.initialValues?.bonds, Validators.required],
     flaws: [this.initialValues?.flaws, Validators.required],
-    equipment: [this.initialValues?.equipment, Validators.required],
+    equipment: [this.initialValues?.equipment],
+    traits: [this.initialValues?.traits],
     otherProficienciesAndLanguages: [this.initialValues?.otherProficienciesAndLanguages, Validators.required],
     equippedArmorName: [this.initialValues?.equippedInventory.armor?.name],
     equippedArmorClass: [this.initialValues?.equippedInventory.armor?.armorClass],
@@ -244,7 +246,13 @@ export class EditCharacterComponent {
 
     console.log(character);
 
-    // this.#campaignsService.updatePlayerCharacter(character);
+    const formData = new FormData();
+    formData.append('playerCharacter', JSON.stringify(character));
+
+
+    this.#campaignsService.updatePlayerCharacter(formData, character._id || '').subscribe(() => {
+      this.changeDetectorRef.markForCheck();
+    });
   }
 
   private getEquippedInventory(): IEquippedInventory {

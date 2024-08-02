@@ -80,4 +80,9 @@ export class CampaignsService {
   deletePlayerCharacter(id: string, playerCharacterId: string) {
     return this.campaignsRepository.deletePlayerCharacter(id, playerCharacterId);
   }
+
+  updatePlayerCharacter(id: string, playerCharacterId: string, playerCharacter: CreatePlayerCharacterDto) {
+    const playerCharacterData: PlayerCharacter = JSON.parse(playerCharacter.playerCharacter);
+    return this.campaignsRepository.updatePlayerCharacter(id, playerCharacterId, playerCharacterData);
+  }
 }

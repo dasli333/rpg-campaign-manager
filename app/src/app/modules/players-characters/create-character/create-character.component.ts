@@ -420,7 +420,7 @@ export class CreateCharacterComponent implements OnInit {
       ideals: this.personalCharacteristicsForm.value.ideals || '',
       bonds: this.personalCharacteristicsForm.value.bonds || '',
       flaws: this.personalCharacteristicsForm.value.flaws || '',
-      traits: [],
+      traits: this.getTraits(),
       speed: this.selectedRaceDetail?.speed || 0,
       skills_proficiencies: this.characterSummary?.proficiencies.SKILLS || [],
       saving_throws_proficiencies: this.characterSummary?.proficiencies.SAVING_THROWS || [],
@@ -450,6 +450,12 @@ export class CreateCharacterComponent implements OnInit {
       formGroup.addControl(skill.index, this.#formBuilder.control(false));
     });
     return formGroup;
+  }
+
+  private getTraits(): string {
+    const raceTraits = this.selectedRaceDetail?.traits.map(trait => trait.name).join(', ');
+    const subraceTraits = this.selectedSubrace?.racial_traits.map(trait => trait.name).join(', ');
+    return `${raceTraits}, ${subraceTraits}`;
   }
 
   private getOtherProficienciesAndLanguages(): string {

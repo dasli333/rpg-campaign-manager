@@ -114,13 +114,12 @@ export class CampaignsService {
     );
   }
 
-  updatePlayerCharacter(playerCharacter: IPlayerCharacter): Observable<ICampaign | undefined> {
-    return this.#httpService.patch<ICampaign>(`${this.#apiUrl}/${this.activeCampaign()?.id}/player-character/${playerCharacter._id}`, playerCharacter).pipe(
+  updatePlayerCharacter(playerCharacter: FormData, characterId: string): Observable<ICampaign | undefined> {
+    return this.#httpService.patch<ICampaign>(`${this.#apiUrl}/${this.activeCampaign()?.id}/player-character/${characterId}`, playerCharacter).pipe(
       tap(campaign => {
         this.#activeCampaign.set(campaign);
       })
     );
-
   }
 
   getPlayerCharacterById(id: string): Signal<IPlayerCharacter | undefined> {

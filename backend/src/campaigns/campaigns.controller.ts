@@ -65,4 +65,10 @@ export class CampaignsController {
   deletePlayerCharacter(@Param('id') id: string, @Param('playerCharacterId') playerCharacterId: string) {
     return this.campaignsService.deletePlayerCharacter(id, playerCharacterId);
   }
+
+  @Patch(':id/player-character/:playerCharacterId')
+  @UseInterceptors(FileInterceptor('image'))
+  updatePlayerCharacter(@UploadedFile() file: Express.Multer.File, @Param('id') id: string, @Param('playerCharacterId') playerCharacterId: string, @Body() playerCharacter: any) {
+    return this.campaignsService.updatePlayerCharacter(id, playerCharacterId, playerCharacter);
+  }
 }

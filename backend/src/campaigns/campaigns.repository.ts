@@ -87,4 +87,11 @@ export class CampaignsRepository {
     campaign.playersCharacters.splice(playerCharacterIndex, 1);
     return campaign.save();
   }
+
+  async updatePlayerCharacter(id: string, playerCharacterId: string, playerCharacter: PlayerCharacter) {
+    const campaign = await this.campaignModel.findById(id).exec();
+    const playerCharacterIndex = campaign.playersCharacters.findIndex(playerCharacter => playerCharacter._id.toString() === playerCharacterId);
+    campaign.playersCharacters[playerCharacterIndex] = playerCharacter;
+    return campaign.save();
+  }
 }
