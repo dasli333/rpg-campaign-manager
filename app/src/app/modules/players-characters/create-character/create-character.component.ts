@@ -455,6 +455,11 @@ export class CreateCharacterComponent implements OnInit {
   private getTraits(): string {
     const raceTraits = this.selectedRaceDetail?.traits.map(trait => trait.name).join(', ');
     const subraceTraits = this.selectedSubrace?.racial_traits.map(trait => trait.name).join(', ');
+    if (!raceTraits && !subraceTraits) {
+      return '';
+    } else if (!subraceTraits && raceTraits) {
+      return raceTraits;
+    }
     return `${raceTraits}, ${subraceTraits}`;
   }
 

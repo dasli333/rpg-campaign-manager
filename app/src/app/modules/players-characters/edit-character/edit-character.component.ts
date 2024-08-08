@@ -16,6 +16,7 @@ import {ImageUploadComponent} from "../../helpers/image-upload/image-upload.comp
 import {IMAGE_URL} from "../../../../config";
 import {IPlayerCharacter} from "../interfaces/player-character";
 import {IArmor, IEquipment, IEquippedInventory, IWeapon} from "../interfaces/equipment";
+import {SnackbarService} from "../../helpers/snackbar.service";
 
 interface ISkillsProficiencies {
   acrobatics: boolean;
@@ -66,6 +67,7 @@ export class EditCharacterComponent {
   #route = inject(ActivatedRoute);
   #formBuilder = inject(FormBuilder);
   private changeDetectorRef = inject(ChangeDetectorRef);
+  private snackbarService = inject(SnackbarService);
 
   characterId = this.#route.snapshot.paramMap.get('id') || '';
   playerCharacter = this.#campaignsService.getPlayerCharacterById(this.characterId);
@@ -91,7 +93,7 @@ export class EditCharacterComponent {
     alignment: [this.initialValues?.alignment, Validators.required],
     experiencePoints: [this.initialValues?.experiencePoints, [Validators.required, Validators.min(0), Validators.pattern('[0-9]+')]],
     inspiration: [this.initialValues?.inspiration, [Validators.required, Validators.min(0), Validators.pattern('[0-9]+')]],
-    armorClass: [this.getArmorClass(), [Validators.required, Validators.min(0), Validators.pattern('[0-9]+')]],
+    armorClass: [this.getInitialArmorClass(), [Validators.required, Validators.min(0), Validators.pattern('[0-9]+')]],
     speed: [this.initialValues?.speed, [Validators.required, Validators.min(0), Validators.pattern('[0-9]+')]],
     numberOfHitDie: [this.initialValues?.numberOfHitDie, [Validators.required, Validators.min(0), Validators.pattern('[0-9]+')]],
     currentHitPoints: [this.getCurrentHitPoints(), [Validators.required, Validators.min(0), Validators.pattern('[0-9]+')]],
@@ -185,6 +187,8 @@ export class EditCharacterComponent {
     charisma: this.initialValues?.saving_throws_proficiencies?.includes('Saving Throw: CHA')
   })
 
+  private selectedImageFile: File | null = null;
+
   constructor() {
     this.abilityScoresForm.valueChanges.subscribe(() => {
       if (this.abilityScoresForm.invalid) return;
@@ -203,7 +207,7 @@ export class EditCharacterComponent {
       alignment: this.characterSheetForm.value.alignment || '',
       experiencePoints: this.characterSheetForm.value.experiencePoints || 0,
       inspiration: this.characterSheetForm.value.inspiration || 0,
-      armorClass: this.characterSheetForm.value.armorClass || 0,
+      armorClass: this.getArmorClass() || 0,
       equipment: this.characterSheetForm.value.equipment || '',
       otherProficienciesAndLanguages: this.characterSheetForm.value.otherProficienciesAndLanguages || '',
       equippedInventory: this.getEquippedInventory(),
@@ -248,67 +252,69 @@ export class EditCharacterComponent {
 
     const formData = new FormData();
     formData.append('playerCharacter', JSON.stringify(character));
-
+    if (this.selectedImageFile) {
+      formData.append('image', this.selectedImageFile);
+    }
 
     this.#campaignsService.updatePlayerCharacter(formData, character._id || '').subscribe(() => {
-      this.changeDetectorRef.markForCheck();
+      this.snackbarService.openSnackBar('Character updated successfully');
     });
   }
 
   private getEquippedInventory(): IEquippedInventory {
     const equippedArmor: IArmor = {
       name: this.characterSheetForm.value.equippedArmorName || '',
-      armorClass: this.characterSheetForm.value.equippedArmorClass || 0,
-      maxBonus: this.characterSheetForm.value.equippedArmorMaxBonus || 0,
+      armorClass: this.characterSheetForm.value.equippedArmorClass || '',
+      maxBonus: this.characterSheetForm.value.equippedArmorDexterityBonus ? this.characterSheetForm.value.equippedArmorMaxBonus || '' : '',
       notes: this.characterSheetForm.value.equippedArmorNotes || '',
       dexterityBonus: this.characterSheetForm.value.equippedArmorDexterityBonus || false
     }
 
     const equippedShield: IEquipment = {
       name: this.characterSheetForm.value.equippedShieldName || '',
-      armorClassBonus: this.characterSheetForm.value.equippedShieldArmorClassBonus || 0,
+      armorClassBonus: this.characterSheetForm.value.equippedShieldArmorClassBonus || '',
       notes: this.characterSheetForm.value.equippedShieldNotes || ''
     }
 
     const equippedHelmet: IEquipment = {
       name: this.characterSheetForm.value.equippedHelmetName || '',
-      armorClassBonus: this.characterSheetForm.value.equippedHelmetArmorClassBonus || 0,
+      armorClassBonus: this.characterSheetForm.value.equippedHelmetArmorClassBonus || '',
       notes: this.characterSheetForm.value.equippedHelmetNotes || ''
     }
 
     const equippedRing1: IEquipment = {
       name: this.characterSheetForm.value.equippedRing1Name || '',
-      armorClassBonus: this.characterSheetForm.value.equippedRing1ArmorClassBonus || 0,
+      armorClassBonus: this.characterSheetForm.value.equippedRing1ArmorClassBonus || '',
       notes: this.characterSheetForm.value.equippedRing1Notes || ''
     }
 
     const equippedRing2: IEquipment = {
       name: this.characterSheetForm.value.equippedRing2Name || '',
-      armorClassBonus: this.characterSheetForm.value.equippedRing2ArmorClassBonus || 0,
+      armorClassBonus: this.characterSheetForm.value.equippedRing2ArmorClassBonus || '',
       notes: this.characterSheetForm.value.equippedRing2Notes || ''
     }
 
     const equippedCloak: IEquipment = {
       name: this.characterSheetForm.value.equippedCloakName || '',
-      armorClassBonus: this.characterSheetForm.value.equippedCloakArmorClassBonus || 0,
+      armorClassBonus: this.characterSheetForm.value.equippedCloakArmorClassBonus || '',
       notes: this.characterSheetForm.value.equippedCloakNotes || ''
     }
 
     const equippedBoots: IEquipment = {
       name: this.characterSheetForm.value.equippedBootsName || '',
-      armorClassBonus: this.characterSheetForm.value.equippedBootsArmorClassBonus || 0,
+      armorClassBonus: this.characterSheetForm.value.equippedBootsArmorClassBonus || '',
       notes: this.characterSheetForm.value.equippedBootsNotes || ''
     }
 
     const equippedGloves: IEquipment = {
       name: this.characterSheetForm.value.equippedGlovesName || '',
-      armorClassBonus: this.characterSheetForm.value.equippedGlovesArmorClassBonus || 0,
+      armorClassBonus: this.characterSheetForm.value.equippedGlovesArmorClassBonus || '',
       notes: this.characterSheetForm.value.equippedGlovesNotes || ''
     }
 
     const equippedNecklace: IEquipment = {
       name: this.characterSheetForm.value.equippedNecklaceName || '',
-      armorClassBonus: this.characterSheetForm.value.equippedNecklaceArmorClassBonus || 0,
+      armorClassBonus: this.characterSheetForm.value.equippedNecklaceArmorClassBonus || '',
       notes: this.characterSheetForm.value.equippedNecklaceNotes || ''
     }
 
@@ -442,6 +448,10 @@ export class EditCharacterComponent {
     return firstLevelHitPoints + (averageRoll + this.constitutionModifier()) * (this.initialValues.level - 1);
   }
 
+  getInitialArmorClass(): number {
+    return this.initialValues?.armorClass || 10 + this.dexterityModifier() + this.otherItemsArmorBonus();
+  }
+
   getArmorClass(): number {
     let armorClass = this.characterSheetForm?.value.equippedArmorClass;
     let equippedArmorDexterityBonus = this.characterSheetForm?.value.equippedArmorDexterityBonus;
@@ -456,8 +466,8 @@ export class EditCharacterComponent {
     if (equippedArmorDexterityBonus) {
       let dexterityModifier = this.dexterityModifier();
 
-      if (maxBonus && dexterityModifier > maxBonus) {
-        dexterityModifier = maxBonus;
+      if (maxBonus && dexterityModifier > Number(maxBonus)) {
+        dexterityModifier = Number(maxBonus);
       }
 
       return modifiedArmorClass + Number(dexterityModifier);
@@ -509,4 +519,8 @@ export class EditCharacterComponent {
   }
 
   protected readonly IMAGE_URL = IMAGE_URL;
+
+  onFileSelected($event: File) {
+    this.selectedImageFile = $event;
+  }
 }

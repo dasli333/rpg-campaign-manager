@@ -17,15 +17,15 @@ interface IWeapon {
 
 interface IArmor {
   name: string;
-  armorClass: number;
+  armorClass: string;
   dexterityBonus: boolean;
-  maxBonus: number;
+  maxBonus: string;
   notes: string;
 }
 
 interface IEquipment {
   name: string;
-  armorClassBonus: number;
+  armorClassBonus: string;
   notes: string;
 }
 

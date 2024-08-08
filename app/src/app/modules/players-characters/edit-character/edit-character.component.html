@@ -527,7 +527,7 @@
             <div class="row character-statistics-container">
               <div class="character-statistics-column">
                 <div class="d-and-d-box square">
-                  <app-image-upload [imagePreview]="IMAGE_URL + initialValues.image" [withButtons]="false" [displayCenter]="true" ></app-image-upload>
+                  <app-image-upload [imagePreview]="IMAGE_URL + initialValues.image" [withButtons]="false" [displayCenter]="true" (fileSelected)="onFileSelected($event)"></app-image-upload>
                   <label class="d-and-d-title" style="margin-top: 10px;">Character Appearance</label></div>
                 <div class="d-and-d-box mt-3"><textarea rows="26" style="padding-bottom: 5px;"></textarea><label
                   class="d-and-d-title" style="margin-top: 10px;">Character Backstory</label></div>

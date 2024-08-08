@@ -6,7 +6,6 @@ import {Model, Types} from "mongoose";
 import {NotFoundException} from "@nestjs/common";
 import * as fs from 'fs';
 import {CreateStoryLogDto} from "./dto/create-story-log.dto";
-import {CreatePlayerCharacterDto} from "./dto/create-player-character.dto";
 import {PlayerCharacter} from "./entities/embedded/player-character.interface";
 
 export class CampaignsRepository {

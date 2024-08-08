@@ -17,15 +17,7 @@ export class CampaignsService {
 
   create(createCampaignDto: CreateCampaignDto, file: Express.Multer.File) {
     if (file) {
-      const uploadPath = 'public/images';
-      const fileExtension = path.extname(file.originalname);
-      const uniqueFilename = uuidv4() + fileExtension;
-      const filePath = path.join(uploadPath, uniqueFilename);
-
-      fs.mkdirSync(uploadPath, {recursive: true});
-      fs.writeFileSync(filePath, file.buffer);
-
-      createCampaignDto.image = uniqueFilename;
+      createCampaignDto.image = this.saveImage(file);
     }
 
     return this.campaignsRepository.create(createCampaignDto);
@@ -64,15 +56,7 @@ export class CampaignsService {
   addPlayerCharacter(id: string, data: CreatePlayerCharacterDto, file: Express.Multer.File) {
     const playerCharacter: PlayerCharacter = JSON.parse(data.playerCharacter);
     if (file) {
-      const uploadPath = 'public/images';
-      const fileExtension = path.extname(file.originalname);
-      const uniqueFilename = uuidv4() + fileExtension;
-      const filePath = path.join(uploadPath, uniqueFilename);
-
-      fs.mkdirSync(uploadPath, {recursive: true});
-      fs.writeFileSync(filePath, file.buffer);
-
-      playerCharacter.image = uniqueFilename;
+      playerCharacter.image = this.saveImage(file);
     }
     return this.campaignsRepository.addPlayerCharacter(id, playerCharacter);
   }
@@ -81,8 +65,31 @@ export class CampaignsService {
     return this.campaignsRepository.deletePlayerCharacter(id, playerCharacterId);
   }
 
-  updatePlayerCharacter(id: string, playerCharacterId: string, playerCharacter: CreatePlayerCharacterDto) {
-    const playerCharacterData: PlayerCharacter = JSON.parse(playerCharacter.playerCharacter);
-    return this.campaignsRepository.updatePlayerCharacter(id, playerCharacterId, playerCharacterData);
+  updatePlayerCharacter(id: string, playerCharacterId: string, data: CreatePlayerCharacterDto, file: Express.Multer.File) {
+    const playerCharacter: PlayerCharacter = JSON.parse(data.playerCharacter);
+    if (file) {
+      // remove old file and save new one
+      if (playerCharacter.image) {
+        try {
+          fs.unlinkSync(`public/images/${playerCharacter.image}`);
+        } catch (e) {
+          console.log(e);
+        }
+      }
+
+      playerCharacter.image = this.saveImage(file);
+    }
+    return this.campaignsRepository.updatePlayerCharacter(id, playerCharacterId, playerCharacter);
+  }
+
+  private saveImage(file: Express.Multer.File): string {
+    const uploadPath = 'public/images';
+    const fileExtension = path.extname(file.originalname);
+    const uniqueFilename = uuidv4() + fileExtension;
+    const filePath = path.join(uploadPath, uniqueFilename);
+    fs.mkdirSync(uploadPath, {recursive: true});
+    fs.writeFileSync(filePath, file.buffer);
+
+    return uniqueFilename;
   }
 }

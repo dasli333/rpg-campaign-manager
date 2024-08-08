@@ -69,6 +69,6 @@ export class CampaignsController {
   @Patch(':id/player-character/:playerCharacterId')
   @UseInterceptors(FileInterceptor('image'))
   updatePlayerCharacter(@UploadedFile() file: Express.Multer.File, @Param('id') id: string, @Param('playerCharacterId') playerCharacterId: string, @Body() playerCharacter: any) {
-    return this.campaignsService.updatePlayerCharacter(id, playerCharacterId, playerCharacter);
+    return this.campaignsService.updatePlayerCharacter(id, playerCharacterId, playerCharacter, file);
   }
 }

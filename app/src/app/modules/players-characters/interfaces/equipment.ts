@@ -19,14 +19,14 @@ export interface IWeapon {
 
 export interface IArmor {
   name: string;
-  armorClass: number;
+  armorClass: string;
   dexterityBonus: boolean;
-  maxBonus: number;
+  maxBonus: string;
   notes: string;
 }
 
 export interface IEquipment {
   name: string;
-  armorClassBonus: number;
+  armorClassBonus: string;
   notes: string;
 }
