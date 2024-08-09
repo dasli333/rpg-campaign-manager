@@ -38,7 +38,6 @@ Follow the instructions on the [MongoDB website](https://www.mongodb.com/try/dow
 
 After installing MongoDB, start the MongoDB server and create a new database named `rpg`.
 
-```bash
 
 3. **Set up the backend**
 
