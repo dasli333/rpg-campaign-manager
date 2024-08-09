@@ -1,0 +1,17 @@
+{
+  "name": "rpg-campaign-manager",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start:app": "cd app && ng serve",
+    "start:backend": "cd backend && npm run start:dev",
+    "start": "concurrently \"npm run start:app\" \"npm run start:backend\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}

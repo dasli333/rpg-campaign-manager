@@ -308,8 +308,10 @@
                                                                                                      formControlName="numberOfHitDie"
                                                                                                      style="width: calc(100% - 25px);">
                       </div>
-                      <input type="text" class="d-and-d-cinput" [value]="'1d' + initialValues.hit_die"><label class="d-and-d-title"
-                                                                                style="margin-top: 5px;">Hit Dice</label>
+                      @if (initialValues) {
+                        <input type="text" class="d-and-d-cinput" [value]="'1d' + initialValues.hit_die"><label class="d-and-d-title" style="margin-top: 5px;">Hit Dice</label>
+                      }
+
                     </div>
                   </div>
                   <div class="width-1-2 pl-1 pr-15">
@@ -467,7 +469,7 @@
                         <div class="d-and-d-currency-value"><input type="text" value=""></div>
                       </div>
                     </div>
-                    <div class="col pr-15 pl-15"><textarea class="d-and-d-equipment-indent" rows="10" formControlName="equipment" [value]="initialValues.equipment"></textarea></div>
+                    <div class="col pr-15 pl-15"><textarea class="d-and-d-equipment-indent" rows="10" formControlName="equipment"></textarea></div>
                   </div>
                 </div>
                 <label class="d-and-d-title" style="margin-top: 10px;">Equipment</label></div>
@@ -476,24 +478,22 @@
               <div class="d-and-d-box gray" style="margin-bottom: 15px; line-height: 16px">
                 <div class="d-and-d-box white"
                      style="border-radius: 8px 8px 0 0; margin-bottom: 5px; padding-top: 1px; padding-bottom: 5px;">
-                  <textarea formControlName="personalityTraits" [value]="initialValues.personalityTraits" rows="3"></textarea><label class="d-and-d-title">Personality
+                  <textarea formControlName="personalityTraits" rows="3"></textarea><label class="d-and-d-title">Personality
                   Traits</label></div>
                 <div class="d-and-d-box white"
                      style="border-radius: 0; margin-bottom: 5px; padding-top: 1px; padding-bottom: 5px;"><textarea
                   formControlName="ideals"
-                  [value]="initialValues.ideals"
                   rows="3"></textarea><label class="d-and-d-title">Ideals</label></div>
                 <div class="d-and-d-box white"
                      style="border-radius: 0; margin-bottom: 5px; padding-top: 1px; padding-bottom: 5px;"><textarea
                   formControlName="bonds"
-                  [value]="initialValues.bonds"
                   rows="2"></textarea><label class="d-and-d-title">Bonds</label></div>
                 <div class="d-and-d-box white"
                      style="border-radius: 0 0 8px 8px; margin-bottom: 0; padding-top: 1px; padding-bottom: 4px;">
-                  <textarea formControlName="flaws" [value]="initialValues.flaws" rows="2"></textarea><label class="d-and-d-title">Flaws</label>
+                  <textarea formControlName="flaws" rows="2"></textarea><label class="d-and-d-title">Flaws</label>
                 </div>
               </div>
-              <div class="d-and-d-box mt-3"><textarea formControlName="traits" [value]="initialValues.traits" rows="27"
+              <div class="d-and-d-box mt-3"><textarea formControlName="traits" rows="27"
                                                       style="padding-bottom: 5px;"></textarea><label
                 class="d-and-d-title" style="margin-top: 10px;">Features &amp; Traits</label></div>
             </div>
@@ -506,15 +506,15 @@
             <div class="row character-details-header">
               <div class="character-name-column">
                 <div class="d-and-d-page-title">D&amp;D</div>
-                <div class="attribute-collection character-name"><input type="text" formControlName="name" [value]="initialValues.name"></div>
+                <div class="attribute-collection character-name"><input type="text" formControlName="name"></div>
                 <label style="width: 100%; text-align: right; text-transform: uppercase; font-size: 11px;">Character
                   Name</label></div>
               <div class="character-details-column">
                 <div class="attribute-collection">
                   <div class="row padding-left-right">
-                    <div class="col-md-4 col-6 pl-0 pr-0"><input type="text" formControlName="age" [value]="initialValues.age"><label>Age</label></div>
-                    <div class="col-md-4 col-6 pl-0 pr-0"><input type="text" formControlName="height" [value]="initialValues.height"><label>Height</label></div>
-                    <div class="col-md-4 col-6 pl-0 pr-0"><input type="text" formControlName="weight" [value]="initialValues.weight"><label>Weight</label></div>
+                    <div class="col-md-4 col-6 pl-0 pr-0"><input type="text" formControlName="age"><label>Age</label></div>
+                    <div class="col-md-4 col-6 pl-0 pr-0"><input type="text" formControlName="height"><label>Height</label></div>
+                    <div class="col-md-4 col-6 pl-0 pr-0"><input type="text" formControlName="weight"><label>Weight</label></div>
                   </div>
                   <div class="row padding-left-right">
                     <div class="col-md-4 col-6 pl-0 pr-0"><input type="text" value=""><label>Eyes</label></div>
@@ -527,7 +527,9 @@
             <div class="row character-statistics-container">
               <div class="character-statistics-column">
                 <div class="d-and-d-box square">
-                  <app-image-upload [imagePreview]="IMAGE_URL + initialValues.image" [withButtons]="false" [displayCenter]="true" (fileSelected)="onFileSelected($event)"></app-image-upload>
+                  @if (initialValues) {
+                    <app-image-upload [imagePreview]="IMAGE_URL + initialValues.image" [withButtons]="false" [displayCenter]="true" (fileSelected)="onFileSelected($event)"></app-image-upload>
+                  }
                   <label class="d-and-d-title" style="margin-top: 10px;">Character Appearance</label></div>
                 <div class="d-and-d-box mt-3"><textarea rows="26" style="padding-bottom: 5px;"></textarea><label
                   class="d-and-d-title" style="margin-top: 10px;">Character Backstory</label></div>
@@ -570,7 +572,10 @@
           </div>
         </div>
       </mat-tab>
-      <mat-tab label="Third"> Content 3</mat-tab>
+      <mat-tab label="Third">
+<!--        TODO-->
+        Content 3
+      </mat-tab>
     </mat-tab-group>
   </form>
 }

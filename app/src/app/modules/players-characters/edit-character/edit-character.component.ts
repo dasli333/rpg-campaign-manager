@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, signal} from '@angular/core';
+import {ChangeDetectionStrategy, Component, inject, signal} from '@angular/core';
 import {ActivatedRoute, RouterLink} from "@angular/router";
 import {CampaignsService} from "../../campaigns/campaigns.service";
 import {MatButton} from "@angular/material/button";
@@ -66,7 +66,6 @@ export class EditCharacterComponent {
   #playerCharacterDataService = inject(PlayerCharacterDataService);
   #route = inject(ActivatedRoute);
   #formBuilder = inject(FormBuilder);
-  private changeDetectorRef = inject(ChangeDetectorRef);
   private snackbarService = inject(SnackbarService);
 
   characterId = this.#route.snapshot.paramMap.get('id') || '';

@@ -32,7 +32,15 @@ git clone https://github.com/dasli333/rpg-campaign-manager.git
 cd rpg-campaign-manager
 ```
 
-2. **Set up the backend**
+2. **Install MongoDB Community Server**
+
+Follow the instructions on the [MongoDB website](https://www.mongodb.com/try/download/community) to install MongoDB on your system.
+
+After installing MongoDB, start the MongoDB server and create a new database named `rpg`.
+
+```bash
+
+3. **Set up the backend**
 
 Navigate to the backend directory and install dependencies.
 
@@ -47,7 +55,7 @@ Start the NestJS server.
 npm run start
 ```
 
-3. **Set up the frontend**
+4. **Set up the frontend**
 
 Open a new terminal, navigate to the frontend directory, and install dependencies.
 
