@@ -55,6 +55,10 @@
 
   .character-name-column, .character-details-column, .character-statistics-column {
     width: 100%;
+
+    &.gray {
+      background-color: #cfcfcf;
+    }
   }
 
   .width-1-3 {
@@ -81,6 +85,14 @@
 
   .pl-2 {
     padding-left: .5rem !important
+  }
+
+  .pr-4 {
+    padding-right: 1.5rem !important;
+  }
+
+  .pl-4 {
+    padding-left: 1.5rem !important;
   }
 
   .pl-15 {
@@ -118,6 +130,49 @@
   background-color: #fff;
   padding-left: 1rem;
   padding-right: 1rem;
+
+  &.gray {
+    background-color: #cfcfcf;
+  }
+
+  .spells-collection {
+    display: flex;
+  }
+
+  .d-and-d-statbox-type2 {
+    font-size: 7px;
+    background-color: #fff;
+    font-weight: 700;
+    border: 2px solid #000;
+    text-align: center;
+    text-transform: uppercase;
+    padding: 5px;
+    height: 90px;
+    overflow: hidden;
+    white-space: nowrap;
+    word-wrap: break-word;
+    text-overflow: ellipsis;
+    border-radius: 5px;
+    margin: 5px 0;
+
+    .d-and-d-statbox-modifier {
+      text-align: center;
+      font-size: 24px;
+
+      input {
+        border: none;
+        text-align: center;
+        font-size: 24px;
+        margin: 10px 0;
+        height: 50px;
+      }
+    }
+
+    label {
+      line-height: 10.5px;
+    }
+
+  }
 
   label {
     font-size: 10px;
