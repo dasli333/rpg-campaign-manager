@@ -593,6 +593,18 @@
       }
 
       .d-and-d-spelllist {
+
+        .d-and-d-spell-header-labels {
+          label {
+            margin-bottom: 0;
+            padding-bottom: 5px;
+            width: 100%;
+            text-align: center;
+            text-transform: uppercase;
+            font-size: 9px;
+          }
+        }
+
         .d-and-d-spell-header {
           border: 2px solid #000;
           border-radius: 8px;
@@ -623,9 +635,50 @@
             padding-left: 30px;
             height: 36px;
 
+            .d-and-d-spell-slots-total {
+              width: 70px;
+              display: inline-block;
+              font-size: 16px;
+              border-right: 2px solid #000;
+              border-top-right-radius: 15px 50%;
+              border-bottom-right-radius: 15px 50%;
+              padding: 5px 5px 5px 0;
+
+              input {
+                text-align: center;
+                width: 55px;
+                height: 26px;
+              }
+            }
+
+            .d-and-d-spell-slots-remaining {
+              display: inline-block;
+              width: calc(100% - 70px);
+              text-align: center;
+              height: 100%;
+              vertical-align: top;
+              padding: 10px 0;
+              overflow: hidden;
+
+              .d-and-d-skill-circle {
+                margin: 0 3px;
+              }
+            }
+
             label {
               margin: 0;
             }
+          }
+        }
+
+        table {
+          width: 100%;
+
+          input {
+            width: 100%;
+            border-bottom: 1px solid #969696;
+            font-size: 15px;
+            height: 25px;
           }
         }
       }
