@@ -10,13 +10,14 @@ import {MatGridListModule} from "@angular/material/grid-list";
 import {NgClass} from "@angular/common";
 import {PlayerCharacterDataService} from "../player-character-data.service";
 import {Attributes} from "../interfaces/attributes";
-import {FormBuilder, ReactiveFormsModule, Validators} from "@angular/forms";
+import {FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {MatTabsModule} from "@angular/material/tabs";
 import {ImageUploadComponent} from "../../helpers/image-upload/image-upload.component";
 import {IMAGE_URL} from "../../../../config";
 import {IPlayerCharacter} from "../interfaces/player-character";
 import {IArmor, IEquipment, IEquippedInventory, IWeapon} from "../interfaces/equipment";
 import {SnackbarService} from "../../helpers/snackbar.service";
+import {Spells} from "../interfaces/spells";
 
 interface ISkillsProficiencies {
   acrobatics: boolean;
@@ -156,6 +157,68 @@ export class EditCharacterComponent {
     charisma: [this.initialValues?.attributes?.charisma, [Validators.required, Validators.min(1), Validators.max(30), Validators.pattern('[0-9]{1,2}')]]
   })
 
+  spellsForm = this.#formBuilder.group({
+    cantrips: this.#formBuilder.array(this.createSpellControls(9, 'cantrips')),
+    level1: this.#formBuilder.array(this.createSpellControls(13, 'level1')),
+    level2: this.#formBuilder.array(this.createSpellControls(13, 'level2')),
+    level3: this.#formBuilder.array(this.createSpellControls(13, 'level3')),
+    level4: this.#formBuilder.array(this.createSpellControls(13, 'level4')),
+    level5: this.#formBuilder.array(this.createSpellControls(9, 'level5')),
+    level6: this.#formBuilder.array(this.createSpellControls(9, 'level6')),
+    level7: this.#formBuilder.array(this.createSpellControls(9, 'level7')),
+    level8: this.#formBuilder.array(this.createSpellControls(7, 'level8')),
+    level9: this.#formBuilder.array(this.createSpellControls(7, 'level9')),
+  });
+
+  createSpellControls(count: number, level: keyof Spells): FormGroup[] {
+    return Array.from({ length: count }).map((_, index) =>
+      this.#formBuilder.group({
+        name: [this.initialValues?.spells[level]?.[index]?.name || ''],
+        prepared: [false]
+      })
+    );
+  }
+
+  get cantrips(): FormArray {
+    return this.spellsForm.get('cantrips') as FormArray;
+  }
+
+  get level1(): FormArray {
+    return this.spellsForm.get('level1') as FormArray;
+  }
+
+  get level2(): FormArray {
+    return this.spellsForm.get('level2') as FormArray;
+  }
+
+  get level3(): FormArray {
+    return this.spellsForm.get('level3') as FormArray;
+  }
+
+  get level4(): FormArray {
+    return this.spellsForm.get('level4') as FormArray;
+  }
+
+  get level5(): FormArray {
+    return this.spellsForm.get('level5') as FormArray;
+  }
+
+  get level6(): FormArray {
+    return this.spellsForm.get('level6') as FormArray;
+  }
+
+  get level7(): FormArray {
+    return this.spellsForm.get('level7') as FormArray;
+  }
+
+  get level8(): FormArray {
+    return this.spellsForm.get('level8') as FormArray;
+  }
+
+  get level9(): FormArray {
+    return this.spellsForm.get('level9') as FormArray;
+  }
+
   skillsProficiencies = signal({
     acrobatics: this.initialValues?.skills_proficiencies?.includes('Skill: Acrobatics'),
     animal_handling: this.initialValues?.skills_proficiencies?.includes('Skill: Animal Handling'),
@@ -193,6 +256,18 @@ export class EditCharacterComponent {
       if (this.abilityScoresForm.invalid) return;
       this.updateAbilityScores();
     });
+  }
+
+  isSpellPrepared(level: keyof Spells, index: number): boolean {
+    const preparedControl = this.spellsForm.get(`${level}.${index}.prepared`);
+    return preparedControl?.value || false;
+  }
+
+  toggleSpellPrepared(level: keyof Spells, index: number) {
+    const preparedControl = this.spellsForm.get(`${level}.${index}.prepared`);
+    if (preparedControl) {
+      preparedControl.setValue(!preparedControl.value);
+    }
   }
 
   saveCharacter() {

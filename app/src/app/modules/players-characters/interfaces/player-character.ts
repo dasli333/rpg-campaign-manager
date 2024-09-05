@@ -1,5 +1,6 @@
 import {Attributes} from "./attributes";
 import {IEquippedInventory} from "./equipment";
+import {Spells} from "./spells";
 
 export interface IPlayerCharacter {
   _id?: string;
@@ -35,7 +36,7 @@ export interface IPlayerCharacter {
   otherProficienciesAndLanguages: string;
   equipment: string;
   equippedInventory: IEquippedInventory;
-  spells: string[];
+  spells: Spells;
 }
 
 export interface IProficiencies {

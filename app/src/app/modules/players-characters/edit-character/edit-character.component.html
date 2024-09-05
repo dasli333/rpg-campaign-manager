@@ -660,798 +660,298 @@
                 </div>
               </div>
             </div>
-            <div class="row character-statistics-container">
-              <div class="character-statistics-column">
-                <div class="d-and-d-box">
-                  <div class="d-and-d-spelllist" style="margin-bottom: 23px;">
-                    <div class="d-and-d-spell-header">
-                      <div class="d-and-d-spell-level">0</div>
-                      <div class="d-and-d-spell-slots"><label>CANTRIPS</label></div>
+            <form [formGroup]="spellsForm">
+              <div class="row character-statistics-container">
+                <div class="character-statistics-column">
+                  <div class="d-and-d-box">
+                    <div class="d-and-d-spelllist" style="margin-bottom: 23px;">
+                      <div class="d-and-d-spell-header">
+                        <div class="d-and-d-spell-level">0</div>
+                        <div class="d-and-d-spell-slots"><label>CANTRIPS</label></div>
+                      </div>
+                      <table>
+                        <tbody formArrayName="cantrips">
+                          @for (spell of cantrips.controls; track spell; let i = $index) {
+                            <tr [formArrayName]="i">
+                              <td><input formControlName="name" type="text"></td>
+                            </tr>
+                          }
+                        </tbody>
+                      </table>
                     </div>
-                    <table>
-                      <tbody>
-                      <tr>
-                        <td><input type="text" value=""></td>
-                      </tr>
-                      <tr>
-                        <td><input type="text" value=""></td>
-                      </tr>
-                      <tr>
-                        <td><input type="text" value=""></td>
-                      </tr>
-                      <tr>
-                        <td><input type="text" value=""></td>
-                      </tr>
-                      <tr>
-                        <td><input type="text" value=""></td>
-                      </tr>
-                      <tr>
-                        <td><input type="text" value=""></td>
-                      </tr>
-                      <tr>
-                        <td><input type="text" value=""></td>
-                      </tr>
-                      <tr>
-                        <td><input type="text" value=""></td>
-                      </tr>
-                      <tr>
-                        <td><input type="text" value=""></td>
-                      </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                  <div class="d-and-d-spelllist">
-                    <div class="d-and-d-spell-header-labels"><label style="width: 20px;">Spell Level</label><label
-                      style="width: 80px;">Slots</label><label style="width: calc(100% - 100px);">Slots
-                      Remaining</label></div>
-                    <div class="d-and-d-spell-header">
-                      <div class="d-and-d-spell-level">1</div>
-                      <div class="d-and-d-spell-slots">
-                        <div class="d-and-d-spell-slots-total"><input type="text" value=""></div>
-                        <div class="d-and-d-spell-slots-remaining">
-                          <div class="d-and-d-skill-circle"></div>
-                          <div class="d-and-d-skill-circle"></div>
-                          <div class="d-and-d-skill-circle"></div>
-                          <div class="d-and-d-skill-circle"></div>
-                          <div class="d-and-d-skill-circle"></div>
-                          <div class="d-and-d-skill-circle"></div>
+                    <div class="d-and-d-spelllist">
+                      <div class="d-and-d-spell-header-labels"><label style="width: 20px;">Spell Level</label><label
+                        style="width: 80px;">Slots</label><label style="width: calc(100% - 100px);">Slots
+                        Remaining</label></div>
+                      <div class="d-and-d-spell-header">
+                        <div class="d-and-d-spell-level">1</div>
+                        <div class="d-and-d-spell-slots">
+                          <div class="d-and-d-spell-slots-total"><input type="text" value=""></div>
+                          <div class="d-and-d-spell-slots-remaining">
+                            <div class="d-and-d-skill-circle"></div>
+                            <div class="d-and-d-skill-circle"></div>
+                            <div class="d-and-d-skill-circle"></div>
+                            <div class="d-and-d-skill-circle"></div>
+                            <div class="d-and-d-skill-circle"></div>
+                            <div class="d-and-d-skill-circle"></div>
+                          </div>
                         </div>
                       </div>
+                      <table>
+                        <thead>
+                        <tr>
+                          <th style="width: 30px; position: absolute;">Prepared</th>
+                          <th>Spell Name</th>
+                        </tr>
+                        </thead>
+                        <tbody formArrayName="level1">
+                          @for (spell of level1.controls; track spell; let i = $index) {
+                            <tr [formArrayName]="i">
+                              <td class="d-and-d-spell-prepared" (click)="toggleSpellPrepared('level1', i)">
+                                <div [ngClass]="{'active': isSpellPrepared('level1', i)}" class="d-and-d-skill-circle"></div>
+                              </td>
+                              <td><input formControlName="name" type="text"></td>
+                            </tr>
+                          }
+                        </tbody>
+                      </table>
                     </div>
-                    <table>
-                      <thead>
-                      <tr>
-                        <th style="width: 30px; position: absolute;">Prepared</th>
-                        <th>Spell Name</th>
-                      </tr>
-                      </thead>
-                      <tbody>
-                      <tr>
-                        <td class="d-and-d-spell-prepared">
-                          <div class="d-and-d-skill-circle"></div>
-                        </td>
-                        <td><input type="text" value=""></td>
-                      </tr>
-                      <tr>
-                        <td class="d-and-d-spell-prepared">
-                          <div class="d-and-d-skill-circle"></div>
-                        </td>
-                        <td><input type="text" value=""></td>
-                      </tr>
-                      <tr>
-                        <td class="d-and-d-spell-prepared">
-                          <div class="d-and-d-skill-circle"></div>
-                        </td>
-                        <td><input type="text" value=""></td>
-                      </tr>
-                      <tr>
-                        <td class="d-and-d-spell-prepared">
-                          <div class="d-and-d-skill-circle"></div>
-                        </td>
-                        <td><input type="text" value=""></td>
-                      </tr>
-                      <tr>
-                        <td class="d-and-d-spell-prepared">
-                          <div class="d-and-d-skill-circle"></div>
-                        </td>
-                        <td><input type="text" value=""></td>
-                      </tr>
-                      <tr>
-                        <td class="d-and-d-spell-prepared">
-                          <div class="d-and-d-skill-circle"></div>
-                        </td>
-                        <td><input type="text" value=""></td>
-                      </tr>
-                      <tr>
-                        <td class="d-and-d-spell-prepared">
-                          <div class="d-and-d-skill-circle"></div>
-                        </td>
-                        <td><input type="text" value=""></td>
-                      </tr>
-                      <tr>
-                        <td class="d-and-d-spell-prepared">
-                          <div class="d-and-d-skill-circle"></div>
-                        </td>
-                        <td><input type="text" value=""></td>
-                      </tr>
-                      <tr>
-                        <td class="d-and-d-spell-prepared">
-                          <div class="d-and-d-skill-circle"></div>
-                        </td>
-                        <td><input type="text" value=""></td>
-                      </tr>
-                      <tr>
-                        <td class="d-and-d-spell-prepared">
-                          <div class="d-and-d-skill-circle"></div>
-                        </td>
-                        <td><input type="text" value=""></td>
-                      </tr>
-                      <tr>
-                        <td class="d-and-d-spell-prepared">
-                          <div class="d-and-d-skill-circle"></div>
-                        </td>
-                        <td><input type="text" value=""></td>
-                      </tr>
-                      <tr>
-                        <td class="d-and-d-spell-prepared">
-                          <div class="d-and-d-skill-circle"></div>
-                        </td>
-                        <td><input type="text" value=""></td>
-                      </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                  <div class="d-and-d-spelllist">
-                    <div class="d-and-d-spell-header">
-                      <div class="d-and-d-spell-level">2</div>
-                      <div class="d-and-d-spell-slots">
-                        <div class="d-and-d-spell-slots-total"><input type="text" value=""></div>
-                        <div class="d-and-d-spell-slots-remaining">
-                          <div class="d-and-d-skill-circle"></div>
-                          <div class="d-and-d-skill-circle"></div>
-                          <div class="d-and-d-skill-circle"></div>
-                          <div class="d-and-d-skill-circle"></div>
-                          <div class="d-and-d-skill-circle"></div>
-                          <div class="d-and-d-skill-circle"></div>
+                    <div class="d-and-d-spelllist">
+                      <div class="d-and-d-spell-header">
+                        <div class="d-and-d-spell-level">2</div>
+                        <div class="d-and-d-spell-slots">
+                          <div class="d-and-d-spell-slots-total"><input type="text" value=""></div>
+                          <div class="d-and-d-spell-slots-remaining">
+                            <div class="d-and-d-skill-circle"></div>
+                            <div class="d-and-d-skill-circle"></div>
+                            <div class="d-and-d-skill-circle"></div>
+                            <div class="d-and-d-skill-circle"></div>
+                            <div class="d-and-d-skill-circle"></div>
+                            <div class="d-and-d-skill-circle"></div>
+                          </div>
                         </div>
                       </div>
+                      <table>
+                        <tbody formArrayName="level2">
+                          @for (spell of level2.controls; track spell; let i = $index) {
+                            <tr [formArrayName]="i">
+                              <td class="d-and-d-spell-prepared" (click)="toggleSpellPrepared('level2', i)">
+                                <div [ngClass]="{'active': isSpellPrepared('level2', i)}" class="d-and-d-skill-circle"></div>
+                              </td>
+                              <td><input formControlName="name" type="text"></td>
+                            </tr>
+                          }
+                        </tbody>
+                      </table>
                     </div>
-                    <table>
-                      <tbody>
-                      <tr>
-                        <td class="d-and-d-spell-prepared">
-                          <div class="d-and-d-skill-circle"></div>
-                        </td>
-                        <td><input type="text" value=""></td>
-                      </tr>
-                      <tr>
-                        <td class="d-and-d-spell-prepared">
-                          <div class="d-and-d-skill-circle"></div>
-                        </td>
-                        <td><input type="text" value=""></td>
-                      </tr>
-                      <tr>
-                        <td class="d-and-d-spell-prepared">
-                          <div class="d-and-d-skill-circle"></div>
-                        </td>
-                        <td><input type="text" value=""></td>
-                      </tr>
-                      <tr>
-                        <td class="d-and-d-spell-prepared">
-                          <div class="d-and-d-skill-circle"></div>
-                        </td>
-                        <td><input type="text" value=""></td>
-                      </tr>
-                      <tr>
-                        <td class="d-and-d-spell-prepared">
-                          <div class="d-and-d-skill-circle"></div>
-                        </td>
-                        <td><input type="text" value=""></td>
-                      </tr>
-                      <tr>
-                        <td class="d-and-d-spell-prepared">
-                          <div class="d-and-d-skill-circle"></div>
-                        </td>
-                        <td><input type="text" value=""></td>
-                      </tr>
-                      <tr>
-                        <td class="d-and-d-spell-prepared">
-                          <div class="d-and-d-skill-circle"></div>
-                        </td>
-                        <td><input type="text" value=""></td>
-                      </tr>
-                      <tr>
-                        <td class="d-and-d-spell-prepared">
-                          <div class="d-and-d-skill-circle"></div>
-                        </td>
-                        <td><input type="text" value=""></td>
-                      </tr>
-                      <tr>
-                        <td class="d-and-d-spell-prepared">
-                          <div class="d-and-d-skill-circle"></div>
-                        </td>
-                        <td><input type="text" value=""></td>
-                      </tr>
-                      <tr>
-                        <td class="d-and-d-spell-prepared">
-                          <div class="d-and-d-skill-circle"></div>
-                        </td>
-                        <td><input type="text" value=""></td>
-                      </tr>
-                      <tr>
-                        <td class="d-and-d-spell-prepared">
-                          <div class="d-and-d-skill-circle"></div>
-                        </td>
-                        <td><input type="text" value=""></td>
-                      </tr>
-                      <tr>
-                        <td class="d-and-d-spell-prepared">
-                          <div class="d-and-d-skill-circle"></div>
-                        </td>
-                        <td><input type="text" value=""></td>
-                      </tr>
-                      <tr>
-                        <td class="d-and-d-spell-prepared">
-                          <div class="d-and-d-skill-circle"></div>
-                        </td>
-                        <td><input type="text" value=""></td>
-                      </tr>
-                      </tbody>
-                    </table>
+                  </div>
+                </div>
+                <div class="character-statistics-column">
+                  <div class="d-and-d-box">
+                    <div class="d-and-d-spelllist">
+                      <div class="d-and-d-spell-header">
+                        <div class="d-and-d-spell-level">3</div>
+                        <div class="d-and-d-spell-slots">
+                          <div class="d-and-d-spell-slots-total"><input type="text" value=""></div>
+                          <div class="d-and-d-spell-slots-remaining">
+                            <div class="d-and-d-skill-circle"></div>
+                            <div class="d-and-d-skill-circle"></div>
+                            <div class="d-and-d-skill-circle"></div>
+                            <div class="d-and-d-skill-circle"></div>
+                            <div class="d-and-d-skill-circle"></div>
+                            <div class="d-and-d-skill-circle"></div>
+                          </div>
+                        </div>
+                      </div>
+                      <table>
+                        <tbody formArrayName="level3">
+                          @for (spell of level3.controls; track spell; let i = $index) {
+                            <tr [formArrayName]="i">
+                              <td class="d-and-d-spell-prepared" (click)="toggleSpellPrepared('level3', i)">
+                                <div [ngClass]="{'active': isSpellPrepared('level3', i)}" class="d-and-d-skill-circle"></div>
+                              </td>
+                              <td><input formControlName="name" type="text"></td>
+                            </tr>
+                          }
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="d-and-d-spelllist">
+                      <div class="d-and-d-spell-header">
+                        <div class="d-and-d-spell-level">4</div>
+                        <div class="d-and-d-spell-slots">
+                          <div class="d-and-d-spell-slots-total"><input type="text" value=""></div>
+                          <div class="d-and-d-spell-slots-remaining">
+                            <div class="d-and-d-skill-circle"></div>
+                            <div class="d-and-d-skill-circle"></div>
+                            <div class="d-and-d-skill-circle"></div>
+                            <div class="d-and-d-skill-circle"></div>
+                            <div class="d-and-d-skill-circle"></div>
+                            <div class="d-and-d-skill-circle"></div>
+                          </div>
+                        </div>
+                      </div>
+                      <table>
+                        <tbody formArrayName="level4">
+                          @for (spell of level4.controls; track spell; let i = $index) {
+                            <tr [formArrayName]="i">
+                              <td class="d-and-d-spell-prepared" (click)="toggleSpellPrepared('level4', i)">
+                                <div [ngClass]="{'active': isSpellPrepared('level4', i)}" class="d-and-d-skill-circle"></div>
+                              </td>
+                              <td><input formControlName="name" type="text"></td>
+                            </tr>
+                          }
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="d-and-d-spelllist">
+                      <div class="d-and-d-spell-header">
+                        <div class="d-and-d-spell-level">5</div>
+                        <div class="d-and-d-spell-slots">
+                          <div class="d-and-d-spell-slots-total"><input type="text" value=""></div>
+                          <div class="d-and-d-spell-slots-remaining">
+                            <div class="d-and-d-skill-circle"></div>
+                            <div class="d-and-d-skill-circle"></div>
+                            <div class="d-and-d-skill-circle"></div>
+                            <div class="d-and-d-skill-circle"></div>
+                            <div class="d-and-d-skill-circle"></div>
+                            <div class="d-and-d-skill-circle"></div>
+                          </div>
+                        </div>
+                      </div>
+                      <table>
+                        <tbody formArrayName="level5">
+                          @for (spell of level5.controls; track spell; let i = $index) {
+                            <tr [formArrayName]="i">
+                              <td class="d-and-d-spell-prepared" (click)="toggleSpellPrepared('level5', i)">
+                                <div [ngClass]="{'active': isSpellPrepared('level5', i)}" class="d-and-d-skill-circle"></div>
+                              </td>
+                              <td><input formControlName="name" type="text"></td>
+                            </tr>
+                          }
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+                <div class="character-statistics-column">
+                  <div class="d-and-d-box">
+                    <div class="d-and-d-spelllist">
+                      <div class="d-and-d-spell-header">
+                        <div class="d-and-d-spell-level">6</div>
+                        <div class="d-and-d-spell-slots">
+                          <div class="d-and-d-spell-slots-total"><input type="text" value=""></div>
+                          <div class="d-and-d-spell-slots-remaining">
+                            <div class="d-and-d-skill-circle"></div>
+                            <div class="d-and-d-skill-circle"></div>
+                            <div class="d-and-d-skill-circle"></div>
+                            <div class="d-and-d-skill-circle"></div>
+                            <div class="d-and-d-skill-circle"></div>
+                            <div class="d-and-d-skill-circle"></div>
+                          </div>
+                        </div>
+                      </div>
+                      <table>
+                        <tbody formArrayName="level6">
+                          @for (spell of level6.controls; track spell; let i = $index) {
+                            <tr [formArrayName]="i">
+                              <td class="d-and-d-spell-prepared" (click)="toggleSpellPrepared('level6', i)">
+                                <div [ngClass]="{'active': isSpellPrepared('level6', i)}" class="d-and-d-skill-circle"></div>
+                              </td>
+                              <td><input formControlName="name" type="text"></td>
+                            </tr>
+                          }
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="d-and-d-spelllist">
+                      <div class="d-and-d-spell-header">
+                        <div class="d-and-d-spell-level">7</div>
+                        <div class="d-and-d-spell-slots">
+                          <div class="d-and-d-spell-slots-total"><input type="text" value=""></div>
+                          <div class="d-and-d-spell-slots-remaining">
+                            <div class="d-and-d-skill-circle"></div>
+                            <div class="d-and-d-skill-circle"></div>
+                            <div class="d-and-d-skill-circle"></div>
+                            <div class="d-and-d-skill-circle"></div>
+                            <div class="d-and-d-skill-circle"></div>
+                            <div class="d-and-d-skill-circle"></div>
+                          </div>
+                        </div>
+                      </div>
+                      <table>
+                        <tbody formArrayName="level7">
+                          @for (spell of level7.controls; track spell; let i = $index) {
+                            <tr [formArrayName]="i">
+                              <td class="d-and-d-spell-prepared" (click)="toggleSpellPrepared('level7', i)">
+                                <div [ngClass]="{'active': isSpellPrepared('level7', i)}" class="d-and-d-skill-circle"></div>
+                              </td>
+                              <td><input formControlName="name" type="text"></td>
+                            </tr>
+                          }
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="d-and-d-spelllist">
+                      <div class="d-and-d-spell-header">
+                        <div class="d-and-d-spell-level">8</div>
+                        <div class="d-and-d-spell-slots">
+                          <div class="d-and-d-spell-slots-total"><input type="text" value=""></div>
+                          <div class="d-and-d-spell-slots-remaining">
+                            <div class="d-and-d-skill-circle"></div>
+                            <div class="d-and-d-skill-circle"></div>
+                            <div class="d-and-d-skill-circle"></div>
+                            <div class="d-and-d-skill-circle"></div>
+                            <div class="d-and-d-skill-circle"></div>
+                            <div class="d-and-d-skill-circle"></div>
+                          </div>
+                        </div>
+                      </div>
+                      <table>
+                        <tbody formArrayName="level8">
+                          @for (spell of level8.controls; track spell; let i = $index) {
+                            <tr [formArrayName]="i">
+                              <td class="d-and-d-spell-prepared" (click)="toggleSpellPrepared('level8', i)">
+                                <div [ngClass]="{'active': isSpellPrepared('level8', i)}" class="d-and-d-skill-circle"></div>
+                              </td>
+                              <td><input formControlName="name" type="text"></td>
+                            </tr>
+                          }
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="d-and-d-spelllist">
+                      <div class="d-and-d-spell-header">
+                        <div class="d-and-d-spell-level">9</div>
+                        <div class="d-and-d-spell-slots">
+                          <div class="d-and-d-spell-slots-total"><input type="text" value=""></div>
+                          <div class="d-and-d-spell-slots-remaining">
+                            <div class="d-and-d-skill-circle"></div>
+                            <div class="d-and-d-skill-circle"></div>
+                            <div class="d-and-d-skill-circle"></div>
+                            <div class="d-and-d-skill-circle"></div>
+                            <div class="d-and-d-skill-circle"></div>
+                            <div class="d-and-d-skill-circle"></div>
+                          </div>
+                        </div>
+                      </div>
+                      <table>
+                        <tbody formArrayName="level9">
+                          @for (spell of level9.controls; track spell; let i = $index) {
+                            <tr [formArrayName]="i">
+                              <td class="d-and-d-spell-prepared" (click)="toggleSpellPrepared('level9', i)">
+                                <div [ngClass]="{'active': isSpellPrepared('level9', i)}" class="d-and-d-skill-circle"></div>
+                              </td>
+                              <td><input formControlName="name" type="text"></td>
+                            </tr>
+                          }
+                        </tbody>
+                      </table>
+                    </div>
                   </div>
                 </div>
               </div>
-              <div class="character-statistics-column">
-                <div class="d-and-d-box">
-                  <div class="d-and-d-spelllist">
-                    <div class="d-and-d-spell-header">
-                      <div class="d-and-d-spell-level">3</div>
-                      <div class="d-and-d-spell-slots">
-                        <div class="d-and-d-spell-slots-total"><input type="text" value=""></div>
-                        <div class="d-and-d-spell-slots-remaining">
-                          <div class="d-and-d-skill-circle"></div>
-                          <div class="d-and-d-skill-circle"></div>
-                          <div class="d-and-d-skill-circle"></div>
-                          <div class="d-and-d-skill-circle"></div>
-                          <div class="d-and-d-skill-circle"></div>
-                          <div class="d-and-d-skill-circle"></div>
-                        </div>
-                      </div>
-                    </div>
-                    <table>
-                      <tbody>
-                      <tr>
-                        <td class="d-and-d-spell-prepared">
-                          <div class="d-and-d-skill-circle"></div>
-                        </td>
-                        <td><input type="text" value=""></td>
-                      </tr>
-                      <tr>
-                        <td class="d-and-d-spell-prepared">
-                          <div class="d-and-d-skill-circle"></div>
-                        </td>
-                        <td><input type="text" value=""></td>
-                      </tr>
-                      <tr>
-                        <td class="d-and-d-spell-prepared">
-                          <div class="d-and-d-skill-circle"></div>
-                        </td>
-                        <td><input type="text" value=""></td>
-                      </tr>
-                      <tr>
-                        <td class="d-and-d-spell-prepared">
-                          <div class="d-and-d-skill-circle"></div>
-                        </td>
-                        <td><input type="text" value=""></td>
-                      </tr>
-                      <tr>
-                        <td class="d-and-d-spell-prepared">
-                          <div class="d-and-d-skill-circle"></div>
-                        </td>
-                        <td><input type="text" value=""></td>
-                      </tr>
-                      <tr>
-                        <td class="d-and-d-spell-prepared">
-                          <div class="d-and-d-skill-circle"></div>
-                        </td>
-                        <td><input type="text" value=""></td>
-                      </tr>
-                      <tr>
-                        <td class="d-and-d-spell-prepared">
-                          <div class="d-and-d-skill-circle"></div>
-                        </td>
-                        <td><input type="text" value=""></td>
-                      </tr>
-                      <tr>
-                        <td class="d-and-d-spell-prepared">
-                          <div class="d-and-d-skill-circle"></div>
-                        </td>
-                        <td><input type="text" value=""></td>
-                      </tr>
-                      <tr>
-                        <td class="d-and-d-spell-prepared">
-                          <div class="d-and-d-skill-circle"></div>
-                        </td>
-                        <td><input type="text" value=""></td>
-                      </tr>
-                      <tr>
-                        <td class="d-and-d-spell-prepared">
-                          <div class="d-and-d-skill-circle"></div>
-                        </td>
-                        <td><input type="text" value=""></td>
-                      </tr>
-                      <tr>
-                        <td class="d-and-d-spell-prepared">
-                          <div class="d-and-d-skill-circle"></div>
-                        </td>
-                        <td><input type="text" value=""></td>
-                      </tr>
-                      <tr>
-                        <td class="d-and-d-spell-prepared">
-                          <div class="d-and-d-skill-circle"></div>
-                        </td>
-                        <td><input type="text" value=""></td>
-                      </tr>
-                      <tr>
-                        <td class="d-and-d-spell-prepared">
-                          <div class="d-and-d-skill-circle"></div>
-                        </td>
-                        <td><input type="text" value=""></td>
-                      </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                  <div class="d-and-d-spelllist">
-                    <div class="d-and-d-spell-header">
-                      <div class="d-and-d-spell-level">4</div>
-                      <div class="d-and-d-spell-slots">
-                        <div class="d-and-d-spell-slots-total"><input type="text" value=""></div>
-                        <div class="d-and-d-spell-slots-remaining">
-                          <div class="d-and-d-skill-circle"></div>
-                          <div class="d-and-d-skill-circle"></div>
-                          <div class="d-and-d-skill-circle"></div>
-                          <div class="d-and-d-skill-circle"></div>
-                          <div class="d-and-d-skill-circle"></div>
-                          <div class="d-and-d-skill-circle"></div>
-                        </div>
-                      </div>
-                    </div>
-                    <table>
-                      <tbody>
-                      <tr>
-                        <td class="d-and-d-spell-prepared">
-                          <div class="d-and-d-skill-circle"></div>
-                        </td>
-                        <td><input type="text" value=""></td>
-                      </tr>
-                      <tr>
-                        <td class="d-and-d-spell-prepared">
-                          <div class="d-and-d-skill-circle"></div>
-                        </td>
-                        <td><input type="text" value=""></td>
-                      </tr>
-                      <tr>
-                        <td class="d-and-d-spell-prepared">
-                          <div class="d-and-d-skill-circle"></div>
-                        </td>
-                        <td><input type="text" value=""></td>
-                      </tr>
-                      <tr>
-                        <td class="d-and-d-spell-prepared">
-                          <div class="d-and-d-skill-circle"></div>
-                        </td>
-                        <td><input type="text" value=""></td>
-                      </tr>
-                      <tr>
-                        <td class="d-and-d-spell-prepared">
-                          <div class="d-and-d-skill-circle"></div>
-                        </td>
-                        <td><input type="text" value=""></td>
-                      </tr>
-                      <tr>
-                        <td class="d-and-d-spell-prepared">
-                          <div class="d-and-d-skill-circle"></div>
-                        </td>
-                        <td><input type="text" value=""></td>
-                      </tr>
-                      <tr>
-                        <td class="d-and-d-spell-prepared">
-                          <div class="d-and-d-skill-circle"></div>
-                        </td>
-                        <td><input type="text" value=""></td>
-                      </tr>
-                      <tr>
-                        <td class="d-and-d-spell-prepared">
-                          <div class="d-and-d-skill-circle"></div>
-                        </td>
-                        <td><input type="text" value=""></td>
-                      </tr>
-                      <tr>
-                        <td class="d-and-d-spell-prepared">
-                          <div class="d-and-d-skill-circle"></div>
-                        </td>
-                        <td><input type="text" value=""></td>
-                      </tr>
-                      <tr>
-                        <td class="d-and-d-spell-prepared">
-                          <div class="d-and-d-skill-circle"></div>
-                        </td>
-                        <td><input type="text" value=""></td>
-                      </tr>
-                      <tr>
-                        <td class="d-and-d-spell-prepared">
-                          <div class="d-and-d-skill-circle"></div>
-                        </td>
-                        <td><input type="text" value=""></td>
-                      </tr>
-                      <tr>
-                        <td class="d-and-d-spell-prepared">
-                          <div class="d-and-d-skill-circle"></div>
-                        </td>
-                        <td><input type="text" value=""></td>
-                      </tr>
-                      <tr>
-                        <td class="d-and-d-spell-prepared">
-                          <div class="d-and-d-skill-circle"></div>
-                        </td>
-                        <td><input type="text" value=""></td>
-                      </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                  <div class="d-and-d-spelllist">
-                    <div class="d-and-d-spell-header">
-                      <div class="d-and-d-spell-level">5</div>
-                      <div class="d-and-d-spell-slots">
-                        <div class="d-and-d-spell-slots-total"><input type="text" value=""></div>
-                        <div class="d-and-d-spell-slots-remaining">
-                          <div class="d-and-d-skill-circle"></div>
-                          <div class="d-and-d-skill-circle"></div>
-                          <div class="d-and-d-skill-circle"></div>
-                          <div class="d-and-d-skill-circle"></div>
-                          <div class="d-and-d-skill-circle"></div>
-                          <div class="d-and-d-skill-circle"></div>
-                        </div>
-                      </div>
-                    </div>
-                    <table>
-                      <tbody>
-                      <tr>
-                        <td class="d-and-d-spell-prepared">
-                          <div class="d-and-d-skill-circle"></div>
-                        </td>
-                        <td><input type="text" value=""></td>
-                      </tr>
-                      <tr>
-                        <td class="d-and-d-spell-prepared">
-                          <div class="d-and-d-skill-circle"></div>
-                        </td>
-                        <td><input type="text" value=""></td>
-                      </tr>
-                      <tr>
-                        <td class="d-and-d-spell-prepared">
-                          <div class="d-and-d-skill-circle"></div>
-                        </td>
-                        <td><input type="text" value=""></td>
-                      </tr>
-                      <tr>
-                        <td class="d-and-d-spell-prepared">
-                          <div class="d-and-d-skill-circle"></div>
-                        </td>
-                        <td><input type="text" value=""></td>
-                      </tr>
-                      <tr>
-                        <td class="d-and-d-spell-prepared">
-                          <div class="d-and-d-skill-circle"></div>
-                        </td>
-                        <td><input type="text" value=""></td>
-                      </tr>
-                      <tr>
-                        <td class="d-and-d-spell-prepared">
-                          <div class="d-and-d-skill-circle"></div>
-                        </td>
-                        <td><input type="text" value=""></td>
-                      </tr>
-                      <tr>
-                        <td class="d-and-d-spell-prepared">
-                          <div class="d-and-d-skill-circle"></div>
-                        </td>
-                        <td><input type="text" value=""></td>
-                      </tr>
-                      <tr>
-                        <td class="d-and-d-spell-prepared">
-                          <div class="d-and-d-skill-circle"></div>
-                        </td>
-                        <td><input type="text" value=""></td>
-                      </tr>
-                      <tr>
-                        <td class="d-and-d-spell-prepared">
-                          <div class="d-and-d-skill-circle"></div>
-                        </td>
-                        <td><input type="text" value=""></td>
-                      </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              </div>
-              <div class="character-statistics-column">
-                <div class="d-and-d-box">
-                  <div class="d-and-d-spelllist">
-                    <div class="d-and-d-spell-header">
-                      <div class="d-and-d-spell-level">6</div>
-                      <div class="d-and-d-spell-slots">
-                        <div class="d-and-d-spell-slots-total"><input type="text" value=""></div>
-                        <div class="d-and-d-spell-slots-remaining">
-                          <div class="d-and-d-skill-circle"></div>
-                          <div class="d-and-d-skill-circle"></div>
-                          <div class="d-and-d-skill-circle"></div>
-                          <div class="d-and-d-skill-circle"></div>
-                          <div class="d-and-d-skill-circle"></div>
-                          <div class="d-and-d-skill-circle"></div>
-                        </div>
-                      </div>
-                    </div>
-                    <table>
-                      <tbody>
-                      <tr>
-                        <td class="d-and-d-spell-prepared">
-                          <div class="d-and-d-skill-circle"></div>
-                        </td>
-                        <td><input type="text" value=""></td>
-                      </tr>
-                      <tr>
-                        <td class="d-and-d-spell-prepared">
-                          <div class="d-and-d-skill-circle"></div>
-                        </td>
-                        <td><input type="text" value=""></td>
-                      </tr>
-                      <tr>
-                        <td class="d-and-d-spell-prepared">
-                          <div class="d-and-d-skill-circle"></div>
-                        </td>
-                        <td><input type="text" value=""></td>
-                      </tr>
-                      <tr>
-                        <td class="d-and-d-spell-prepared">
-                          <div class="d-and-d-skill-circle"></div>
-                        </td>
-                        <td><input type="text" value=""></td>
-                      </tr>
-                      <tr>
-                        <td class="d-and-d-spell-prepared">
-                          <div class="d-and-d-skill-circle"></div>
-                        </td>
-                        <td><input type="text" value=""></td>
-                      </tr>
-                      <tr>
-                        <td class="d-and-d-spell-prepared">
-                          <div class="d-and-d-skill-circle"></div>
-                        </td>
-                        <td><input type="text" value=""></td>
-                      </tr>
-                      <tr>
-                        <td class="d-and-d-spell-prepared">
-                          <div class="d-and-d-skill-circle"></div>
-                        </td>
-                        <td><input type="text" value=""></td>
-                      </tr>
-                      <tr>
-                        <td class="d-and-d-spell-prepared">
-                          <div class="d-and-d-skill-circle"></div>
-                        </td>
-                        <td><input type="text" value=""></td>
-                      </tr>
-                      <tr>
-                        <td class="d-and-d-spell-prepared">
-                          <div class="d-and-d-skill-circle"></div>
-                        </td>
-                        <td><input type="text" value=""></td>
-                      </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                  <div class="d-and-d-spelllist">
-                    <div class="d-and-d-spell-header">
-                      <div class="d-and-d-spell-level">7</div>
-                      <div class="d-and-d-spell-slots">
-                        <div class="d-and-d-spell-slots-total"><input type="text" value=""></div>
-                        <div class="d-and-d-spell-slots-remaining">
-                          <div class="d-and-d-skill-circle"></div>
-                          <div class="d-and-d-skill-circle"></div>
-                          <div class="d-and-d-skill-circle"></div>
-                          <div class="d-and-d-skill-circle"></div>
-                          <div class="d-and-d-skill-circle"></div>
-                          <div class="d-and-d-skill-circle"></div>
-                        </div>
-                      </div>
-                    </div>
-                    <table>
-                      <tbody>
-                      <tr>
-                        <td class="d-and-d-spell-prepared">
-                          <div class="d-and-d-skill-circle"></div>
-                        </td>
-                        <td><input type="text" value=""></td>
-                      </tr>
-                      <tr>
-                        <td class="d-and-d-spell-prepared">
-                          <div class="d-and-d-skill-circle"></div>
-                        </td>
-                        <td><input type="text" value=""></td>
-                      </tr>
-                      <tr>
-                        <td class="d-and-d-spell-prepared">
-                          <div class="d-and-d-skill-circle"></div>
-                        </td>
-                        <td><input type="text" value=""></td>
-                      </tr>
-                      <tr>
-                        <td class="d-and-d-spell-prepared">
-                          <div class="d-and-d-skill-circle"></div>
-                        </td>
-                        <td><input type="text" value=""></td>
-                      </tr>
-                      <tr>
-                        <td class="d-and-d-spell-prepared">
-                          <div class="d-and-d-skill-circle"></div>
-                        </td>
-                        <td><input type="text" value=""></td>
-                      </tr>
-                      <tr>
-                        <td class="d-and-d-spell-prepared">
-                          <div class="d-and-d-skill-circle"></div>
-                        </td>
-                        <td><input type="text" value=""></td>
-                      </tr>
-                      <tr>
-                        <td class="d-and-d-spell-prepared">
-                          <div class="d-and-d-skill-circle"></div>
-                        </td>
-                        <td><input type="text" value=""></td>
-                      </tr>
-                      <tr>
-                        <td class="d-and-d-spell-prepared">
-                          <div class="d-and-d-skill-circle"></div>
-                        </td>
-                        <td><input type="text" value=""></td>
-                      </tr>
-                      <tr>
-                        <td class="d-and-d-spell-prepared">
-                          <div class="d-and-d-skill-circle"></div>
-                        </td>
-                        <td><input type="text" value=""></td>
-                      </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                  <div class="d-and-d-spelllist">
-                    <div class="d-and-d-spell-header">
-                      <div class="d-and-d-spell-level">8</div>
-                      <div class="d-and-d-spell-slots">
-                        <div class="d-and-d-spell-slots-total"><input type="text" value=""></div>
-                        <div class="d-and-d-spell-slots-remaining">
-                          <div class="d-and-d-skill-circle"></div>
-                          <div class="d-and-d-skill-circle"></div>
-                          <div class="d-and-d-skill-circle"></div>
-                          <div class="d-and-d-skill-circle"></div>
-                          <div class="d-and-d-skill-circle"></div>
-                          <div class="d-and-d-skill-circle"></div>
-                        </div>
-                      </div>
-                    </div>
-                    <table>
-                      <tbody>
-                      <tr>
-                        <td class="d-and-d-spell-prepared">
-                          <div class="d-and-d-skill-circle"></div>
-                        </td>
-                        <td><input type="text" value=""></td>
-                      </tr>
-                      <tr>
-                        <td class="d-and-d-spell-prepared">
-                          <div class="d-and-d-skill-circle"></div>
-                        </td>
-                        <td><input type="text" value=""></td>
-                      </tr>
-                      <tr>
-                        <td class="d-and-d-spell-prepared">
-                          <div class="d-and-d-skill-circle"></div>
-                        </td>
-                        <td><input type="text" value=""></td>
-                      </tr>
-                      <tr>
-                        <td class="d-and-d-spell-prepared">
-                          <div class="d-and-d-skill-circle"></div>
-                        </td>
-                        <td><input type="text" value=""></td>
-                      </tr>
-                      <tr>
-                        <td class="d-and-d-spell-prepared">
-                          <div class="d-and-d-skill-circle"></div>
-                        </td>
-                        <td><input type="text" value=""></td>
-                      </tr>
-                      <tr>
-                        <td class="d-and-d-spell-prepared">
-                          <div class="d-and-d-skill-circle"></div>
-                        </td>
-                        <td><input type="text" value=""></td>
-                      </tr>
-                      <tr>
-                        <td class="d-and-d-spell-prepared">
-                          <div class="d-and-d-skill-circle"></div>
-                        </td>
-                        <td><input type="text" value=""></td>
-                      </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                  <div class="d-and-d-spelllist">
-                    <div class="d-and-d-spell-header">
-                      <div class="d-and-d-spell-level">9</div>
-                      <div class="d-and-d-spell-slots">
-                        <div class="d-and-d-spell-slots-total"><input type="text" value=""></div>
-                        <div class="d-and-d-spell-slots-remaining">
-                          <div class="d-and-d-skill-circle"></div>
-                          <div class="d-and-d-skill-circle"></div>
-                          <div class="d-and-d-skill-circle"></div>
-                          <div class="d-and-d-skill-circle"></div>
-                          <div class="d-and-d-skill-circle"></div>
-                          <div class="d-and-d-skill-circle"></div>
-                        </div>
-                      </div>
-                    </div>
-                    <table>
-                      <tbody>
-                      <tr>
-                        <td class="d-and-d-spell-prepared">
-                          <div class="d-and-d-skill-circle"></div>
-                        </td>
-                        <td><input type="text" value=""></td>
-                      </tr>
-                      <tr>
-                        <td class="d-and-d-spell-prepared">
-                          <div class="d-and-d-skill-circle"></div>
-                        </td>
-                        <td><input type="text" value=""></td>
-                      </tr>
-                      <tr>
-                        <td class="d-and-d-spell-prepared">
-                          <div class="d-and-d-skill-circle"></div>
-                        </td>
-                        <td><input type="text" value=""></td>
-                      </tr>
-                      <tr>
-                        <td class="d-and-d-spell-prepared">
-                          <div class="d-and-d-skill-circle"></div>
-                        </td>
-                        <td><input type="text" value=""></td>
-                      </tr>
-                      <tr>
-                        <td class="d-and-d-spell-prepared">
-                          <div class="d-and-d-skill-circle"></div>
-                        </td>
-                        <td><input type="text" value=""></td>
-                      </tr>
-                      <tr>
-                        <td class="d-and-d-spell-prepared">
-                          <div class="d-and-d-skill-circle"></div>
-                        </td>
-                        <td><input type="text" value=""></td>
-                      </tr>
-                      <tr>
-                        <td class="d-and-d-spell-prepared">
-                          <div class="d-and-d-skill-circle"></div>
-                        </td>
-                        <td><input type="text" value=""></td>
-                      </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              </div>
-            </div>
+            </form>
           </div>
         </div>
       </mat-tab>

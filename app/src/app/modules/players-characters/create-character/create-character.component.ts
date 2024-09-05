@@ -37,6 +37,7 @@ import {CharacterSummaryComponent, CharacterSummaryData} from "./character-summa
 import {StepperSelectionEvent} from "@angular/cdk/stepper";
 import {IPlayerCharacter, IProficiencies} from "../interfaces/player-character";
 import {CampaignsService} from "../../campaigns/campaigns.service";
+import {Spells} from "../interfaces/spells";
 
 enum AbilityScoreMode {
   DEFAULT,
@@ -439,7 +440,7 @@ export class CreateCharacterComponent implements OnInit {
         weapons: [],
         necklace: null,
       },
-      spells: [],
+      spells: this.createEmptySpellsObject(),
     };
   }
 
@@ -450,6 +451,21 @@ export class CreateCharacterComponent implements OnInit {
       formGroup.addControl(skill.index, this.#formBuilder.control(false));
     });
     return formGroup;
+  }
+
+  private createEmptySpellsObject(): Spells {
+    return {
+      cantrips: [],
+      level1: [],
+      level2: [],
+      level3: [],
+      level4: [],
+      level5: [],
+      level6: [],
+      level7: [],
+      level8: [],
+      level9: [],
+    };
   }
 
   private getTraits(): string {
