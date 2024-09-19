@@ -540,7 +540,7 @@ export class EditCharacterComponent {
     if (equippedArmorDexterityBonus) {
       let dexterityModifier = this.dexterityModifier();
 
-      if (maxBonus && dexterityModifier > Number(maxBonus)) {
+      if ((maxBonus && dexterityModifier > Number(maxBonus)) || Number(maxBonus) === 0) {
         dexterityModifier = Number(maxBonus);
       }
 
