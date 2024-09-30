@@ -11,7 +11,7 @@ export interface Spells {
   level9: Spell[];
 }
 
-interface Spell {
+export interface Spell {
   name: string;
   prepared: boolean;
 }

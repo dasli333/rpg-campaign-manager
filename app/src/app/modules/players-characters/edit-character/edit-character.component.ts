@@ -17,7 +17,7 @@ import {IMAGE_URL} from "../../../../config";
 import {IPlayerCharacter} from "../interfaces/player-character";
 import {IArmor, IEquipment, IEquippedInventory, IWeapon} from "../interfaces/equipment";
 import {SnackbarService} from "../../helpers/snackbar.service";
-import {Spells} from "../interfaces/spells";
+import {Spell, Spells} from "../interfaces/spells";
 
 interface ISkillsProficiencies {
   acrobatics: boolean;
@@ -296,6 +296,18 @@ export class EditCharacterComponent {
       ideals: this.characterSheetForm.value.ideals || '',
       bonds: this.characterSheetForm.value.bonds || '',
       flaws: this.characterSheetForm.value.flaws || '',
+      spells: {
+        cantrips: this.getSpellsFromForm(this.cantrips.value),
+        level1: this.getSpellsFromForm(this.level1.value),
+        level2: this.getSpellsFromForm(this.level2.value),
+        level3: this.getSpellsFromForm(this.level3.value),
+        level4: this.getSpellsFromForm(this.level4.value),
+        level5: this.getSpellsFromForm(this.level5.value),
+        level6: this.getSpellsFromForm(this.level6.value),
+        level7: this.getSpellsFromForm(this.level7.value),
+        level8: this.getSpellsFromForm(this.level8.value),
+        level9: this.getSpellsFromForm(this.level9.value)
+      },
       attributes: {
         strength: this.abilityScoresForm.value.strength || 3,
         dexterity: this.abilityScoresForm.value.dexterity || 3,
@@ -333,6 +345,10 @@ export class EditCharacterComponent {
     this.#campaignsService.updatePlayerCharacter(formData, character._id || '').subscribe(() => {
       this.snackbarService.openSnackBar('Character updated successfully');
     });
+  }
+
+  private getSpellsFromForm(spells: Spell[]): Spell[] {
+    return spells.filter(spell => spell.name !== '');
   }
 
   private getEquippedInventory(): IEquippedInventory {
