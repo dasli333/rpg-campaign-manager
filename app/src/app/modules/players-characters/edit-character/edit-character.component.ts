@@ -174,7 +174,7 @@ export class EditCharacterComponent {
     return Array.from({ length: count }).map((_, index) =>
       this.#formBuilder.group({
         name: [this.initialValues?.spells[level]?.[index]?.name || ''],
-        prepared: [false]
+        prepared: [this.initialValues?.spells[level]?.[index]?.prepared || false]
       })
     );
   }

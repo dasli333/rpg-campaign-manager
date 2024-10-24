@@ -29,6 +29,24 @@ interface IEquipment {
   notes: string;
 }
 
+interface Spells {
+  cantrips: Spell[];
+  level1: Spell[];
+  level2: Spell[];
+  level3: Spell[];
+  level4: Spell[];
+  level5: Spell[];
+  level6: Spell[];
+  level7: Spell[];
+  level8: Spell[];
+  level9: Spell[];
+}
+
+interface Spell {
+  name: string;
+  prepared: boolean;
+}
+
 @Schema()
 export class PlayerCharacter {
   @Prop({ required: true })
@@ -138,8 +156,8 @@ export class PlayerCharacter {
     necklace: IEquipment | null;
   };
 
-  @Prop({ type: [String] })
-  spells: string[];
+  @Prop({ type: Object })
+  spells: Spells;
 }
 
 export const PlayerCharacterSchema = SchemaFactory.createForClass(PlayerCharacter);
